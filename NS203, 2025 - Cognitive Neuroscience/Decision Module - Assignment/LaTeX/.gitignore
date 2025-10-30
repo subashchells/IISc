@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# LaTeX build files
+*.aux
+*.log
+*.toc
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# VSCode project settings
+.vscode/
