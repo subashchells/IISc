@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Memory Task</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Grainy texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 1;
+            pointer-events: none;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.4) 35px, rgba(255,255,255,.4) 70px);
+        }
+        
+        /* Animated grain effect */
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            30% { transform: translate(3%, -15%); }
+            50% { transform: translate(-2%, 5%); }
+            70% { transform: translate(5%, -5%); }
+            90% { transform: translate(-3%, 10%); }
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.03"/></svg>');
+            pointer-events: none;
+            animation: grain 8s steps(10) infinite;
+            z-index: 1;
+        }
+        
+        * {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 30px;
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            background: rgba(20, 20, 20, 0.8);
+            padding: 15px 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        button {
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+        
+        select {
+            padding: 10px 15px;
+            font-size: 16px;
+            background: rgba(30, 30, 30, 0.8);
+            color: #f0f0f0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+        }
+        
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        
+        .stimulus-display {
+            min-height: 450px;
+            width: 85%;
+            max-width: 900px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            margin: 60px 0 40px 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.02), transparent);
+            border-radius: 20px;
+            position: relative;
+        }
+        
+        .stimulus-display::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: exclude;
+            mask-composite: exclude;
+        }
+        
+        .word-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .word {
+            padding: 18px 25px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            font-size: 26px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 400;
+            text-align: center;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .word:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .probe-word {
+            font-size: 72px;
+            color: #ffd700;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            letter-spacing: 3px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+        
+        .response-buttons {
+            display: none;
+            gap: 60px;
+        }
+        
+        .response-btn {
+            padding: 30px 60px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .response-btn:first-child {
+            border-color: rgba(100, 255, 100, 0.4);
+            color: #90ff90;
+        }
+        
+        .response-btn:last-child {
+            border-color: rgba(255, 100, 100, 0.4);
+            color: #ff9090;
+        }
+        
+        .response-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+        }
+        
+        .info {
+            position: fixed;
+            bottom: 30px;
+            font-size: 18px;
+            font-family: 'Space Mono', monospace;
+            background: rgba(20, 20, 20, 0.8);
+            padding: 12px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            letter-spacing: 1px;
+        }
+        
+        .info span {
+            color: #ffd700;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label>
+            Set Size: 
+            <select id="setSize">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+        <button onclick="startTrial()">Start Trial</button>
+        <button onclick="downloadCSV()">Save CSV</button>
+        <button onclick="newExperiment()">New Experiment</button>
+    </div>
+
+    <div class="stimulus-display" id="stimulusDisplay">
+        Press "Start Trial" to begin
+    </div>
+
+    <div class="response-buttons" id="responseButtons">
+        <button class="response-btn" onclick="recordResponse('yes')">YES</button>
+        <button class="response-btn" onclick="recordResponse('no')">NO</button>
+    </div>
+
+    <div class="info">
+        Experiment: <span id="expNum">1</span> | Trials: <span id="trialCount">0</span>
+    </div>
+
+    <script>
+        // Expanded word pool - 150 common, memorable words
+        const wordPool = [
+            // Original words
+            'apple', 'chair', 'water', 'phone', 'book', 'light', 'music', 'cloud',
+            'stone', 'plant', 'clock', 'bread', 'horse', 'paper', 'glass', 'metal',
+            'beach', 'sword', 'crown', 'flame', 'bridge', 'tower', 'garden', 'mirror',
+            'shadow', 'crystal', 'dragon', 'forest', 'ocean', 'desert', 'mountain', 'valley',
+            'window', 'pencil', 'bottle', 'camera', 'flower', 'jacket', 'ladder', 'needle',
+            'orange', 'pocket', 'rabbit', 'silver', 'table', 'violin', 'wallet', 'yellow',
+            'zebra', 'anchor', 'butter', 'candle', 'doctor', 'engine', 'finger', 'guitar',
+            // Additional words
+            'thunder', 'castle', 'diamond', 'eagle', 'feather', 'galaxy', 'hammer', 'island',
+            'jungle', 'knight', 'leopard', 'marble', 'neutron', 'oxygen', 'pirate', 'quantum',
+            'rocket', 'spider', 'temple', 'unicorn', 'volcano', 'wizard', 'angel', 'bronze',
+            'coffee', 'dancer', 'empire', 'falcon', 'glacier', 'hunter', 'iceberg', 'jester',
+            'kernel', 'lizard', 'magnet', 'nectar', 'oracle', 'plasma', 'quartz', 'ranger',
+            'sphere', 'tunnel', 'velvet', 'whisper', 'arrow', 'balloon', 'compass', 'dolphin',
+            'emerald', 'fountain', 'goblin', 'helmet', 'insect', 'journey', 'kitchen', 'lantern',
+            'monster', 'network', 'octopus', 'pyramid', 'rainbow', 'saturn', 'treasure', 'umbrella',
+            'vampire', 'warrior', 'airplane', 'basket', 'cartoon', 'diamond', 'elephant', 'factory',
+            'garbage', 'highway', 'icecream', 'jewelry', 'keyboard', 'library', 'machine', 'necklace',
+            'officer', 'package', 'quarter', 'railway', 'sandwich', 'teacher', 'uniform', 'village',
+            'weather', 'blanket', 'chicken', 'dentist', 'evening', 'freedom', 'goldfish', 'holiday',
+            'internet', 'justice', 'kangaroo', 'lemon', 'medicine', 'notebook', 'ostrich', 'painting',
+            'question', 'restaurant', 'skeleton', 'triangle', 'universe', 'vitamin', 'windmill', 'yogurt',
+            'zipper', 'battery', 'calendar', 'dinosaur', 'elevator', 'football', 'gorilla', 'hospital'
+        ];
+
+        let experimentNumber = 1;
+        let trialData = [];
+        let currentWords = [];
+        let probeWord = '';
+        let probePresent = false;
+        let trialActive = false;
+        let subjectId = '';
+
+        function startTrial() {
+            if (trialActive) return;
+            
+            const setSize = parseInt(document.getElementById('setSize').value);
+            
+            // Select random words
+            const shuffled = [...wordPool].sort(() => 0.5 - Math.random());
+            currentWords = shuffled.slice(0, setSize);
+            
+            // Decide if probe will be present (50% chance)
+            probePresent = Math.random() < 0.5;
+            
+            if (probePresent) {
+                probeWord = currentWords[Math.floor(Math.random() * currentWords.length)];
+            } else {
+                const remainingWords = shuffled.slice(setSize);
+                probeWord = remainingWords[Math.floor(Math.random() * remainingWords.length)];
+            }
+            
+            trialActive = true;
+            
+            // Display words
+            const display = document.getElementById('stimulusDisplay');
+            display.innerHTML = '<div class="word-list">' + 
+                currentWords.map(w => `<div class="word">${w}</div>`).join('') +
+                '</div>';
+            
+            // After 5 seconds, show probe
+            setTimeout(() => {
+                display.innerHTML = `<div class="probe-word">${probeWord}?</div>`;
+                document.getElementById('responseButtons').style.display = 'flex';
+            }, 5000);
+        }
+
+        function recordResponse(response) {
+            if (!trialActive) return;
+            
+            const setSize = parseInt(document.getElementById('setSize').value);
+            const isHit = probePresent && response === 'yes';
+            const isFalseAlarm = !probePresent && response === 'yes';
+            const isMiss = probePresent && response === 'no';
+            const isCorrectRejection = !probePresent && response === 'no';
+            
+            trialData.push({
+                experimentNumber: experimentNumber,
+                trialNumber: trialData.length + 1,
+                setSize: setSize,
+                words: currentWords.join(';'),
+                probeWord: probeWord,
+                probePresent: probePresent,
+                response: response,
+                isHit: isHit,
+                isFalseAlarm: isFalseAlarm,
+                isMiss: isMiss,
+                isCorrectRejection: isCorrectRejection,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Reset for next trial
+            trialActive = false;
+            document.getElementById('responseButtons').style.display = 'none';
+            document.getElementById('stimulusDisplay').innerHTML = 'Ready for next trial';
+            document.getElementById('trialCount').textContent = trialData.length;
+        }
+
+        function downloadCSV() {
+            if (trialData.length === 0) {
+                alert('No data to save!');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = [
+                'experimentNumber', 
+                'trialNumber', 
+                'setSize', 
+                'words', 
+                'probeWord',
+                'probePresent', 
+                'response', 
+                'isHit', 
+                'isFalseAlarm', 
+                'isMiss', 
+                'isCorrectRejection', 
+                'timestamp'
+            ];
+            
+            let csvContent = headers.join(',') + '\n';
+            
+            trialData.forEach(trial => {
+                const row = [
+                    trial.experimentNumber,
+                    trial.trialNumber,
+                    trial.setSize,
+                    '"' + trial.words + '"',
+                    trial.probeWord,
+                    trial.probePresent,
+                    trial.response,
+                    trial.isHit,
+                    trial.isFalseAlarm,
+                    trial.isMiss,
+                    trial.isCorrectRejection,
+                    trial.timestamp
+                ];
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // Create blob and download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `working_memory_exp${experimentNumber}_${Date.now()}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function newExperiment() {
+            if (trialData.length > 0) {
+                if (confirm('Save current experiment data before starting new?')) {
+                    downloadCSV();
+                }
+            }
+            
+            experimentNumber++;
+            trialData = [];
+            document.getElementById('expNum').textContent = experimentNumber;
+            document.getElementById('trialCount').textContent = 0;
+            document.getElementById('stimulusDisplay').innerHTML = 'Press "Start Trial" to begin';
+        }
+    </script>
+</body>
+</html>

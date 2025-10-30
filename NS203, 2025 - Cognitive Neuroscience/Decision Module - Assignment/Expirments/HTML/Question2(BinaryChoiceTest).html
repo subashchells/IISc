@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Choice ESP Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .setup-screen, .test-screen, .results-screen {
+            display: none;
+        }
+
+        .setup-screen.active, .test-screen.active, .results-screen.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #c9753d;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #c9753d 0%, #b87333 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(201, 117, 61, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #c9753d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .choice-display {
+            font-size: 100px;
+            margin: 40px 0;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 3px solid #c9753d;
+        }
+
+        .choice-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .choice-btn {
+            padding: 50px 20px;
+            font-size: 60px;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .choice-btn:hover {
+            border-color: #c9753d;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(201, 117, 61, 0.3);
+        }
+
+        .progress {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result-card h3 {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .result-card .value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #c9753d;
+        }
+
+        .sdt-results {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .sdt-results h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .sdt-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .sdt-item {
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        .sdt-item .label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .sdt-item .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #c9753d;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .choice-type-select {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .choice-type-btn {
+            padding: 15px;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .choice-type-btn:hover {
+            border-color: #c9753d;
+        }
+
+        .choice-type-btn.selected {
+            border-color: #c9753d;
+            background: #fff8f0;
+        }
+
+        .feedback-display {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feedback-display .result {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Setup Screen -->
+        <div class="setup-screen active">
+            <h1>🎯 Binary Choice ESP Test</h1>
+            <p class="subtitle">Single-Device Two-Person Test</p>
+
+            <div class="info-box">
+                <p><strong>Instructions:</strong> This test requires two people using ONE device. You'll pass the device back and forth:</p>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Sender</strong> sees the target and focuses on it (don't show receiver!)</li>
+                    <li><strong>Sender</strong> passes device to <strong>Receiver</strong></li>
+                    <li><strong>Receiver</strong> guesses which option without seeing what sender saw</li>
+                    <li>Both see the result, then continue to next trial</li>
+                </ol>
+                <p style="margin-top: 10px;">You'll complete 50 trials together for better statistics.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="subjectId">Subject ID (Receiver's ID):</label>
+                <input type="text" id="subjectId" placeholder="e.g., Subject01" required>
+            </div>
+
+            <div class="input-group">
+                <label for="senderName">Sender Name (optional):</label>
+                <input type="text" id="senderName" placeholder="e.g., John">
+            </div>
+
+            <div class="input-group">
+                <label for="testName">Test Name (optional):</label>
+                <input type="text" id="testName" placeholder="e.g., ESP_Session1" value="BinaryChoiceTest">
+            </div>
+
+            <div class="input-group">
+                <label>Choose Binary Choice Type:</label>
+                <div class="choice-type-select">
+                    <div class="choice-type-btn" onclick="selectChoiceType('color')">
+                        <div style="font-size: 40px;">🔴 🔵</div>
+                        <p>Red vs Blue</p>
+                    </div>
+                    <div class="choice-type-btn" onclick="selectChoiceType('coin')">
+                        <div style="font-size: 40px;">🪙 🪙</div>
+                        <p>Heads vs Tails</p>
+                    </div>
+                    <div class="choice-type-btn" onclick="selectChoiceType('direction')">
+                        <div style="font-size: 40px;">⬅️ ➡️</div>
+                        <p>Left vs Right</p>
+                    </div>
+                    <div class="choice-type-btn" onclick="selectChoiceType('shape')">
+                        <div style="font-size: 40px;">⭕ ❌</div>
+                        <p>Circle vs Cross</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="startTest()">Start Test</button>
+        </div>
+
+        <!-- Test Screen -->
+        <div class="test-screen">
+            <h1>🎯 Binary Choice ESP Test</h1>
+            <div class="progress">Trial <span id="currentTrial">1</span> of 50</div>
+
+            <!-- Sender View -->
+            <div id="senderView">
+                <div class="info-box">
+                    <p><strong>👁️ SENDER:</strong> Look at the target below and focus on transmitting it mentally to the receiver. <strong>Do NOT show the screen to the receiver!</strong></p>
+                </div>
+                <div class="choice-display" id="targetChoice"></div>
+                <button class="btn" onclick="passToReceiver()">I'm Ready - Pass Device to Receiver →</button>
+            </div>
+
+            <!-- Receiver View -->
+            <div id="receiverView" class="hidden">
+                <div class="info-box">
+                    <p><strong>🧠 RECEIVER:</strong> Without looking at what the sender saw, select the option you sense telepathically.</p>
+                </div>
+                <div class="choice-buttons" id="choiceButtons"></div>
+            </div>
+
+            <!-- Feedback View -->
+            <div id="feedbackView" class="hidden">
+                <div class="feedback-display">
+                    <div class="result" id="resultEmoji"></div>
+                    <div class="details">
+                        <p style="font-size: 24px; margin: 20px 0;"><strong>Target:</strong> <span id="feedbackTarget" style="font-size: 60px;"></span></p>
+                        <p style="font-size: 24px; margin: 20px 0;"><strong>Guess:</strong> <span id="feedbackGuess" style="font-size: 60px;"></span></p>
+                        <p id="feedbackText" style="font-size: 20px; margin-top: 20px; font-weight: bold;"></p>
+                    </div>
+                </div>
+                <button class="btn" onclick="nextTrial()">Continue to Next Trial</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="results-screen">
+            <h1>📊 Test Results</h1>
+            <p class="subtitle">Signal Detection Theory Analysis</p>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Correct Guesses</h3>
+                    <div class="value" id="correct">0</div>
+                </div>
+                <div class="result-card">
+                    <h3>Accuracy Rate</h3>
+                    <div class="value" id="accuracy">0%</div>
+                </div>
+                <div class="result-card">
+                    <h3>Total Trials</h3>
+                    <div class="value" id="totalTrials">50</div>
+                </div>
+                <div class="result-card">
+                    <h3>Chance Level</h3>
+                    <div class="value">50%</div>
+                </div>
+            </div>
+
+            <div class="sdt-results">
+                <h3>Signal Detection Theory Metrics</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Treating Option 1 as "signal present"</p>
+                <div class="sdt-grid">
+                    <div class="sdt-item">
+                        <div class="label">Hits (Correct "Yes")</div>
+                        <div class="value" id="hits">0</div>
+                    </div>
+                    <div class="sdt-item">
+                        <div class="label">False Alarms (Incorrect "Yes")</div>
+                        <div class="value" id="falseAlarms">0</div>
+                    </div>
+                    <div class="sdt-item">
+                        <div class="label">Misses (Incorrect "No")</div>
+                        <div class="value" id="misses">0</div>
+                    </div>
+                    <div class="sdt-item">
+                        <div class="label">Correct Rejections (Correct "No")</div>
+                        <div class="value" id="correctRejections">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Analysis:</strong> <span id="interpretation"></span></p>
+            </div>
+
+            <button class="btn" onclick="downloadCSV()">💾 Download Results as CSV</button>
+            <button class="btn" onclick="resetTest()" style="margin-top: 15px; background: linear-gradient(135deg, #868f96 0%, #596164 100%);">Start New Test</button>
+        </div>
+    </div>
+
+    <script>
+        const choiceTypes = {
+            color: { option1: '🔴', option2: '🔵', labels: ['Red', 'Blue'] },
+            coin: { option1: '🪙 H', option2: '🪙 T', labels: ['Heads', 'Tails'] },
+            direction: { option1: '⬅️', option2: '➡️', labels: ['Left', 'Right'] },
+            shape: { option1: '⭕', option2: '❌', labels: ['Circle', 'Cross'] }
+        };
+
+        let currentChoiceType = '';
+        let subjectId = '';
+        let senderName = '';
+        let testName = '';
+        let currentTrial = 1;
+        let totalTrials = 50;
+        let targetChoice = '';
+        let targetLabel = '';
+        
+        let testData = {
+            subjectId: '',
+            senderName: '',
+            testName: '',
+            choiceType: '',
+            startTime: '',
+            endTime: '',
+            trials: []
+        };
+
+        function selectChoiceType(type) {
+            currentChoiceType = type;
+            document.querySelectorAll('.choice-type-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.closest('.choice-type-btn').classList.add('selected');
+        }
+
+        function startTest() {
+            subjectId = document.getElementById('subjectId').value.trim();
+            senderName = document.getElementById('senderName').value.trim() || 'Sender';
+            testName = document.getElementById('testName').value.trim() || 'BinaryChoiceTest';
+
+            if (!subjectId) {
+                alert('Please enter a Subject ID for the receiver');
+                return;
+            }
+
+            if (!currentChoiceType) {
+                alert('Please select a choice type (Red vs Blue, etc.)');
+                return;
+            }
+
+            testData.subjectId = subjectId;
+            testData.senderName = senderName;
+            testData.testName = testName;
+            testData.choiceType = currentChoiceType;
+            testData.startTime = new Date().toISOString();
+
+            document.querySelector('.setup-screen').classList.remove('active');
+            document.querySelector('.test-screen').classList.add('active');
+
+            startTrial();
+        }
+
+        function startTrial() {
+            document.getElementById('currentTrial').textContent = currentTrial;
+            const choices = choiceTypes[currentChoiceType];
+            
+            // Generate random target (option1 or option2)
+            const option = Math.random() < 0.5 ? 'option1' : 'option2';
+            targetChoice = option;
+            targetLabel = choices.labels[option === 'option1' ? 0 : 1];
+            
+            // Show sender view
+            document.getElementById('senderView').classList.remove('hidden');
+            document.getElementById('receiverView').classList.add('hidden');
+            document.getElementById('feedbackView').classList.add('hidden');
+            document.getElementById('targetChoice').textContent = choices[option];
+        }
+
+        function passToReceiver() {
+            // Hide sender view, show receiver view with choices
+            document.getElementById('senderView').classList.add('hidden');
+            document.getElementById('receiverView').classList.remove('hidden');
+            
+            // Create choice buttons
+            const choicesDiv = document.getElementById('choiceButtons');
+            choicesDiv.innerHTML = '';
+            const choices = choiceTypes[currentChoiceType];
+            
+            ['option1', 'option2'].forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choices[option];
+                btn.onclick = () => makeGuess(option, choices.labels[index]);
+                choicesDiv.appendChild(btn);
+            });
+        }
+
+        function makeGuess(guessedChoice, guessedLabel) {
+            const correct = guessedChoice === targetChoice;
+            
+            const trialData = {
+                trial: currentTrial,
+                target: targetChoice,
+                targetLabel: targetLabel,
+                guess: guessedChoice,
+                guessLabel: guessedLabel,
+                correct: correct,
+                timestamp: new Date().toISOString()
+            };
+
+            testData.trials.push(trialData);
+
+            // Show feedback
+            const choices = choiceTypes[currentChoiceType];
+            document.getElementById('receiverView').classList.add('hidden');
+            document.getElementById('feedbackView').classList.remove('hidden');
+            
+            if (correct) {
+                document.getElementById('resultEmoji').textContent = '✅';
+                document.getElementById('resultEmoji').style.color = '#28a745';
+                document.getElementById('feedbackText').textContent = 'Correct! Great telepathic connection!';
+                document.getElementById('feedbackText').style.color = '#28a745';
+            } else {
+                document.getElementById('resultEmoji').textContent = '❌';
+                document.getElementById('resultEmoji').style.color = '#dc3545';
+                document.getElementById('feedbackText').textContent = 'Incorrect. Keep focusing!';
+                document.getElementById('feedbackText').style.color = '#dc3545';
+            }
+            
+            document.getElementById('feedbackTarget').textContent = choices[targetChoice];
+            document.getElementById('feedbackGuess').textContent = choices[guessedChoice];
+        }
+
+        function nextTrial() {
+            if (currentTrial < totalTrials) {
+                currentTrial++;
+                startTrial();
+            } else {
+                finishTest();
+            }
+        }
+
+        function finishTest() {
+            testData.endTime = new Date().toISOString();
+            
+            // Calculate metrics
+            const correct = testData.trials.filter(t => t.correct).length;
+            const accuracy = ((correct / totalTrials) * 100).toFixed(1);
+
+            // Calculate Signal Detection Theory metrics
+            const hits = testData.trials.filter(t => t.target === 'option1' && t.guess === 'option1').length;
+            const falseAlarms = testData.trials.filter(t => t.target === 'option2' && t.guess === 'option1').length;
+            const misses = testData.trials.filter(t => t.target === 'option1' && t.guess === 'option2').length;
+            const correctRejections = testData.trials.filter(t => t.target === 'option2' && t.guess === 'option2').length;
+
+            document.getElementById('correct').textContent = correct;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            document.getElementById('totalTrials').textContent = totalTrials;
+            
+            document.getElementById('hits').textContent = hits;
+            document.getElementById('falseAlarms').textContent = falseAlarms;
+            document.getElementById('misses').textContent = misses;
+            document.getElementById('correctRejections').textContent = correctRejections;
+
+            let interpretation = '';
+            if (accuracy > 60) {
+                interpretation = 'Significantly above chance (50%)! This suggests possible ESP ability or systematic bias. Hit rate: ' + hits + ', False Alarm rate: ' + falseAlarms + '.';
+            } else if (accuracy >= 45 && accuracy <= 55) {
+                interpretation = 'Performance is at chance level (50%). No evidence of ESP in this session. The hit and false alarm rates suggest random guessing.';
+            } else {
+                interpretation = 'Below chance performance. In binary choice, this is unusual and might indicate psi-missing (unconscious avoidance) or response bias.';
+            }
+            document.getElementById('interpretation').textContent = interpretation;
+
+            document.querySelector('.test-screen').classList.remove('active');
+            document.querySelector('.results-screen').classList.add('active');
+        }
+
+        function downloadCSV() {
+            let csv = 'SubjectID,SenderName,TestName,ChoiceType,StartTime,EndTime,Trial,Target,TargetLabel,Guess,GuessLabel,Correct,Hits,FalseAlarms,Misses,CorrectRejections,Timestamp\n';
+            
+            // Calculate SDT metrics
+            const hits = testData.trials.filter(t => t.target === 'option1' && t.guess === 'option1').length;
+            const falseAlarms = testData.trials.filter(t => t.target === 'option2' && t.guess === 'option1').length;
+            const misses = testData.trials.filter(t => t.target === 'option1' && t.guess === 'option2').length;
+            const correctRejections = testData.trials.filter(t => t.target === 'option2' && t.guess === 'option2').length;
+
+            testData.trials.forEach(trial => {
+                csv += `${testData.subjectId},${testData.senderName},${testData.testName},${testData.choiceType},${testData.startTime},${testData.endTime},${trial.trial},${trial.target},${trial.targetLabel},${trial.guess},${trial.guessLabel},${trial.correct},${hits},${falseAlarms},${misses},${correctRejections},${trial.timestamp}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${testData.testName}${testData.subjectId}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function resetTest() {
+            currentTrial = 1;
+            currentChoiceType = '';
+            testData = {
+                subjectId: '',
+                senderName: '',
+                testName: '',
+                choiceType: '',
+                startTime: '',
+                endTime: '',
+                trials: []
+            };
+            
+            document.querySelectorAll('.choice-type-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('subjectId').value = '';
+            document.getElementById('senderName').value = '';
+            document.getElementById('testName').value = 'BinaryChoiceTest';
+            
+            document.querySelector('.results-screen').classList.remove('active');
+            document.querySelector('.setup-screen').classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+\documentclass[12pt]{article} % For LaTeX2e
+
+% ----------------- PACKAGES -------------------
+\usepackage[final]{project_template}
+\usepackage{pdflscape}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{adjustbox}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{csvsimple}
+\usepackage{pdfpages}
+\usepackage{lineno}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{float}
+
+% ----------------- HYPERLINK COLORS -------------------
+\definecolor{darkblue}{rgb}{0, 0, 0.5}
+\hypersetup{
+  colorlinks=true,
+  citecolor=darkblue,
+  linkcolor=darkblue,
+  urlcolor=darkblue
+}
+
+% ----------------- CUSTOM MACROS -------------------
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+% ----------------- BEGIN DOCUMENT -------------------
+\begin{document}
+
+% ---- Disable default \maketitle (removes unwanted rule from project_template) ----
+\makeatletter
+\renewcommand{\@maketitle}{}
+\makeatother
+
+\ifcolmsubmission
+\linenumbers
+\fi
+
+% ----------------- CUSTOM TITLE BLOCK -------------------
+\begin{titlepage}
+  \thispagestyle{empty}
+
+  % ---- Top Logos ----
+  \begin{center}
+    \vspace*{0.5cm}
+    \begin{minipage}{0.42\textwidth}
+      \begin{flushleft}
+        \includegraphics[height=2.7cm]{figures/IISc.png}
+      \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.42\textwidth}
+      \begin{flushright}
+        \includegraphics[height=2.7cm]{figures/cns.jpeg}
+      \end{flushright}
+    \end{minipage}
+  \end{center}
+
+  % ---- Title ----
+  \vspace{2.5cm}
+  \begin{center}
+    {\LARGE \textbf{Signal Detection Theory: Testing Psychology \& Parapsychology}}\\[3em]
+
+    {\large
+    \textbf{Submitted by:}\\[0.5em]
+    Dr.~Subash~C,~MBBS\\
+    M.Tech~(Research)~Student,\\
+    \textit{Department of Instrumentation and Applied Physics}\\
+    \textit{Indian Institute of Science, Bengaluru}
+    }\\[2.5em]
+
+    {\large
+    \textbf{Course Instructor (NS203, 2025: Cognitive Neuroscience):}\\[0.5em]
+    Dr.~Sridhar~Devarajan,~PhD\\
+    Associate~Professor,~Centre~for~Neuroscience\\
+    \textit{Indian Institute of Science, Bengaluru}
+    }\\[4em]
+  \end{center}
+\end{titlepage}
+
+% ----------------- REMOVE EXTRA SPACE AFTER TITLE PAGE -------------------
+\clearpage
+\vspace*{-2cm}
+
+% ----------------- MAIN SECTIONS -------------------
+% \input{sections/abstract.tex}
+\input{sections/Assignment 1.tex}
+\input{sections/Assignment 2.tex}
+% \input{sections/plan.tex}
+% \input{sections/methods.tex}
+\input{sections/acknowledgments.tex}
+
+% ----------------- DECLARATION -------------------
+\section*{Declaration about AI Assistance}
+\begin{itemize}
+  \item \textbf{Claude:} Assisted with generating the HTML code for the experimental setup, Python code for computing Signal Detection Theory variables, LaTeX formatting, and writing (including spell-checking and grammar correction).
+  \item \textbf{ChatGPT:} Assisted with generating the HTML code for the experimental setup, Python code for computing Signal Detection Theory variables, LaTeX formatting, and writing (including spell-checking and grammar correction).
+  \item \textbf{GitHub Copilot (in VS Code):} Assisted with generating the HTML code for the experimental setup, Python code, and LaTeX formatting.
+\end{itemize}
+
+\appendix
+\newpage
+\section{Appendix}
+\label{sec:appendix}
+
+\subsection*{Stimuli Used in Experimental Tasks}
+
+The following stimuli were used across the four experimental tasks described in this study.
+
+\subsubsection*{Working Memory Task}
+
+The following 150 words were used as the pool for the working memory task. 
+A random subset of these words was selected for each trial.
+
+\vspace{0.8em}
+
+\noindent
+apple, chair, water, phone, book, light, music, cloud, stone, plant, clock, bread, horse, paper, glass, metal, 
+beach, sword, crown, flame, bridge, tower, garden, mirror, shadow, crystal, dragon, forest, ocean, desert, mountain, valley, 
+window, pencil, bottle, camera, flower, jacket, ladder, needle, orange, pocket, rabbit, silver, table, violin, wallet, yellow, 
+zebra, anchor, butter, candle, doctor, engine, finger, guitar, thunder, castle, diamond, eagle, feather, galaxy, hammer, island, 
+jungle, knight, leopard, marble, neutron, oxygen, pirate, quantum, rocket, spider, temple, unicorn, volcano, wizard, angel, bronze, 
+coffee, dancer, empire, falcon, glacier, hunter, iceberg, jester, kernel, lizard, magnet, nectar, oracle, plasma, quartz, ranger, 
+sphere, tunnel, velvet, whisper, arrow, balloon, compass, dolphin, emerald, fountain, goblin, helmet, insect, journey, kitchen, lantern, 
+monster, network, octopus, pyramid, rainbow, saturn, treasure, umbrella, vampire, warrior, airplane, basket, cartoon, diamond, elephant, 
+factory, garbage, highway, icecream, jewelry, keyboard, library, machine, necklace, officer, package, quarter, railway, sandwich, teacher, 
+uniform, village, weather, blanket, chicken, dentist, evening, freedom, goldfish, holiday, internet, justice, kangaroo, lemon, medicine, 
+notebook, ostrich, painting, question, restaurant, skeleton, triangle, universe, vitamin, windmill, yogurt, zipper, battery, calendar, 
+dinosaur, elevator, football, gorilla, hospital.
+
+\subsubsection*{Binary Choice Task}
+
+Participants could select from four different binary choice types:
+\begin{itemize}
+    \item \textbf{Color:} Red vs. Blue
+    \item \textbf{Coin:} Heads vs. Tails
+    \item \textbf{Direction:} Left vs. Right
+    \item \textbf{Shape:} Circle vs. Cross
+\end{itemize}
+
+\subsubsection*{Zener Card Task}
+
+The Zener Card task utilized five symbolic stimuli representing human organs:
+\begin{itemize}
+    \item Heart
+    \item Lungs
+    \item Brain
+    \item Eye
+    \item Ear
+\end{itemize}
+
+\subsubsection*{Image Orientation Task}
+
+The Image Orientation task employed three categories of emoji stimuli, with participants selecting one category for their session:
+
+\noindent
+\textbf{Animals:} Lion, Elephant, Butterfly, Turtle, Octopus, Panda, Dolphin, Owl
+
+\noindent
+\textbf{Faces:} Smiling Face, Cool Face, Thinking Face, Sleeping Face, Party Face, Nerd Face, Angel Face, Upside-Down Face
+
+\noindent
+\textbf{Symbols:} Star, Diamond, Fire, Lightning, Moon, Sun, Rainbow, Sparkles
+
+\noindent
+\textbf{Mixed:} Lion, Tree, Palette, Smiling Face, Star, Elephant, Flower, Guitar
+
+\vspace{0.5em}
+\noindent
+Each image could be presented in either upright or inverted (180° rotated) orientation.
+
+\end{document}

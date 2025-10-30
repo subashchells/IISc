@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zener Card ESP Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .setup-screen, .test-screen, .results-screen {
+            display: none;
+        }
+
+        .setup-screen.active, .test-screen.active, .results-screen.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #d4af37 0%, #aa8d2e 100%);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #d4af37;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .organ-display {
+            font-size: 100px;
+            margin: 40px 0;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 3px solid #d4af37;
+        }
+
+        .organ-choices {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .organ-btn {
+            padding: 25px;
+            font-size: 50px;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .organ-btn:hover {
+            border-color: #d4af37;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .progress {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result-card h3 {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .result-card .value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #d4af37;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .feedback-display {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feedback-display .result {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+
+        .feedback-display .details {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Setup Screen -->
+        <div class="setup-screen active">
+            <h1>🔮 Zener Card ESP Test</h1>
+            <p class="subtitle">Single-Device Two-Person Test</p>
+
+            <div class="info-box">
+                <p><strong>Instructions:</strong> This test requires two people using ONE device. You'll pass the device back and forth:</p>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Sender</strong> sees the target organ and focuses on it (don't show receiver!)</li>
+                    <li><strong>Sender</strong> passes device to <strong>Receiver</strong></li>
+                    <li><strong>Receiver</strong> guesses which organ without seeing what sender saw</li>
+                    <li>Both see the result, then continue to next trial</li>
+                </ol>
+                <p style="margin-top: 10px;">You'll complete 25 trials together.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="subjectId">Subject ID (Receiver's ID):</label>
+                <input type="text" id="subjectId" placeholder="e.g., Subject01" required>
+            </div>
+
+            <div class="input-group">
+                <label for="senderName">Sender Name (optional):</label>
+                <input type="text" id="senderName" placeholder="e.g., John">
+            </div>
+
+            <div class="input-group">
+                <label for="testName">Test Name (optional):</label>
+                <input type="text" id="testName" placeholder="e.g., ESP_Session1" value="ZenerCardTest">
+            </div>
+
+            <button class="btn" onclick="startTest()">Start Test</button>
+        </div>
+
+        <!-- Test Screen -->
+        <div class="test-screen">
+            <h1>🔮 Zener Card ESP Test</h1>
+            <div class="progress">Trial <span id="currentTrial">1</span> of 25</div>
+
+            <!-- Sender View -->
+            <div id="senderView">
+                <div class="info-box">
+                    <p><strong>👁️ SENDER:</strong> Look at the target organ below and focus on transmitting it mentally to the receiver. <strong>Do NOT show the screen to the receiver!</strong></p>
+                </div>
+                <div class="organ-display" id="targetOrgan"></div>
+                <button class="btn" onclick="passToReceiver()">I'm Ready - Pass Device to Receiver →</button>
+            </div>
+
+            <!-- Receiver View -->
+            <div id="receiverView" class="hidden">
+                <div class="info-box">
+                    <p><strong>🧠 RECEIVER:</strong> Without looking at what the sender saw, select the organ you sense telepathically.</p>
+                </div>
+                <div class="organ-choices" id="organChoices"></div>
+            </div>
+
+            <!-- Feedback View -->
+            <div id="feedbackView" class="hidden">
+                <div class="feedback-display">
+                    <div class="result" id="resultEmoji"></div>
+                    <div class="details">
+                        <p style="font-size: 24px; margin: 20px 0;"><strong>Target:</strong> <span id="feedbackTarget" style="font-size: 60px;"></span></p>
+                        <p style="font-size: 24px; margin: 20px 0;"><strong>Guess:</strong> <span id="feedbackGuess" style="font-size: 60px;"></span></p>
+                        <p id="feedbackText" style="font-size: 20px; margin-top: 20px; font-weight: bold;"></p>
+                    </div>
+                </div>
+                <button class="btn" onclick="nextTrial()">Continue to Next Trial</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="results-screen">
+            <h1>📊 Test Results</h1>
+            <p class="subtitle">Signal Detection Theory Analysis</p>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Correct Guesses (Hits)</h3>
+                    <div class="value" id="hits">0</div>
+                </div>
+                <div class="result-card">
+                    <h3>Accuracy Rate</h3>
+                    <div class="value" id="accuracy">0%</div>
+                </div>
+                <div class="result-card">
+                    <h3>Total Trials</h3>
+                    <div class="value" id="totalTrials">25</div>
+                </div>
+                <div class="result-card">
+                    <h3>Chance Level</h3>
+                    <div class="value">20%</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Analysis:</strong> <span id="interpretation"></span></p>
+            </div>
+
+            <button class="btn" onclick="downloadCSV()">💾 Download Results as CSV</button>
+            <button class="btn" onclick="resetTest()" style="margin-top: 15px; background: linear-gradient(135deg, #868f96 0%, #596164 100%);">Start New Test</button>
+        </div>
+    </div>
+
+    <script>
+        const organs = ['🫀', '🫁', '🧠', '👁️', '👂'];
+        const organNames = ['Heart', 'Lungs', 'Brain', 'Eye', 'Ear'];
+        
+        let subjectId = '';
+        let senderName = '';
+        let testName = '';
+        let currentTrial = 1;
+        let totalTrials = 25;
+        let targetOrgan = '';
+        let targetOrganName = '';
+        
+        let testData = {
+            subjectId: '',
+            senderName: '',
+            testName: '',
+            startTime: '',
+            endTime: '',
+            trials: []
+        };
+
+        function startTest() {
+            subjectId = document.getElementById('subjectId').value.trim();
+            senderName = document.getElementById('senderName').value.trim() || 'Sender';
+            testName = document.getElementById('testName').value.trim() || 'ZenerCardTest';
+
+            if (!subjectId) {
+                alert('Please enter a Subject ID for the receiver');
+                return;
+            }
+
+            testData.subjectId = subjectId;
+            testData.senderName = senderName;
+            testData.testName = testName;
+            testData.startTime = new Date().toISOString();
+
+            document.querySelector('.setup-screen').classList.remove('active');
+            document.querySelector('.test-screen').classList.add('active');
+
+            startTrial();
+        }
+
+        function startTrial() {
+            document.getElementById('currentTrial').textContent = currentTrial;
+            
+            // Generate random target
+            const randomIndex = Math.floor(Math.random() * organs.length);
+            targetOrgan = organs[randomIndex];
+            targetOrganName = organNames[randomIndex];
+            
+            // Show sender view
+            document.getElementById('senderView').classList.remove('hidden');
+            document.getElementById('receiverView').classList.add('hidden');
+            document.getElementById('feedbackView').classList.add('hidden');
+            document.getElementById('targetOrgan').textContent = targetOrgan;
+        }
+
+        function passToReceiver() {
+            // Hide sender view, show receiver view with choices
+            document.getElementById('senderView').classList.add('hidden');
+            document.getElementById('receiverView').classList.remove('hidden');
+            
+            // Create choice buttons
+            const choicesDiv = document.getElementById('organChoices');
+            choicesDiv.innerHTML = '';
+            
+            organs.forEach((organ, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'organ-btn';
+                btn.textContent = organ;
+                btn.onclick = () => makeGuess(organ, organNames[index]);
+                choicesDiv.appendChild(btn);
+            });
+        }
+
+        function makeGuess(guessedOrgan, guessedOrganName) {
+            const correct = guessedOrgan === targetOrgan;
+            
+            const trialData = {
+                trial: currentTrial,
+                target: targetOrgan,
+                targetName: targetOrganName,
+                guess: guessedOrgan,
+                guessName: guessedOrganName,
+                correct: correct,
+                timestamp: new Date().toISOString()
+            };
+
+            testData.trials.push(trialData);
+
+            // Show feedback
+            document.getElementById('receiverView').classList.add('hidden');
+            document.getElementById('feedbackView').classList.remove('hidden');
+            
+            if (correct) {
+                document.getElementById('resultEmoji').textContent = '✅';
+                document.getElementById('resultEmoji').style.color = '#28a745';
+                document.getElementById('feedbackText').textContent = 'Correct! Great telepathic connection!';
+                document.getElementById('feedbackText').style.color = '#28a745';
+            } else {
+                document.getElementById('resultEmoji').textContent = '❌';
+                document.getElementById('resultEmoji').style.color = '#dc3545';
+                document.getElementById('feedbackText').textContent = 'Incorrect. Keep focusing!';
+                document.getElementById('feedbackText').style.color = '#dc3545';
+            }
+            
+            document.getElementById('feedbackTarget').textContent = targetOrgan;
+            document.getElementById('feedbackGuess').textContent = guessedOrgan;
+        }
+
+        function nextTrial() {
+            if (currentTrial < totalTrials) {
+                currentTrial++;
+                startTrial();
+            } else {
+                finishTest();
+            }
+        }
+
+        function finishTest() {
+            testData.endTime = new Date().toISOString();
+            
+            const hits = testData.trials.filter(t => t.correct).length;
+            const accuracy = ((hits / totalTrials) * 100).toFixed(1);
+
+            document.getElementById('hits').textContent = hits;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            document.getElementById('totalTrials').textContent = totalTrials;
+
+            let interpretation = '';
+            if (accuracy > 30) {
+                interpretation = 'Performance is significantly above chance (20%)! This suggests possible ESP ability, strong intuition, or fortunate guessing.';
+            } else if (accuracy >= 15 && accuracy <= 25) {
+                interpretation = 'Performance is at or near chance level (20%). No clear evidence of ESP in this session.';
+            } else {
+                interpretation = 'Performance is below chance level. This is statistically unusual and might indicate psi-missing (unconscious avoidance of correct answers).';
+            }
+            document.getElementById('interpretation').textContent = interpretation;
+
+            document.querySelector('.test-screen').classList.remove('active');
+            document.querySelector('.results-screen').classList.add('active');
+        }
+
+        function downloadCSV() {
+            let csv = 'SubjectID,SenderName,TestName,StartTime,EndTime,Trial,Target,TargetName,Guess,GuessName,Correct,Timestamp\n';
+            
+            testData.trials.forEach(trial => {
+                csv += `${testData.subjectId},${testData.senderName},${testData.testName},${testData.startTime},${testData.endTime},${trial.trial},${trial.target},${trial.targetName},${trial.guess},${trial.guessName},${trial.correct},${trial.timestamp}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${testData.testName}${testData.subjectId}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function resetTest() {
+            currentTrial = 1;
+            testData = {
+                subjectId: '',
+                senderName: '',
+                testName: '',
+                startTime: '',
+                endTime: '',
+                trials: []
+            };
+            
+            document.getElementById('subjectId').value = '';
+            document.getElementById('senderName').value = '';
+            document.getElementById('testName').value = 'ZenerCardTest';
+            
+            document.querySelector('.results-screen').classList.remove('active');
+            document.querySelector('.setup-screen').classList.add('active');
+        }
+    </script>
+</body>
+</html>
