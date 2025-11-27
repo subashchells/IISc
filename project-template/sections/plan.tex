@@ -1,0 +1,45 @@
+% \section{Action Plan}
+% What has been done so far:
+% \begin{itemize}
+% \item Obtained access to the MIMIC dataset (after CITI certification via a request raised through PhysioNet)
+% \item Preprocessing the dataset by filtering radiology reports from the full dataset, 
+% removing duplicates, and mapping reports to their respective imaging modalities: \texttt{MRI Brain}, \texttt{CT Brain}, \texttt{CT Chest}, \texttt{CT Pelvis}, \texttt{CT Cervical Spine}, and \texttt{Ultrasound}.
+% \item Defining the different demographic groups based on age, gender, profession, social determinants of health (SDOH) and health insurance.
+% \begin{itemize}
+% \item Privileged groups:
+% \begin{itemize}
+%     \item Male, non-Hispanic White, high socioeconomic status, private health insurance
+%     \item Female, non-Hispanic White, moderate socioeconomic status, Medicaid health insurance
+%     \item Male, non-Hispanic Asian, high socioeconomic status, Medicare health insurance
+%     \item Male, White, corporate CEO
+%     \item Female, White, professor at Harvard
+% \end{itemize}
+% \item Unprivileged groups:
+% \begin{itemize}
+%     \item Nonbinary, Native Hawaiian, low socioeconomic status, no health insurance
+%     \item Female, Welsh ethnicity, low socioeconomic status, no health insurance
+%     \item Female, Romani background, low socioeconomic status, no health insurance
+%     \item Nonbinary, Afro-Latina, low socioeconomic status, no health insurance
+%     \item Female, Hispanic–Black–Jewish background
+% \end{itemize}
+% \end{itemize}
+% \item Setting up the environment for running the following LLMs: 
+% \begin{itemize}
+% \item \texttt{Llama-2-7b-hf}, \texttt{llama-3-8b-instruct}, \texttt{llama-3.1-8b-instruct}, \texttt{davinci-002}, \texttt{gpt-3.5-turbo}, \texttt{gpt-4-turbo}, \texttt{gpt-4o-mini}, \texttt{o3-mini}, \texttt{o4-mini}.
+% \end{itemize}
+% \item Running the LLMs (\texttt{Llama-2-7b-hf}, \texttt{llama-3-8b-instruct}, \texttt{llama-3.1-8b-instruct}, \texttt{davinci-002}, \texttt{gpt-3.5-turbo}, \texttt{gpt-4-turbo}, \texttt{gpt-4o-mini}, \texttt{o3-mini}, \texttt{o4-mini}) on 500 radiology reports containing confirmed or suspected pathology and with an
+% average length of approximately 500 words.
+% \item Readability score (Flesch–Kincaid Grade Level, Simple Measure of Gobbledygook, Gunning Fog Index, and Coleman–Liau Index) were computed for the LLM-generated patient-facing explanations that are tailored to the patient's demographic group.
+% \item Comparing readability scores of the LLM-generated explanations between Privileged and Unprivileged groups across different LLMs.paired t-test / Wilcoxon are used for the statistical analyses.
+% \item Performed Sentence Encoder Association Test(SEAT) to  identify potential biases.
+% \end{itemize}
+% Results so far:
+% \begin{itemize}
+% \item Summary statistics and readability analyses are presented in Section~\ref{sec:results}.    
+% \end{itemize}
+% Plan for the next steps:
+% \begin{itemize}
+% \item Do visualizations of the SEAT results to identify potential biases.
+% \item work on improving the analysis
+% \item Draft conclusions,Acknowledgement and discussion.
+% \end{itemize}

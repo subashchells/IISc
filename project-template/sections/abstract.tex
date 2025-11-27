@@ -1,0 +1,16 @@
+\begin{abstract}
+Healthcare systems are increasingly leveraging large language models (LLMs) to aid in clinical decision-making, medical documentation, and other healthcare applications.
+However, these models may exhibit stereotypical biases based on patient demographics and social determinants of health (SDOH), which 
+impact patient care and clinical outcomes.
+In this study, we tested whether AI systems are perpetuating existing disparities in healthcare by identifying and quantifying potential stereotypical biases in LLM-generated patient explanations.
+We examined how LLMs from Meta, Anthropic, and OpenAI generate radiology report explanations tailored to patients of different genders, races/ethnicities,
+socioeconomic statuses, and insurance types.
+We used radiology reports from the MIMIC-IV corpus, applying four readability metrics: Flesch-Kincaid Grade Level, Simple Measure of Gobbledygook, Gunning Fog Index, and Coleman–Liau Index.
+Across latest LLMs, privileged-group outputs consistently showed higher readability grades across all four indices.
+Advanced models demonstrated large, statistically significant differences ranging from $\Delta \approx 0.8$ to $2.0$ grade levels, with effect sizes often exceeding $d>1.5$.
+GPT-4-turbo exhibited the largest gaps across metrics (FKG: $\Delta = 1.669$, $d = 2.443$; GUNN: $\Delta = 1.976$, $d = 2.536$; all $p < 10^{-6}$).
+Early-generation models showed minimal or nonsignificant differences.
+Sentence Encoder Association Test (SEAT) analysis confirmed these patterns at the embedding level, with modern models showing significant associations of privileged-group embeddings with expert-like language (GPT-4-turbo: $d = -0.629$, $p < 10^{-6}$).
+Demographic parity analysis revealed systematic disparities: privileged groups were overrepresented in high-complexity outputs (top-20\%: 22.09\% vs. 18.21\%), distributional differences were substantial (Wasserstein distance $W = 0.6073$), and counterfactual analysis showed demographic attributes alone caused higher complexity in 64.8\% of matched pairs.
+These findings demonstrate that as LLMs become more advanced, their outputs exhibit greater linguistic complexity for privileged demographic groups, raising concerns for fairness and accessibility in patient communication.
+\end{abstract}

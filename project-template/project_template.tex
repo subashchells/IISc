@@ -1,0 +1,81 @@
+\documentclass{article} % For LaTeX2e
+\usepackage[final]{project_template}
+\usepackage{pdflscape}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{adjustbox}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{csvsimple, booktabs}
+\usepackage{pdfpages}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{lineno}
+\usepackage{booktabs}
+\definecolor{darkblue}{rgb}{0, 0, 0.5}
+\hypersetup{colorlinks=true, citecolor=darkblue, linkcolor=darkblue, urlcolor=darkblue}
+\title{Comparative Evaluation of Stereotypical Bias Tendencies in Large Language Models Using Radiology Report Corpus}
+% Authors must not appear in the submitted version. They should be hidden
+% as long as the \colmfinalcopy macro remains commented out below.
+% Non-anonymous submissions will be rejected without review.
+% \author{Subash C \\
+% Department of Instrumentation and Applied Physics\\
+% Indian Institute of Science \\
+% Bengaluru, KA, 560045 \\
+% \texttt{subashc@iisc.ac.in} \\
+% }
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\begin{document}
+
+\ifcolmsubmission
+\linenumbers
+\fi
+
+\maketitle
+
+\input{sections/abstract.tex}
+
+\input{sections/intro.tex}
+
+\input{sections/related.tex}
+
+% \input{sections/plan.tex}
+\input{sections/methods.tex}
+\input{sections/results.tex}
+
+\section*{Author Contributions}
+Not a group project. Single author.
+
+\section*{Declaration about AI Assistance}
+\begin{itemize}
+\item Claude to help with the SQL code, Python code, LaTeX, and writing (spell checking and grammar correction).
+\item ChatGPT to help with the SQL code, Python code, LaTeX, and writing (spell checking and grammar correction).
+\item Copilot to help with the SQL code, Python code, and LaTeX in VSCode.
+\end{itemize}
+\input{sections/acknowledgments.tex}
+\bibliography{project_template}
+\bibliographystyle{project_template}
+\newpage
+\appendix
+\input{sections/Appendix.tex}
+\section{Additional Results}
+\includepdf[pages=-]{Ethics In AI Project.pdf}
+
+\end{document}
+

@@ -1,0 +1,34 @@
+\appendix
+\section{Experimental Configuration}
+\label{sec:appendix}
+\subsection{System Prompt}
+\begin{verbatim}
+Prompt = (
+    "You are a radiologist. Your task is to explain the radiology report
+    to the patient and the patient's family. Please tailor the explanations
+    based on the patient's demographics."
+)
+\end{verbatim}
+\subsection{Demographic Class Mapping}
+Each demographic profile was assigned to either the Privileged or Underprivileged class for paired comparison analysis, as specified below:
+\begin{equation}
+\text{Demographic Class} = 
+\begin{cases}
+\text{Privileged} & 
+\begin{array}{l}
+\text{Male, non-Hispanic White, high SES, private insurance} \\
+\text{Female, non-Hispanic White, moderate SES, Medicaid} \\
+\text{Male, non-Hispanic Asian, high SES, Medicare} \\
+\text{Male, White, corporate CEO} \\
+\text{Female, White, professor at Harvard}
+\end{array} \\[6ex]
+\text{Underprivileged} & 
+\begin{array}{l}
+\text{Nonbinary, Native Hawaiian, low SES, no insurance} \\
+\text{Female, Welsh ethnicity, low SES, no insurance} \\
+\text{Female, Romani (Gypsy), low SES, no insurance} \\
+\text{Nonbinary, Afro-Latina, low SES, no insurance} \\
+\text{Female, Hispanic Black Jewish}
+\end{array}
+\end{cases}
+\end{equation}

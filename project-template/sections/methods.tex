@@ -1,0 +1,155 @@
+\section{Methods}
+\label{sec:methods}
+
+The de-identified MIMIC-IV Clinical Database \citep{johnsonMIMICIV,johnsonMIMICIVNoteDeidentifiedFreetext} was used for this study.
+This database received IRB approval from the Massachusetts Institute of Technology (No. 0403000206).
+A total of 500 radiology reports were taken from the MIMIC-IV Radiology Note table. For each report, each LLM generated patient-facing explanations based on five privileged and five underprivileged demographic profiles (see Appendix~\ref{sec:appendix} for details). This created 5,000 total outputs per model (500 reports × 10 profiles).
+
+\subsection{Readability Analysis Pipeline}
+
+For each model-demographic-radiology report combination, the generated patient-facing explanations were evaluated using four standard readability indices implemented via the Python package \textbf{textstat}:
+
+
+     \textbf{Flesch--Kincaid Grade (FKG):} estimates the U.S. grade level required to comprehend the text \citep{fleschNewReadabilityYardstick1948}:
+    \begin{equation}
+        \text{FKG} = 0.39 \left(\frac{\text{total words}}{\text{total sentences}}\right) + 11.8 \left(\frac{\text{total syllables}}{\text{total words}}\right) - 15.59
+    \end{equation}
+    
+     \textbf{Simple Measure of Gobbledygook (SMOG):} captures reading difficulty based on polysyllabic word count \citep{kimSurfaceCharacteristicsNew2007}:
+    \begin{equation}
+        \text{SMOG} = 1.0430 \sqrt{\text{polysyllables} \times \frac{30}{\text{sentences}}} + 3.1291
+    \end{equation}
+    
+     \textbf{Gunning Fog Index (GUNN):} reflects complexity as a function of sentence length and complex words \citep{boztasReadabilityInternetsourcedPatient2017}:
+    \begin{equation}
+        \text{GUNN} = 0.4 \left[\left(\frac{\text{words}}{\text{sentences}}\right) + 100 \left(\frac{\text{complex words}}{\text{words}}\right)\right]
+    \end{equation}
+    
+     \textbf{Coleman--Liau Index (CLI):} computes readability from average characters per word and words per sentence \citep{pahujaNovelAnalysisReadability2022}:
+    \begin{equation}
+        \text{CLI} = 0.0588 \times L - 0.296 \times S - 15.8
+    \end{equation}
+    where $L$ is the average number of letters per 100 words and $S$ is the average number of sentences per 100 words.
+
+
+After obtaining the readability metrics, a paired comparison analysis was performed to test whether readability differed between privileged and underprivileged demographic groups for the same underlying note within each LLM. For each metric's paired difference, the Shapiro--Wilk test was used to assess distributional normality ($p \geq 0.05$ was considered normal). 
+
+Statistical test selection:
+\[
+\text{Test} = 
+\begin{cases}
+    \text{Paired } t\text{-test} & \text{if differences normally distributed} \\
+    \text{Wilcoxon signed-rank test} & \text{if differences not normally distributed}
+\end{cases}
+\]
+
+Effect size calculation:
+\[
+\text{Effect size} = 
+\begin{cases}
+    \text{Cohen's } d = \frac{\text{mean difference}}{\text{standard deviation}} & \text{if parametric test} \\
+    r_{rb} = \frac{\text{positive ranks} - \text{negative ranks}}{\text{total ranks}} & \text{if non-parametric test}
+\end{cases}
+\]
+
+Effect magnitude categorization:
+\[
+\text{Effect magnitude} = 
+\begin{cases}
+    \text{Small} & \text{if } |d| < 0.3 \\
+    \text{Medium} & \text{if } 0.3 \leq |d| < 0.5 \\
+    \text{Large} & \text{if } |d| \geq 0.5
+\end{cases}
+\]
+
+False discovery rate (FDR)-adjusted $p$-values were obtained using the Benjamini--Hochberg procedure. Median and interquartile range (IQR) of differences were reported to indicate directionality. 
+
+Readability gap classification:
+\[
+\text{Classification} = 
+\begin{cases}
+    \text{Significant readability gap} & \text{if } p_{\text{adj}} < 0.05 \text{ and } |d| \geq 0.3 \\
+    \text{Minor/nonsignificant difference} & \text{otherwise}
+\end{cases}
+\]
+
+Descriptive statistics for all LLM explanation readability scores were computed, including aggregated mean $\pm$ SD and median (IQR) values per model and demographic class. Complete results are provided in the Appendix.
+
+\subsection{Sentence Encoder Association Test (SEAT) Analysis Pipeline}
+\subsubsection{Sentence Embedding Model}
+SEAT is the adaptation of the Word Embedding Association Test (WEAT) to sentence embeddings.
+Used the Universal Sentence Encoder (USE) from TensorFlow to convert each explanation and attribute sentence into a 512-dimensional embedding. USE is a fixed-length, transformer/DAN-based encoder. Embeddings were computed in batches for computational efficiency. This analysis uses natural-language attribute sentences as poles, rather than template-based SEAT sentences.
+
+\subsubsection{Construction of Communication-Style Axes}
+Created Expert and Lay the communication-style axes. Both categories were represented by a curated set of ten short sentences describing the style. Mean embeddings were computed.
+
+\subsubsection{Axis Score Computation}
+Calculated the axis score as the difference between its similarity to the first pole's mean embedding and its similarity to the second pole's mean embedding. If either class has fewer than 20 explanations, it was not added to the analysis.
+
+Axis score interpretation:
+\[
+\text{Axis score interpretation} = 
+\begin{cases}
+    \text{Alignment with Expert} & \text{if score} > 0 \\
+    \text{Alignment with Lay} & \text{if score} < 0
+\end{cases}
+\]
+
+\subsubsection{Statistical Comparison Between Demographic Classes}
+Conducted an independent two-sample $t$-test for the assessment of whether mean axis scores are different between classes. Computed Cohen's $d$ effect size (mean difference divided by pooled standard deviation). Record the direction of the effect (e.g., higher scores for the privileged group imply a shift toward the first pole).
+
+\subsubsection{Descriptive and Inferential Reporting}
+Summarized each axis and class with mean $\pm$ standard deviation and median (interquartile range). Interpreted the effect sizes according to thresholds (small, medium, large), adjusted $p$-values for false discovery rate, and noted any significant differences.
+
+\subsection{Demographic Parity Analysis Pipeline}
+
+Evaluated fairness using three complementary demographic parity tests: Percentile-Based Demographic Parity, Distributional Parity (Wasserstein + KL), and Counterfactual Demographic Parity.
+
+\subsubsection{Percentile-Based Demographic Parity}
+Quantifies whether demographic groups disproportionately appear in the highest-complexity tail of the readability distribution.
+
+Selection rate for group $g$ at threshold $T$:
+\begin{equation}
+    \text{SR}_g(T) = \frac{1}{N_g} \sum_{i \in g} \mathbb{I}\!\left( s_i \ge q_T \right)
+\end{equation}
+
+Demographic parity difference:
+\begin{equation}
+    \Delta_{\mathrm{PDP}}(T) = \text{SR}_{\mathrm{priv}}(T) - \text{SR}_{\mathrm{unpriv}}(T)
+\end{equation}
+
+\subsubsection{Distributional Parity}
+Captures full-distribution differences in readability complexity between groups.
+
+Wasserstein distance (1-Wasserstein metric):
+\begin{equation}
+    W_1(P, Q) = \int_{0}^{1} \big| F_P^{-1}(u) - F_Q^{-1}(u) \big| \, du
+\end{equation}
+
+Kullback--Leibler divergence:
+\begin{equation}
+    \mathrm{KL}(P \parallel Q) = \int p(x) \log\frac{p(x)}{q(x)} \, dx
+\end{equation}
+
+\subsubsection{Counterfactual Demographic Parity}
+Measures the causal effect of demographic attributes on explanation complexity by holding the clinical content fixed.
+
+Counterfactual demographic parity (CDP):
+\begin{equation}
+    \mathrm{CDP} = P\!\left( s_i^{\mathrm{priv}} > s_i^{\mathrm{unpriv}} \right)
+\end{equation}
+
+Empirical estimation:
+\begin{equation}
+    \mathrm{CDP} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I}\!\left( s_i^{\mathrm{priv}} > s_i^{\mathrm{unpriv}} \right)
+\end{equation}
+
+CDP interpretation:
+\[
+\text{Interpretation} = 
+\begin{cases}
+    \text{No demographic effect} & \text{if CDP} \approx 0.5 \\
+    \text{Privileged bias} & \text{if CDP} > 0.5 \\
+    \text{Underprivileged bias} & \text{if CDP} < 0.5
+\end{cases}
+\]

@@ -1,0 +1,28 @@
+% There has been much work done using the Medical Information Mart for Intensive Care dataset (\cite{johnsonMIMICIV,johnsonMIMICIVFreelyAccessible2023,johnsonMIMICIVNoteDeidentifiedFreetext,johnsonMIMICIIIClinicalDatabase2015}) as it is an electronic health record (EHR) dataset which could be accessed by completing CITI training program (\cite{goldbergerPhysioBankPhysioToolkitPhysioNet}).
+% MIMIC has data related to patients demographics, vitals, laboratory tests, medications, and clinical notes.
+% MIMIC was primarily introduced as the dataset to work on building Intelligent Intensive Care Monitoring (\cite{moodyDatabaseSupportDevelopment1996}).
+% Later, MIMIC-II, III and IV were introduced with more granularity and sophisticated database architecture (\cite{johnsonMIMICIIIClinicalDatabase2015,johnsonMIMICIV,johnsonMIMICIVFreelyAccessible2023,johnsonMIMICIVNoteDeidentifiedFreetext}).
+% As the numbers for MIMIC versions increased, the usage of the dataset also increased.
+% The MIMIC datasets have been curated for multiple purposes and are listed in the Physionet page (\cite{goldbergerPhysioBankPhysioToolkitPhysioNet}) and are made available for research purposes.
+
+\section{Related Work}
+\label{sec:related}
+\subsection{Healthcare Bias and Disparities}
+\label{subsec:healthcare_bias}
+EHR datasets have been used for improving clinical decision support systems that translate to improved patient care. 
+Numerous studies have analyzed bias in medicine and healthcare.
+Both neglecting and overemphasizing gender will yield bad outcomes \citep{hambergGenderBiasMedicine2008,burnsReadabilityPatientDischarge2022}.
+Historically, there has been a considerable bias in coronary revascularization among elderly patients and female patients, such that it affects the quality of life of these patients \citep{shawGenderAgeInequity2004}.
+Studies show that individuals experiencing healthcare discrimination report higher levels of poor health status, functional limitations, severe psychological distress, and difficulties with healthcare affordability \citep{gonzalesComparisonHealthHealth2016,liuHealthStatusHealth2023a}.
+Pain is one of the common symptoms for which patients seek healthcare. There have been studies that show how pain management is biased \citep{schwarzHowStereotypesAffect2019}.
+These patterns demonstrate that health disparities are reinforced by both clinical decision-making and broader social contexts.
+Beyond studies documenting healthcare biases \citep{burgessStereotypeThreatHealth2010,chaturvediLayDiagnosisHealthcareseeking1997,ayanianDifferencesUseProcedures1991,rowlandsMismatchPopulationHealth2015}, interdisciplinary studies show that language models exhibit stereotypical biases \citep{clusmannFutureLandscapeLarge2023,omarSociodemographicBiasesMedical2025,moellHarmReductionStrategies2025,huangEvaluationBiasAnalysis2025,sunshineEvaluatingQualityUnderstandability2025,vaidyaDemographicBiasMisdiagnosis2024,kimAssessingBiasesMedical2023,cauAddressingHiddenRisks2025}.
+\subsection{Patient Communication in Radiology}
+\label{subsec:patient_communication}
+Patients have raised dissatisfaction concerns about the communications in the radiology reporting \citep{mulisaPatientsSatisfactionRadiological2017,langUnderstandingPatientSatisfaction2013,ochonmaPatientsReactionEthical2015}.
+As much research is actively developing language models for medical documentation \citep{parkPatientcenteredRadiologyReports2024,stephanImprovingPatientCommunication2025,butlerJargonClarityImproving2024,rustEvaluationLargeLanguage2025,burnsReadabilityPatientDischarge2022,thirunavukarasuLargeLanguageModels2023,singhalLargeLanguageModels2023,luHealthcareProfessionalsPublic2025}, studying the biases exhibited by these models is of utmost importance.
+\subsection{Motivation and Contributions}
+\label{subsec:motivation}
+This leads to the motivation of this work, which involves using patient demographics such as age, gender, race, ethnicity and social determinants of health to study stereotypical biases exhibited by the language models in the context of radiology report explanations to the patients.
+This work has two main contributions: one is to study the biases exhibited by the language models in the context of radiology report explanations to the patients, and the second is to bridge the communication gap between the patients and the radiologists by providing patient-centric explanations of the radiology reports \citep{vandenbergPatientComplaintsRadiology2019,siewertImpactCommunicationErrors2016,rockallPatientCommunicationRadiology2022,kasalakWorkOverloadDiagnostic2023,europeansocietyofradiologyesrPatientSurveyValue2021,vijanOptimizingPatientCommunication2023}.
+Together, these efforts aim to ensure that AI-driven explanations in radiology are equitable, transparent, and accessible to diverse patient populations.

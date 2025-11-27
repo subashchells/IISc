@@ -1,0 +1,69 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: project_template.aux
+The style file: project_template.bst
+Database file #1: project_template.bib
+Warning--empty journal in boztasReadabilityInternetsourcedPatient2017
+Warning--empty year in boztasReadabilityInternetsourcedPatient2017
+Warning--empty year in boztasReadabilityInternetsourcedPatient2017
+Warning--empty journal in buschCurrentApplicationsChallenges2025
+Warning--empty year in buschCurrentApplicationsChallenges2025
+Warning--empty year in buschCurrentApplicationsChallenges2025
+Warning--empty journal in chenBenchmarkingLargeLanguage2025
+Warning--empty year in chenBenchmarkingLargeLanguage2025
+Warning--empty year in chenBenchmarkingLargeLanguage2025
+Warning--empty journal in fleschNewReadabilityYardstick1948
+Warning--empty year in fleschNewReadabilityYardstick1948
+Warning--empty year in fleschNewReadabilityYardstick1948
+Warning--empty year in johnsonMIMICIV
+Warning--empty year in johnsonMIMICIVNoteDeidentifiedFreetext
+Warning--empty journal in kimSurfaceCharacteristicsNew2007
+Warning--empty year in kimSurfaceCharacteristicsNew2007
+Warning--empty year in kimSurfaceCharacteristicsNew2007
+Warning--empty year in pahujaNovelAnalysisReadability2022
+Warning--empty year in pahujaNovelAnalysisReadability2022
+Warning--empty journal in vanveenAdaptedLargeLanguage2024
+Warning--empty year in vanveenAdaptedLargeLanguage2024
+Warning--empty year in vanveenAdaptedLargeLanguage2024
+You've used 68 entries,
+            2773 wiz_defined-function locations,
+            1140 strings with 30225 characters,
+and the built_in function-call counts, 50519 in all, are:
+= -- 4232
+> -- 4757
+< -- 11
++ -- 1590
+- -- 1521
+* -- 5228
+:= -- 8254
+add.period$ -- 335
+call.type$ -- 68
+change.case$ -- 711
+chr.to.int$ -- 67
+cite$ -- 158
+duplicate$ -- 1410
+empty$ -- 2728
+format.name$ -- 1599
+if$ -- 10021
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 65
+newline$ -- 478
+num.names$ -- 272
+pop$ -- 1225
+preamble$ -- 1
+purify$ -- 643
+quote$ -- 0
+skip$ -- 1255
+stack$ -- 0
+substring$ -- 1554
+swap$ -- 126
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 748
+warning$ -- 22
+while$ -- 301
+width$ -- 0
+write$ -- 1135
+(There were 22 warnings)
