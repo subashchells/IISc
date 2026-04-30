@@ -1,12 +1,6 @@
  # binaries
  cardio_scheduler
  acuity_sweep
- 
- # bench artefacts
- out.txt
- bench_out.txt
- bench_results_*.txt
- 
 
  # OS junk
  .DS_Store
