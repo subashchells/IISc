@@ -1,4 +1,0 @@
-libc++abi: terminating due to uncaught exception of type std::runtime_error: Cannot open file: src/data/diseases.json
-=== CardioScheduler V2 ===
-Loading data from: src/data/
-Overtime threshold: 0 min
