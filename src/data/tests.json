@@ -1,0 +1,1100 @@
+[
+  {
+    "id": "T_VITALS",
+    "name": "Vitals, SpO₂ & Fluid Balance",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TELE",
+    "name": "Continuous Telemetry Setup",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HOLTER",
+    "name": "Holter Monitor Setup (24–48 hr)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LOOP",
+    "name": "Implantable Loop Recorder Interrogation",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_EVENT_MON",
+    "name": "Event/Patch Monitor Setup (14 day)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_NPO",
+    "name": "NPO Status & Pre-Procedure Check",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_IV",
+    "name": "IV Access & Line Setup",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ART_LINE",
+    "name": "Arterial Line Insertion (radial/femoral)",
+    "duration_minutes": 25,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CVC",
+    "name": "Central Venous Catheter Insertion (IJ/SC)",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_FOLEY",
+    "name": "Foley Catheter Insertion",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_NG",
+    "name": "Nasogastric Tube Insertion",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_WEIGHT_DAILY",
+    "name": "Daily Weight & Strict I/O Charting",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_NEURO_OBS",
+    "name": "Neuro Observations q1h (post-cardioembolic)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_FALL_RISK",
+    "name": "Falls Risk & Mobility Assessment",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_VTE_PROPH",
+    "name": "VTE Prophylaxis Charting",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_GLUCOSE",
+    "name": "Capillary Blood Glucose (fingerstick)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PAIN_SCORE",
+    "name": "Pain & Sedation Scoring (CPOT/RASS)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CARDIAC_REHAB",
+    "name": "Cardiac Rehab Referral & Education",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DISCHARGE_ED",
+    "name": "Heart-Failure / Post-MI Discharge Education",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECG",
+    "name": "12-Lead ECG",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECG_R",
+    "name": "Right-Sided 12-Lead ECG (V3R–V6R)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECG_POST",
+    "name": "Posterior Lead ECG (V7–V9)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECG_SAECG",
+    "name": "Signal-Averaged ECG (late potentials)",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECG_AMBUL",
+    "name": "Ambulatory ECG Review (24–48 hr)",
+    "duration_minutes": 30,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_AJMALINE",
+    "name": "Ajmaline Provocation Test (Brugada)",
+    "duration_minutes": 45,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_VALSALVA",
+    "name": "Valsalva / Vagal Manoeuvres (SVT)",
+    "duration_minutes": 10,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_ADENOSINE",
+    "name": "IV Adenosine Bolus (diagnostic/therapeutic)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TROP",
+    "name": "Troponin Blood Draw",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HSTROPONIN",
+    "name": "High-Sensitivity Troponin Serial (0/1/3 hr)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CKMB",
+    "name": "CK-MB / Total CK",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_MYOGLOBIN",
+    "name": "Myoglobin Level",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BNP",
+    "name": "BNP / NT-proBNP Blood Draw",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ST2",
+    "name": "Soluble ST2 (sST2)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_GAL3",
+    "name": "Galectin-3",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CBC",
+    "name": "Complete Blood Count (CBC)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BMP",
+    "name": "Basic / Comprehensive Metabolic Panel",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_MG_PO4",
+    "name": "Magnesium & Phosphate Levels",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LFT",
+    "name": "Liver Function Tests (LFTs)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LIPID",
+    "name": "Fasting Lipid Profile",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LPA",
+    "name": "Lipoprotein(a) / Lp(a)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HBA1C",
+    "name": "HbA1c (glycated haemoglobin)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TFT",
+    "name": "Thyroid Function Tests (TSH, fT4)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DIGOXIN",
+    "name": "Digoxin Level",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_AMIODARONE_LVL",
+    "name": "Amiodarone Level / Pulmonary Toxicity Workup",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DDIMER",
+    "name": "D-Dimer Blood Draw",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_COAG",
+    "name": "Coagulation Profile (PT/INR, APTT)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ANTI_XA",
+    "name": "Anti-Xa Activity Assay",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_FIBRINOGEN",
+    "name": "Fibrinogen Level",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ABG",
+    "name": "Arterial Blood Gas (ABG)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_VBG",
+    "name": "Venous Blood Gas (VBG)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LACTATE",
+    "name": "Serum Lactate",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PROCAL",
+    "name": "Procalcitonin",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CRP",
+    "name": "C-Reactive Protein (high-sensitivity)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ESR",
+    "name": "Erythrocyte Sedimentation Rate (ESR)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_FERRITIN",
+    "name": "Iron Studies (Fe, TIBC, Ferritin, TSAT)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BLEED_TIME",
+    "name": "Bleeding Time / Platelet Function Assay",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HIT_PANEL",
+    "name": "Heparin-Induced Thrombocytopenia (HIT) Panel",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_THROMBOPHILIA",
+    "name": "Thrombophilia Screen (Factor V Leiden, Pt G20210A)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ANTIPHOS",
+    "name": "Antiphospholipid Antibody Panel",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ANA",
+    "name": "ANA / ANCA / ENA Panel",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HIV_HCV_HBV",
+    "name": "Pre-Procedure HIV / HCV / HBV Serology",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CULTURE",
+    "name": "Draw Blood Cultures (per set)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_URINE_CX",
+    "name": "Urine Culture & Microscopy",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PCR_VIRAL",
+    "name": "Cardiotropic Viral PCR (parvo B19, HHV-6, enterovirus)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TUBERCULIN",
+    "name": "Tuberculin / IGRA Test (TB pericarditis)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_GENETIC",
+    "name": "Cardiomyopathy / Channelopathy Genetic Panel",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_FREE_LC",
+    "name": "Serum Free Light Chains (amyloid screen)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_SPEP_UPEP",
+    "name": "Serum / Urine Protein Electrophoresis",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TYPE_SCREEN",
+    "name": "Type & Screen / Crossmatch",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CXR",
+    "name": "Chest X-Ray (portable)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECHO",
+    "name": "Refer to Imaging: Transthoracic Echocardiogram (TTE)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECHO_BUBBLE",
+    "name": "Refer to Imaging: TTE with Agitated Saline (Bubble)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECHO_STRESS",
+    "name": "Refer to Imaging: Stress Echocardiogram (DSE)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TEE",
+    "name": "Refer to Procedure: Transoesophageal Echo (TEE)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ICE",
+    "name": "Refer to Procedure: Intracardiac Echo (ICE)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CTA",
+    "name": "Refer to Imaging: CT Coronary Angiography (CCTA)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CT_CALCIUM",
+    "name": "Refer to Imaging: Coronary Artery Calcium Score",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CTPA",
+    "name": "Refer to Imaging: CT Pulmonary Angiography",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CTAO",
+    "name": "Refer to Imaging: CT Aortography",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CT_TAVR",
+    "name": "Refer to Imaging: TAVR/TAVI Planning CT",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CT_LAA",
+    "name": "Refer to Imaging: LAA Occlusion Planning CT",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_MRI_CARD",
+    "name": "Refer to Imaging: Cardiac MRI (with Gadolinium)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_MRI_T1T2",
+    "name": "Refer to Imaging: Cardiac MRI T1/T2 Mapping",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_MRI_STRESS",
+    "name": "Refer to Imaging: Adenosine/Regadenoson Stress CMR",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_SPECT",
+    "name": "Refer to Imaging: Myocardial Perfusion SPECT",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PET",
+    "name": "Refer to Imaging: Cardiac PET (FDG / Rubidium-82)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PYP_SCAN",
+    "name": "Refer to Imaging: 99mTc-PYP Scan (ATTR amyloid)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DOPPLER_VEN",
+    "name": "Refer to Imaging: Venous Duplex Ultrasound",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DOPPLER_ART",
+    "name": "Refer to Imaging: Arterial Duplex Ultrasound",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CAROTID_US",
+    "name": "Refer to Imaging: Carotid Duplex Ultrasound",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_RENAL_US",
+    "name": "Refer to Imaging: Renal Artery Duplex",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ABI",
+    "name": "Ankle-Brachial Index (ABI) at Bedside",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PWV",
+    "name": "Pulse Wave Velocity / Arterial Stiffness",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LUNG_US",
+    "name": "Bedside Lung Ultrasound (B-lines)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_FOCUS_US",
+    "name": "Focused Cardiac Ultrasound (FoCUS, IVC)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_STRESS",
+    "name": "Refer to Procedure: Exercise Stress Test (ETT)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_STRESS_NUC",
+    "name": "Refer to Procedure: Nuclear Stress Test (SPECT/PET)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CPET",
+    "name": "Refer to Procedure: Cardiopulmonary Exercise Test",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TILT",
+    "name": "Refer to Procedure: Tilt Table Test",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_6MWT",
+    "name": "6-Minute Walk Test (6MWT)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_SWAN_GANZ",
+    "name": "Refer to Procedure: Pulmonary Artery (Swan-Ganz)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_RHC",
+    "name": "Refer to Procedure: Right Heart Catheterisation",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LHC",
+    "name": "Refer to Procedure: Left Heart Catheterisation",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_FFR",
+    "name": "Refer to Procedure: FFR / iFR (functional stenosis)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_IVUS",
+    "name": "Refer to Procedure: Intravascular Ultrasound (IVUS)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_OCT",
+    "name": "Refer to Procedure: Optical Coherence Tomography (OCT)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BIOPSY_ENDOMYO",
+    "name": "Refer to Procedure: Endomyocardial Biopsy",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PERICARDIO",
+    "name": "Refer to Procedure: Pericardiocentesis",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PERICARD_WIN",
+    "name": "Refer to Procedure: Pericardial Window",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BAV",
+    "name": "Refer to Procedure: Balloon Aortic Valvuloplasty (BAV)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BMV",
+    "name": "Refer to Procedure: Balloon Mitral Valvuloplasty (BMV)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TAVR",
+    "name": "Refer to Procedure: TAVR / TAVI",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TEER_MITRAL",
+    "name": "Refer to Procedure: Mitral TEER (MitraClip)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TEER_TRIC",
+    "name": "Refer to Procedure: Tricuspid TEER",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PFO_CLOSURE",
+    "name": "Refer to Procedure: PFO Closure",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ASD_CLOSURE",
+    "name": "Refer to Procedure: ASD Device Closure",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LAAC",
+    "name": "Refer to Procedure: LAA Occlusion (Watchman)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PCI_PRIMARY",
+    "name": "Refer to Procedure: Primary PCI (door-to-balloon)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PCI_RESCUE",
+    "name": "Refer to Procedure: Rescue PCI (failed lysis)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CATH",
+    "name": "Refer to Procedure: Cardiac Catheterisation / PCI",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_EP",
+    "name": "Refer to Procedure: Electrophysiology Study",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ABLATION_AF",
+    "name": "Refer to Procedure: AF Pulmonary Vein Isolation",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ABLATION_VT",
+    "name": "Refer to Procedure: VT Substrate Ablation",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ABLATION_SVT",
+    "name": "Refer to Procedure: SVT Ablation (AVNRT/AVRT)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PPM",
+    "name": "Refer to Procedure: Pacemaker Insertion (DDD/VVI)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LEADLESS_PPM",
+    "name": "Refer to Procedure: Leadless Pacemaker (Micra)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ICD",
+    "name": "Refer to Procedure: ICD Insertion",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_SICD",
+    "name": "Refer to Procedure: Subcutaneous ICD (S-ICD)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CRT",
+    "name": "Refer to Procedure: CRT-D / CRT-P Implant",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LEAD_EXTRACT",
+    "name": "Refer to Procedure: Transvenous Lead Extraction",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DEVICE_INTERROG",
+    "name": "Cardiac Device Interrogation (PPM/ICD/CRT)",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CARDIOMEMS",
+    "name": "CardioMEMS Pulmonary Pressure Reading",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CABG",
+    "name": "Refer to Surgery: CABG",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_AVR_SURG",
+    "name": "Refer to Surgery: Surgical Aortic Valve Replacement",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_MVR_SURG",
+    "name": "Refer to Surgery: Mitral Valve Repair / Replacement",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_AORTIC_ROOT",
+    "name": "Refer to Surgery: Aortic Root / Bentall Repair",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TEVAR",
+    "name": "Refer to Procedure: Thoracic Endovascular Aortic (TEVAR)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_EVAR",
+    "name": "Refer to Procedure: Endovascular Aortic (EVAR, AAA)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_EMBOLECTOMY",
+    "name": "Refer to Procedure: Surgical/Catheter Embolectomy",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HEART_TRANSPLANT",
+    "name": "Refer to Service: Heart Transplant Evaluation",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_LVAD",
+    "name": "Refer to Procedure: Durable LVAD (HeartMate 3) Eval",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_IABP",
+    "name": "Refer to Procedure: Intra-Aortic Balloon Pump (IABP)",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_IMPELLA",
+    "name": "Refer to Procedure: Impella Insertion",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECMO_VA",
+    "name": "Refer to Procedure: VA-ECMO Cannulation",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ECMO_VV",
+    "name": "Refer to Procedure: VV-ECMO Cannulation",
+    "duration_minutes": 5,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CONSENT",
+    "name": "Obtain Informed Consent",
+    "duration_minutes": 20,
+    "required_role": "INTERN"
+  },
+  {
+    "id": "T_ATTEND",
+    "name": "Cardiology Attending Review",
+    "duration_minutes": 30,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_MDT",
+    "name": "Heart-Team / Multidisciplinary Review",
+    "duration_minutes": 30,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_CT_SURG_REVIEW",
+    "name": "Cardiothoracic Surgery Consult",
+    "duration_minutes": 30,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_PALLIATIVE",
+    "name": "Palliative / Goals-of-Care Review",
+    "duration_minutes": 30,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_GENETIC_COUNSEL",
+    "name": "Genetic Counselling (familial CV disease)",
+    "duration_minutes": 30,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_PREP_CATH",
+    "name": "Prep & Transfer: Cardiac Catheterisation",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PREP_ANGIO",
+    "name": "Prep & Transfer: Coronary Angiography",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PREP_EP",
+    "name": "Prep & Transfer: EP Study / Ablation",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PREP_CARDIO",
+    "name": "Prep & Transfer: Electrical Cardioversion",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PREP_TEE",
+    "name": "Prep: TEE (throat spray, sedation)",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PREP_SURGERY",
+    "name": "Prep & Transfer: Cardiothoracic Surgery",
+    "duration_minutes": 45,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PREP_DEVICE",
+    "name": "Prep & Transfer: Device Implant Suite",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_PREP_TRANSPLANT",
+    "name": "Prep & Transfer: Transplant / VAD Suite",
+    "duration_minutes": 45,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_TTM",
+    "name": "Initiate Targeted Temperature Management (32–36°C)",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DEFIB",
+    "name": "Manual Defibrillation (asynchronous)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CARDIOVERT",
+    "name": "Synchronised DC Cardioversion",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ANTICOAG",
+    "name": "Administer Anticoagulation (DOAC / Warfarin)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HEPARIN",
+    "name": "Initiate Heparin Infusion",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BIVAL",
+    "name": "Initiate Bivalirudin / Argatroban Infusion",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DAPT",
+    "name": "Dual Antiplatelet Therapy Loading (ASA + P2Y12)",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ABXIV",
+    "name": "Administer IV Antibiotics",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_THROMBO",
+    "name": "Administer Thrombolytics (tPA / TNK)",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_DIURETIC_IV",
+    "name": "Administer IV Diuretics",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_VASOPRESSOR",
+    "name": "Initiate Vasopressors / Inotropes",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_ANTIARRHYTHMIC",
+    "name": "Administer Antiarrhythmic Agent (IV)",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_VASODILATOR_IV",
+    "name": "Initiate IV Vasodilator (NTG / Nitroprusside)",
+    "duration_minutes": 20,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_BB_IV",
+    "name": "Administer IV Beta-Blocker (esmolol / metoprolol)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CCB_IV",
+    "name": "Administer IV Calcium Channel Blocker (diltiazem)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_NIV",
+    "name": "Start Non-Invasive Ventilation (BiPAP / CPAP)",
+    "duration_minutes": 15,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_HFNC",
+    "name": "Start High-Flow Nasal Cannula",
+    "duration_minutes": 10,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_INTUBATE",
+    "name": "Assist with Endotracheal Intubation",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_CRRT",
+    "name": "Initiate Continuous Renal Replacement Therapy",
+    "duration_minutes": 45,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_GDMT_INIT",
+    "name": "Initiate / Up-titrate GDMT (BB/RASi/MRA/SGLT2i)",
+    "duration_minutes": 20,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_PCSK9",
+    "name": "Initiate PCSK9 Inhibitor Therapy",
+    "duration_minutes": 15,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_TAFAMIDIS",
+    "name": "Initiate ATTR-CM Therapy (tafamidis)",
+    "duration_minutes": 15,
+    "required_role": "PGY1"
+  },
+  {
+    "id": "T_IRON_IV",
+    "name": "Administer IV Iron (ferric carboxymaltose)",
+    "duration_minutes": 30,
+    "required_role": "NURSE"
+  },
+  {
+    "id": "T_MAVACAMTEN",
+    "name": "Initiate Mavacamten (obstructive HCM)",
+    "duration_minutes": 15,
+    "required_role": "PGY1"
+  }
+]

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CardioScheduler · Ward</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f5f4ef; --surface: #fff; --surface-2: #faf8f3;
+    --fg: #1a1a1a; --fg-muted: #6b6b6b; --fg-faint: #9a978d;
+    --border: #e0ddd5; --border-mid: #c8c4b8; --border-strong: #8a8678;
+    --hover: #ece9e0; --danger: #6b3030;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font: 400 14px/1.5 'IBM Plex Mono', ui-monospace, monospace;
+    background: var(--bg); color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font: inherit; cursor: pointer; }
+  input, select, textarea { font: inherit; color: inherit; }
+
+  .app { max-width: 1100px; margin: 0 auto; padding: 32px 32px 80px; }
+
+  .header {
+    display: flex; gap: 24px; align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 { font-weight: 500; font-size: 22px; letter-spacing: -0.02em; }
+  .subtitle  { color: var(--fg-muted); font-size: 12px;
+               letter-spacing: 0.02em; text-transform: uppercase; }
+  .toolbar   { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+  .btn {
+    background: transparent; color: var(--fg);
+    border: 1px solid var(--border-mid); padding: 6px 12px;
+    font-size: 13px; transition: background 80ms, border-color 80ms;
+  }
+  .btn:hover    { background: var(--hover); border-color: var(--border-strong); }
+  .btn:active   { background: var(--border); }
+  .btn-primary  { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .btn-primary:hover { background: #2a2a2a; }
+  .btn-danger   { color: var(--danger); border-color: #d6c4c4; }
+  .btn-danger:hover  { background: #f4eaea; border-color: var(--danger); }
+  .btn-ghost    { border-color: transparent; padding: 6px 8px; }
+  .btn-ghost:hover   { background: var(--hover); }
+  .btn-tiny     { font-size: 11px; padding: 2px 8px; letter-spacing: 0.04em; }
+  .btn[disabled] { opacity: 0.4; pointer-events: none; }
+
+  .btn .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--danger); margin-left: 6px;
+    vertical-align: middle; visibility: hidden;
+  }
+  .btn.dirty .dot { visibility: visible; }
+
+  .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .tab {
+    background: transparent; border: 0; border-bottom: 2px solid transparent;
+    padding: 10px 18px; font-size: 13px;
+    letter-spacing: 0.02em; color: var(--fg-muted);
+  }
+  .tab:hover  { color: var(--fg); background: var(--hover); }
+  .tab.active { color: var(--fg); border-bottom-color: var(--fg); font-weight: 500; }
+  .tab .count { color: var(--fg-faint); font-size: 11px; margin-left: 6px; }
+
+  .panel { background: var(--surface); border: 1px solid var(--border); }
+  .panel-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-head h2 {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--fg-muted);
+  }
+  .row {
+    display: grid; gap: 12px; align-items: center;
+    padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 13px;
+    grid-template-columns: 80px 1fr 90px 1.2fr 80px 70px;
+  }
+  .row.workers { grid-template-columns: 80px 1fr 90px 110px 1fr 70px; }
+  .row.tests   { grid-template-columns: 110px 1fr 90px 80px 1fr 70px; }
+  .row.head {
+    background: var(--surface-2); color: var(--fg-muted);
+    font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; padding: 8px 16px;
+  }
+  .row:last-child { border-bottom: 0; }
+  .row .id        { color: var(--fg-muted); }
+  .row .actions   { display: flex; justify-content: flex-end; gap: 6px; }
+  .empty { padding: 24px 16px; text-align: center; color: var(--fg-faint); font-size: 13px; }
+
+  .badge {
+    display: inline-block; padding: 1px 8px; font-size: 11px;
+    letter-spacing: 0.05em; border: 1px solid var(--border-mid);
+    color: var(--fg-muted); background: var(--surface-2);
+  }
+  .badge.crit { color: var(--danger); border-color: #d6c4c4; }
+  .badge.high { color: #4d3a1f;       border-color: #d6cab0; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(26,26,26,0.4);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 60px 20px; z-index: 100;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    width: 100%; max-width: 560px; background: var(--surface);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 20px 60px rgba(26,26,26,0.18);
+  }
+  .modal-head, .modal-foot {
+    padding: 14px 20px; display: flex; align-items: center;
+    justify-content: space-between;
+  }
+  .modal-head { border-bottom: 1px solid var(--border); }
+  .modal-foot {
+    justify-content: flex-end; gap: 8px;
+    border-top: 1px solid var(--border); background: var(--surface-2);
+  }
+  .modal-head h3 { font-size: 14px; font-weight: 500; letter-spacing: 0.02em; }
+  .modal-body { padding: 20px; }
+
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block; font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--fg-muted); margin-bottom: 4px;
+  }
+  .field .hint { font-size: 11px; color: var(--fg-faint); margin-top: 4px; }
+  .field input, .field textarea, .field select {
+    width: 100%; padding: 8px 10px; background: var(--surface);
+    border: 1px solid var(--border-mid); outline: none;
+    transition: border-color 80ms;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--fg); }
+  .field textarea { resize: vertical; min-height: 56px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .combo { position: relative; }
+  .combo-options {
+    position: absolute; z-index: 10; left: 0; right: 0; top: 100%;
+    max-height: 220px; overflow-y: auto;
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-top: 0; box-shadow: 0 8px 24px rgba(26,26,26,0.08);
+  }
+  .combo-options[hidden] { display: none; }
+  .combo-option {
+    display: flex; gap: 10px; align-items: baseline;
+    padding: 6px 10px; cursor: pointer; font-size: 13px;
+  }
+  .combo-option:hover, .combo-option.cursor { background: var(--hover); }
+  .combo-option .id   { color: var(--fg-muted); font-size: 11px; min-width: 70px; }
+  .combo-option .meta { color: var(--fg-faint); font-size: 11px; margin-left: auto; }
+  .combo-empty        { padding: 10px; text-align: center;
+                        color: var(--fg-faint); font-size: 12px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; min-height: 4px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 2px 4px 2px 8px; font-size: 12px;
+    background: var(--surface-2); border: 1px solid var(--border-mid);
+  }
+  .chip .id { color: var(--fg-muted); font-size: 11px; margin-right: 4px; }
+  .chip button {
+    background: transparent; border: 0; color: var(--fg-muted);
+    padding: 0 4px; font-size: 14px; line-height: 1;
+  }
+  .chip button:hover { color: var(--danger); }
+  .chip.custom { background: #fbf6e8; border-color: #e3d8a8; }
+
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--fg); color: var(--bg);
+    padding: 8px 16px; font-size: 12px; letter-spacing: 0.02em;
+    box-shadow: 0 4px 16px rgba(26,26,26,0.2);
+    opacity: 0; transition: opacity 160ms; pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+
+  .banner {
+    margin-top: 24px; padding: 18px 20px;
+    background: var(--surface); border: 1px dashed var(--border-strong);
+    color: var(--fg-muted); text-align: center; font-size: 13px;
+  }
+  .banner code {
+    background: var(--surface-2); padding: 1px 6px;
+    border: 1px solid var(--border); font-size: 12px;
+  }
+
+  .view[hidden] { display: none; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="header">
+    <div>
+      <h1>CardioScheduler</h1>
+      <div class="subtitle">Ward editor · authors data/sample_ward.json &amp; data/tests.json</div>
+    </div>
+    <div class="toolbar">
+      <label class="btn" for="file-input">Load files</label>
+      <input id="file-input" type="file" accept=".json" multiple class="sr-only" />
+      <button id="dl-ward"  class="btn" disabled>Download ward<span class="dot"></span></button>
+      <button id="dl-tests" class="btn" disabled>Download tests<span class="dot"></span></button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="patients">Patients <span class="count" id="cnt-patients">0</span></button>
+    <button class="tab"        data-tab="workers" >Workers  <span class="count" id="cnt-workers" >0</span></button>
+    <button class="tab"        data-tab="tests"   >Tests    <span class="count" id="cnt-tests"   >0</span></button>
+  </nav>
+
+  <section class="view" id="view-patients">
+    <div class="panel">
+      <div class="panel-head"><h2>Patients</h2>
+        <button class="btn btn-primary btn-tiny" id="add-patient">+ Admit patient</button></div>
+      <div id="list-patients"></div>
+    </div>
+  </section>
+  <section class="view" id="view-workers" hidden>
+    <div class="panel">
+      <div class="panel-head"><h2>Workers</h2>
+        <button class="btn btn-primary btn-tiny" id="add-worker">+ Add worker</button></div>
+      <div id="list-workers"></div>
+    </div>
+  </section>
+  <section class="view" id="view-tests" hidden>
+    <div class="panel">
+      <div class="panel-head"><h2>Tests catalog</h2>
+        <button class="btn btn-primary btn-tiny" id="add-test">+ Add custom test</button></div>
+      <div id="list-tests"></div>
+    </div>
+  </section>
+
+  <div id="banner" class="banner">
+    Drop JSON files above — or serve this folder via
+    <code>python3 -m http.server</code> and they'll auto-load from <code>data/</code>.
+  </div>
+</div>
+
+<div id="modal" class="modal-backdrop" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">—</h3>
+      <button class="btn-ghost btn" id="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn"         id="modal-cancel">Cancel</button>
+      <button class="btn btn-primary" id="modal-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const ROLES  = ['PGY1', 'INTERN', 'NURSE'];
+const ACUITY = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'];
+
+const state = {
+  diseases: [], tests: [], patients: [], workers: [],
+  loaded:   { tests: false, ward: false },
+  dirty:    { tests: false, ward: false },
+};
+
+const FILE_KEYS = {
+  'diseases.json':    'diseases',
+  'tests.json':       'tests',
+  'sample_ward.json': 'ward',
+};
+
+// ── DOM helpers ──────────────────────────────────────────
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const el = (tag, props = {}, children = []) => {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if      (k === 'class')         n.className = v;
+    else if (k === 'text')          n.textContent = v;
+    else if (k === 'attrs')         Object.entries(v).forEach(([a, b]) => n.setAttribute(a, b));
+    else if (k.startsWith('on'))    n.addEventListener(k.slice(2).toLowerCase(), v);
+    else                             n[k] = v;
+  }
+  for (const c of [].concat(children)) {
+    if (c == null || c === false) continue;
+    n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+  }
+  return n;
+};
+
+const toast = (msg) => {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._h);
+  toast._h = setTimeout(() => t.classList.remove('show'), 1800);
+};
+
+// ── ID helpers ───────────────────────────────────────────
+const nextId = (prefix, ids, width = 3) => {
+  const max = ids.reduce((m, id) => {
+    const n = parseInt((id || '').slice(prefix.length), 10);
+    return id?.startsWith(prefix) && !isNaN(n) && n > m ? n : m;
+  }, 0);
+  return prefix + String(max + 1).padStart(width, '0');
+};
+
+const slugId = (prefix, name, taken) => {
+  const slug = name.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 24) || 'CUSTOM';
+  let id = prefix + slug, n = 1;
+  while (taken.includes(id)) id = `${prefix}${slug}_${++n}`;
+  return id;
+};
+
+// ── Loading ──────────────────────────────────────────────
+const ingest = (filename, json) => {
+  const key = FILE_KEYS[filename];
+  if (!key) return false;
+  if (key === 'diseases') state.diseases = json;
+  else if (key === 'tests') state.tests  = json;
+  else if (key === 'ward') {
+    state.patients = (json.patients || []).map(p => ({
+      id: p.id, name: p.name, age: p.age, complaint: p.complaint,
+      acuity: p.acuity, disease_id: p.disease_id,
+      test_overrides: Array.isArray(p.test_overrides) ? [...p.test_overrides] : [],
+    }));
+    state.workers = (json.workers || []).map(w => ({
+      id: w.id, name: w.name, role: w.role, shift_minutes_left: w.shift_minutes_left,
+    }));
+  }
+  state.loaded[key] = true;
+  return true;
+};
+
+const tryAutoload = async () => {
+  const fetched = await Promise.allSettled(Object.keys(FILE_KEYS).map(f =>
+    fetch('data/' + f).then(r => r.ok ? r.json().then(j => [f, j]) : Promise.reject())));
+  const any = fetched.some(r => r.status === 'fulfilled' && (ingest(...r.value), true));
+  if (any) afterLoad();
+};
+
+const onFiles = async (files) => {
+  let any = false;
+  for (const f of files) {
+    try {
+      if (ingest(f.name, JSON.parse(await f.text()))) { any = true; toast('Loaded ' + f.name); }
+      else toast('Unrecognised filename: ' + f.name);
+    } catch { toast('Failed to parse ' + f.name); }
+  }
+  if (any) afterLoad();
+};
+
+const afterLoad = () => {
+  state.diseases.sort((a, b) => a.id.localeCompare(b.id));
+  state.tests   .sort((a, b) => a.id.localeCompare(b.id));
+  refreshDownloadButtons();
+  renderAll();
+  if (state.loaded.ward || state.loaded.tests) $('#banner')?.remove();
+};
+
+// ── Dirty / download buttons ─────────────────────────────
+const markDirty = (key) => { state.dirty[key] = true; refreshDownloadButtons(); };
+
+const refreshDownloadButtons = () => {
+  for (const [key, sel] of [['ward', '#dl-ward'], ['tests', '#dl-tests']]) {
+    const b = $(sel);
+    b.disabled = !state.loaded[key];
+    b.classList.toggle('dirty', state.dirty[key] && state.loaded[key]);
+  }
+};
+
+// ── Searchable single-select combobox ────────────────────
+// Keyboard-navigable; onChange(id) on select. onCreate(text) is the
+// inline "+ Create" affordance shown when no match is found.
+const combobox = ({ items, getId, getLabel, getMeta, value, placeholder,
+                    onChange, onCreate }) => {
+  const wrap  = el('div', { class: 'combo' });
+  const input = el('input', { type: 'text', placeholder, autocomplete: 'off',
+                              attrs: { spellcheck: 'false' } });
+  const list  = el('ul', { class: 'combo-options', attrs: { hidden: '' } });
+  let cursor = 0, visible = [];
+
+  const setValue = (id) => {
+    const it = items.find(x => getId(x) === id);
+    input.value = it ? `${getId(it)} — ${getLabel(it)}` : '';
+    input.dataset.value = id || '';
+    onChange?.(id);
+  };
+  const close  = () => { list.setAttribute('hidden', ''); cursor = 0; };
+  const filter = (q) => {
+    const tokens = q.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    visible = items.filter(it => {
+      const hay = `${getId(it)} ${getLabel(it)}`.toLowerCase();
+      return tokens.every(t => hay.includes(t));
+    }).slice(0, 25);
+    list.replaceChildren();
+    if (!visible.length) {
+      const empty = el('div', { class: 'combo-empty' });
+      if (onCreate && q.trim()) {
+        empty.append('No match. ', el('a', {
+          href: '#', text: `+ Create "${q.trim()}"`,
+          onClick: (e) => { e.preventDefault(); close(); onCreate(q.trim()); },
+        }));
+      } else empty.textContent = 'No matches';
+      list.appendChild(empty);
+      return;
+    }
+    visible.forEach((it, i) => list.appendChild(el('li', {
+      class: 'combo-option' + (i === cursor ? ' cursor' : ''),
+      onMousedown: (e) => { e.preventDefault(); pick(i); },
+    }, [
+      el('span', { class: 'id',   text: getId(it) }),
+      el('span', { class: 'name', text: getLabel(it) }),
+      getMeta ? el('span', { class: 'meta', text: getMeta(it) }) : null,
+    ])));
+  };
+  const pick = (i) => {
+    const it = visible[i]; if (!it) return;
+    setValue(getId(it)); close(); input.blur();
+  };
+
+  input.addEventListener('focus', () => { list.removeAttribute('hidden'); filter(input.value); });
+  input.addEventListener('input', () => { cursor = 0; filter(input.value); });
+  input.addEventListener('blur',  () => setTimeout(close, 80));
+  input.addEventListener('keydown', (e) => {
+    const last = visible.length - 1;
+    if (e.key === 'ArrowDown') { cursor = Math.min(cursor + 1, last); e.preventDefault(); filter(input.value); }
+    else if (e.key === 'ArrowUp')   { cursor = Math.max(cursor - 1, 0); e.preventDefault(); filter(input.value); }
+    else if (e.key === 'Enter')     { e.preventDefault(); pick(cursor); }
+    else if (e.key === 'Escape')    { close(); input.blur(); }
+  });
+
+  if (value) setValue(value);
+  wrap.append(input, list);
+  return { node: wrap, setValue, getValue: () => input.dataset.value || '' };
+};
+
+// ── Modal ────────────────────────────────────────────────
+const openModal = ({ title, body, onSave, saveLabel = 'Save' }) => {
+  $('#modal-title').textContent = title;
+  $('#modal-body').replaceChildren(body);
+  $('#modal-save').textContent = saveLabel;
+  $('#modal-save').onclick = () => {
+    try { if (onSave() !== false) closeModal(); }
+    catch (e) { toast(e.message || 'Error'); }
+  };
+  $('#modal').classList.add('show');
+};
+const closeModal = () => $('#modal').classList.remove('show');
+$('#modal-close').onclick  = closeModal;
+$('#modal-cancel').onclick = closeModal;
+$('#modal').addEventListener('click', (e) => { if (e.target === $('#modal')) closeModal(); });
+
+// ── Render tables ────────────────────────────────────────
+const acuityClass = (a) => ({ CRITICAL: 'crit', HIGH: 'high' })[a] || '';
+
+const renderTable = (rootSel, rowClass, headers, rows, emptyText, countSel) => {
+  const root = $(rootSel);
+  root.replaceChildren();
+  root.appendChild(el('div', { class: `row head ${rowClass}` },
+    headers.map(h => el('span', { text: h }))));
+  if (!rows.length) root.appendChild(el('div', { class: 'empty', text: emptyText }));
+  else rows.forEach(r => root.appendChild(r));
+  $(countSel).textContent = rows.length;
+};
+
+const renderPatients = () => {
+  const rows = state.patients.map((p, i) => {
+    const d = state.diseases.find(x => x.id === p.disease_id);
+    const tests = p.test_overrides?.length ? p.test_overrides : (d?.test_ids || []);
+    const overridden = !!p.test_overrides?.length;
+    return el('div', { class: 'row' }, [
+      el('span', { class: 'id', text: p.id }),
+      el('span', { text: p.name }),
+      el('span', {}, [el('span', { class: `badge ${acuityClass(p.acuity)}`, text: p.acuity })]),
+      el('span', { text: d ? d.name : (p.disease_id || '—') }),
+      el('span', { class: 'id', text: `${overridden ? '✎ ' : ''}${tests.length} test(s)` }),
+      el('div', { class: 'actions' }, [
+        el('button', { class: 'btn btn-tiny', text: 'Edit', onClick: () => openPatientModal(i) }),
+        el('button', { class: 'btn btn-tiny btn-danger', text: '×', onClick: () => removePatient(i) }),
+      ]),
+    ]);
+  });
+  renderTable('#list-patients', '', ['ID', 'Name', 'Acuity', 'Disease', 'Tests', ''],
+              rows, 'No patients yet.', '#cnt-patients');
+};
+
+const renderWorkers = () => {
+  const rows = state.workers.map((w, i) => el('div', { class: 'row workers' }, [
+    el('span', { class: 'id', text: w.id }),
+    el('span', { text: w.name }),
+    el('span', {}, [el('span', { class: 'badge', text: w.role })]),
+    el('span', { text: String(w.shift_minutes_left) }),
+    el('span', {}),
+    el('div', { class: 'actions' }, [
+      el('button', { class: 'btn btn-tiny', text: 'Edit', onClick: () => openWorkerModal(i) }),
+      el('button', { class: 'btn btn-tiny btn-danger', text: '×', onClick: () => removeWorker(i) }),
+    ]),
+  ]));
+  renderTable('#list-workers', 'workers',
+              ['ID', 'Name', 'Role', 'Shift (min)', '', ''],
+              rows, 'No workers yet.', '#cnt-workers');
+};
+
+const renderTests = () => {
+  const rows = state.tests.map((t, i) => {
+    const refs = state.diseases.filter(d => (d.test_ids || []).includes(t.id)).length;
+    return el('div', { class: 'row tests' }, [
+      el('span', { class: 'id', text: t.id }),
+      el('span', { text: t.name }),
+      el('span', {}, [el('span', { class: 'badge', text: t.required_role })]),
+      el('span', { text: String(t.duration_minutes) }),
+      el('span', { class: 'id', text: refs ? `used by ${refs} disease${refs > 1 ? 's' : ''}` : 'unused' }),
+      el('div', { class: 'actions' }, [
+        el('button', {
+          class: 'btn btn-tiny btn-danger', text: '×',
+          attrs: refs ? { disabled: '' } : {},
+          onClick: () => removeTest(i),
+        }),
+      ]),
+    ]);
+  });
+  renderTable('#list-tests', 'tests',
+              ['ID', 'Name', 'Role', 'Min', '', ''],
+              rows, 'No tests catalogued.', '#cnt-tests');
+};
+
+const renderAll = () => { renderPatients(); renderWorkers(); renderTests(); };
+
+// ── Form helpers ─────────────────────────────────────────
+const field = (label, control, hint) => el('div', { class: 'field' }, [
+  el('label', { text: label }), control,
+  hint ? el('div', { class: 'hint', text: hint }) : null,
+]);
+
+const select = (options, value) => el('select', {}, options.map(o =>
+  el('option', { value: o, text: o, selected: o === value })));
+
+// Combobox + chip list. Combobox's "+ Create" forwards to the test modal,
+// then attaches the new test back to this patient.
+const testMultiselect = (selectedIds) => {
+  const ids = new Set(selectedIds);
+  const wrap  = el('div');
+  const chips = el('div', { class: 'chips' });
+
+  const renderChips = () => {
+    chips.replaceChildren();
+    ids.forEach(id => {
+      const t = state.tests.find(x => x.id === id);
+      chips.appendChild(el('span', { class: `chip ${t ? '' : 'custom'}` }, [
+        el('span', { class: 'id', text: id }),
+        el('span', { text: t ? t.name : '?' }),
+        el('button', { type: 'button', text: '×',
+          onClick: () => { ids.delete(id); renderChips(); } }),
+      ]));
+    });
+  };
+
+  const cb = combobox({
+    items: state.tests,
+    getId: t => t.id, getLabel: t => t.name,
+    getMeta: t => `${t.required_role} · ${t.duration_minutes}m`,
+    placeholder: 'Search test by ID or name…',
+    onChange: (id) => { if (id) { ids.add(id); renderChips(); cb.setValue(''); } },
+    onCreate: (typed) => openTestModal({
+      presetName: typed,
+      onSaved: (id) => { ids.add(id); renderChips(); },
+    }),
+  });
+
+  const reset = el('button', {
+    type: 'button', class: 'btn btn-tiny', text: 'Reset to disease default',
+    onClick: () => {
+      const d = state.diseases.find(x => x.id === wrap.dataset.diseaseId);
+      ids.clear();
+      (d?.test_ids || []).forEach(t => ids.add(t));
+      renderChips();
+    },
+  });
+
+  wrap.append(cb.node, chips, el('div', { class: 'hint' }, [
+    reset, ' — type to add tests; "+ Create" inside the dropdown spawns a custom test.']));
+  renderChips();
+  wrap._getIds        = () => [...ids];
+  wrap._setDiseaseId  = (id) => { wrap.dataset.diseaseId = id; };
+  wrap._adoptDefaults = (testIds) => { ids.clear(); testIds.forEach(t => ids.add(t)); renderChips(); };
+  return wrap;
+};
+
+// ── Patient modal ────────────────────────────────────────
+const openPatientModal = (idx) => {
+  const editing = idx != null && state.patients[idx];
+  const p = editing
+    ? { ...editing, test_overrides: [...(editing.test_overrides || [])] }
+    : { id: nextId('P', state.patients.map(x => x.id)), name: '', age: 50,
+        complaint: '', acuity: 'MEDIUM', disease_id: '', test_overrides: [] };
+
+  const idIn  = el('input', { type: 'text', value: p.id, attrs: { readonly: '' } });
+  const name  = el('input', { type: 'text', value: p.name });
+  const age   = el('input', { type: 'number', value: String(p.age), attrs: { min: '0', max: '120' } });
+  const com   = el('textarea', { value: p.complaint });
+  const acu   = select(ACUITY, p.acuity);
+  const diseaseDefaults = (state.diseases.find(d => d.id === p.disease_id)?.test_ids) || [];
+  const tests = testMultiselect(p.test_overrides.length ? p.test_overrides : diseaseDefaults);
+  tests._setDiseaseId(p.disease_id);
+
+  // Auto-fill tests on disease change unless the user has edited them.
+  let prev = diseaseDefaults;
+  const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+  const disease = combobox({
+    items: state.diseases,
+    getId: d => d.id, getLabel: d => d.name,
+    getMeta: d => `prio ${d.base_priority} · ${(d.test_ids || []).length} tests`,
+    placeholder: 'Search disease by ID or name…',
+    value: p.disease_id || null,
+    onChange: (id) => {
+      const defaults = (state.diseases.find(x => x.id === id)?.test_ids || []).slice();
+      const cur = tests._getIds();
+      if (!cur.length || same(cur, prev)) tests._adoptDefaults(defaults);
+      prev = defaults;
+      tests._setDiseaseId(id);
+    },
+  });
+
+  const body = el('div', {}, [
+    field('ID', idIn, editing ? 'Read-only' : 'Auto-generated'),
+    el('div', { class: 'field-row' }, [field('Name', name), field('Age', age)]),
+    field('Complaint', com),
+    el('div', { class: 'field-row' }, [field('Acuity', acu), field('Disease', disease.node, 'Required')]),
+    field('Tests', tests, 'Pre-fills from disease. Edit to author per-admission overrides.'),
+  ]);
+
+  openModal({
+    title: editing ? `Edit ${p.id}` : 'Admit patient',
+    body, saveLabel: editing ? 'Save' : 'Admit',
+    onSave: () => {
+      const nm = name.value.trim();
+      const a  = parseInt(age.value, 10);
+      const di = disease.getValue();
+      if (!nm)        throw new Error('Name required');
+      if (isNaN(a))   throw new Error('Age must be a number');
+      if (!di)        throw new Error('Disease required');
+      const defaults = (state.diseases.find(d => d.id === di)?.test_ids || []).slice();
+      const chosen   = tests._getIds();
+      const next = {
+        id: p.id, name: nm, age: a, complaint: com.value.trim(),
+        acuity: acu.value, disease_id: di,
+        test_overrides: same(chosen.slice().sort(), defaults.slice().sort()) ? [] : chosen,
+      };
+      if (editing) state.patients[idx] = next; else state.patients.push(next);
+      markDirty('ward'); renderPatients();
+    },
+  });
+};
+
+const removePatient = (i) => {
+  const p = state.patients[i];
+  if (!confirm(`Remove ${p.id} (${p.name})?`)) return;
+  state.patients.splice(i, 1); markDirty('ward'); renderPatients();
+};
+
+// ── Worker modal ─────────────────────────────────────────
+const openWorkerModal = (idx) => {
+  const editing = idx != null && state.workers[idx];
+  const w = editing ? { ...editing }
+                    : { id: nextId('W', state.workers.map(x => x.id)),
+                        name: '', role: 'NURSE', shift_minutes_left: 480 };
+  const idIn  = el('input', { type: 'text', value: w.id, attrs: { readonly: '' } });
+  const name  = el('input', { type: 'text', value: w.name });
+  const role  = select(ROLES, w.role);
+  const shift = el('input', { type: 'number', value: String(w.shift_minutes_left),
+                              attrs: { min: '0', max: '1440' } });
+  openModal({
+    title: editing ? `Edit ${w.id}` : 'Add worker',
+    body: el('div', {}, [
+      field('ID', idIn, editing ? 'Read-only' : 'Auto-generated'),
+      field('Name', name),
+      el('div', { class: 'field-row' }, [field('Role', role), field('Shift (min)', shift)]),
+    ]),
+    onSave: () => {
+      const nm = name.value.trim();
+      const sh = parseInt(shift.value, 10);
+      if (!nm)        throw new Error('Name required');
+      if (isNaN(sh))  throw new Error('Shift must be a number');
+      const next = { id: w.id, name: nm, role: role.value, shift_minutes_left: sh };
+      if (editing) state.workers[idx] = next; else state.workers.push(next);
+      markDirty('ward'); renderWorkers();
+    },
+  });
+};
+
+const removeWorker = (i) => {
+  const w = state.workers[i];
+  if (!confirm(`Remove ${w.id} (${w.name})?`)) return;
+  state.workers.splice(i, 1); markDirty('ward'); renderWorkers();
+};
+
+// ── Custom test modal ────────────────────────────────────
+const openTestModal = ({ presetName, onSaved } = {}) => {
+  const name = el('input', { type: 'text', value: presetName || '' });
+  const role = select(ROLES, 'NURSE');
+  const dur  = el('input', { type: 'number', value: '15', attrs: { min: '1', max: '600' } });
+  openModal({
+    title: 'Add custom test', saveLabel: 'Add to catalog',
+    body: el('div', {}, [
+      field('Name', name, 'ID auto-generated as T_<SLUG>.'),
+      el('div', { class: 'field-row' }, [field('Required role', role), field('Duration (min)', dur)]),
+    ]),
+    onSave: () => {
+      const nm = name.value.trim();
+      const d  = parseInt(dur.value, 10);
+      if (!nm)               throw new Error('Name required');
+      if (isNaN(d) || d < 1) throw new Error('Duration must be ≥ 1 min');
+      const id = slugId('T_', nm, state.tests.map(t => t.id));
+      state.tests.push({ id, name: nm, required_role: role.value, duration_minutes: d });
+      state.tests.sort((a, b) => a.id.localeCompare(b.id));
+      markDirty('tests'); renderTests();
+      toast('Added ' + id);
+      onSaved?.(id);
+    },
+  });
+};
+
+const removeTest = (i) => {
+  const t = state.tests[i];
+  if (!confirm(`Remove test ${t.id}? It is currently unused.`)) return;
+  state.tests.splice(i, 1); markDirty('tests'); renderTests();
+};
+
+// ── Save / serialize ─────────────────────────────────────
+const downloadJson = (filename, data) => {
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)],
+                                           { type: 'application/json' }));
+  const a = el('a', { href: url, download: filename });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+};
+
+const serializeWard = () => ({
+  patients: state.patients.map(p => {
+    const out = { id: p.id, name: p.name, age: p.age, complaint: p.complaint,
+                  acuity: p.acuity, disease_id: p.disease_id };
+    if (p.test_overrides?.length) out.test_overrides = p.test_overrides;
+    return out;
+  }),
+  workers: state.workers.map(w => ({
+    id: w.id, name: w.name, role: w.role, shift_minutes_left: w.shift_minutes_left,
+  })),
+});
+
+$('#dl-ward').onclick  = () => { downloadJson('sample_ward.json', serializeWard());
+                                 state.dirty.ward  = false; refreshDownloadButtons();
+                                 toast('sample_ward.json downloaded'); };
+$('#dl-tests').onclick = () => { downloadJson('tests.json', state.tests);
+                                 state.dirty.tests = false; refreshDownloadButtons();
+                                 toast('tests.json downloaded'); };
+
+// ── Top-level wiring ─────────────────────────────────────
+$$('.tab').forEach(t => t.addEventListener('click', () => {
+  $$('.tab') .forEach(x => x.classList.remove('active'));
+  $$('.view').forEach(v => v.hidden = true);
+  t.classList.add('active');
+  $('#view-' + t.dataset.tab).hidden = false;
+}));
+
+$('#file-input').addEventListener('change', (e) => onFiles(e.target.files));
+document.addEventListener('dragover', (e) => e.preventDefault());
+document.addEventListener('drop',     (e) => {
+  e.preventDefault();
+  if (e.dataTransfer?.files.length) onFiles(e.dataTransfer.files);
+});
+
+$('#add-patient').onclick = () => openPatientModal(null);
+$('#add-worker') .onclick = () => openWorkerModal(null);
+$('#add-test')   .onclick = () => openTestModal();
+
+// No autosave — warn before unloading with unsaved changes.
+window.addEventListener('beforeunload', (e) => {
+  if (state.dirty.ward || state.dirty.tests) { e.preventDefault(); e.returnValue = ''; }
+});
+
+refreshDownloadButtons();
+renderAll();
+tryAutoload();
+</script>
+</body>
+</html>

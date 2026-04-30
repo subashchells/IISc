@@ -1,0 +1,16 @@
+Unknown option: --bench-urgency
+Usage: cardio_scheduler [options] [data_dir]
+
+  data_dir                 directory of the four JSON files
+                           (default: ./data, falls back to ./src/data)
+
+Bench modes (default is the legacy Priority-vs-FCFS comparison):
+  --bench-2x2              FCFS/Priority × Greedy/Hungarian matrix
+  --bench-pareto           Pareto sweep over lex policies × seeds
+  --bench-fair             throughput vs worker-load stdev
+  --bench-adversarial      synthetic wards built to break each algo
+
+  --overtime-threshold N   OT budget (min) before INFEASIBLE
+  -h, --help               this message
+
+Edit patients, workers, and tests in src/index.html.

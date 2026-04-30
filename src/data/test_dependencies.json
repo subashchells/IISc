@@ -1,0 +1,1302 @@
+[
+  {
+    "from": "T_ECG",
+    "to": "T_ECG_R"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_ECG_POST"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_ECG_SAECG"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_ECG_AMBUL"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_TROP"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_HSTROPONIN"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_CKMB"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_BNP"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_CTAO"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_CTPA"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_CTA"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_HOLTER"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_LOOP"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_EVENT_MON"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_TELE"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_VITALS"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_IV"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_TILT"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_DOPPLER_ART"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_AJMALINE"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_ADENOSINE"
+  },
+  {
+    "from": "T_ECG",
+    "to": "T_VALSALVA"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_TILT"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_DOPPLER_VEN"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_DOPPLER_ART"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_FOCUS_US"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_LUNG_US"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_ABI"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_PWV"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_FALL_RISK"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_VTE_PROPH"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_PAIN_SCORE"
+  },
+  {
+    "from": "T_VITALS",
+    "to": "T_GLUCOSE"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ANTICOAG"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_HEPARIN"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_BIVAL"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ABXIV"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_THROMBO"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CTPA"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CTAO"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CTA"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CT_CALCIUM"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CT_TAVR"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CT_LAA"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_MRI_CARD"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_MRI_T1T2"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_MRI_STRESS"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_SPECT"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_PET"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_PYP_SCAN"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_SWAN_GANZ"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_RHC"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_LHC"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_TTM"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_TILT"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CBC"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_BMP"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_LFT"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_MG_PO4"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_DDIMER"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_LIPID"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_LPA"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_HBA1C"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_TFT"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_DIGOXIN"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_AMIODARONE_LVL"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_COAG"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ANTI_XA"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_FIBRINOGEN"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_DIURETIC_IV"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_VASOPRESSOR"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_VASODILATOR_IV"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_BB_IV"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CCB_IV"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ANTIARRHYTHMIC"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_DAPT"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_IRON_IV"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_PROCAL"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_CRP"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ESR"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_FERRITIN"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_HIT_PANEL"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_THROMBOPHILIA"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ANTIPHOS"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ANA"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_HIV_HCV_HBV"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_FREE_LC"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_SPEP_UPEP"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_TYPE_SCREEN"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_LACTATE"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_ST2"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_GAL3"
+  },
+  {
+    "from": "T_IV",
+    "to": "T_PCR_VIRAL"
+  },
+  {
+    "from": "T_TROP",
+    "to": "T_ECHO"
+  },
+  {
+    "from": "T_TROP",
+    "to": "T_CTA"
+  },
+  {
+    "from": "T_TROP",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_TROP",
+    "to": "T_HSTROPONIN"
+  },
+  {
+    "from": "T_HSTROPONIN",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_HSTROPONIN",
+    "to": "T_CTA"
+  },
+  {
+    "from": "T_HSTROPONIN",
+    "to": "T_PCI_PRIMARY"
+  },
+  {
+    "from": "T_BNP",
+    "to": "T_CXR"
+  },
+  {
+    "from": "T_CXR",
+    "to": "T_ECHO"
+  },
+  {
+    "from": "T_BNP",
+    "to": "T_ECHO"
+  },
+  {
+    "from": "T_BMP",
+    "to": "T_DIURETIC_IV"
+  },
+  {
+    "from": "T_BMP",
+    "to": "T_CRRT"
+  },
+  {
+    "from": "T_BMP",
+    "to": "T_GDMT_INIT"
+  },
+  {
+    "from": "T_MG_PO4",
+    "to": "T_ANTIARRHYTHMIC"
+  },
+  {
+    "from": "T_COAG",
+    "to": "T_HEPARIN"
+  },
+  {
+    "from": "T_COAG",
+    "to": "T_ANTICOAG"
+  },
+  {
+    "from": "T_COAG",
+    "to": "T_THROMBO"
+  },
+  {
+    "from": "T_COAG",
+    "to": "T_BIVAL"
+  },
+  {
+    "from": "T_HIT_PANEL",
+    "to": "T_BIVAL"
+  },
+  {
+    "from": "T_LIPID",
+    "to": "T_PCSK9"
+  },
+  {
+    "from": "T_LPA",
+    "to": "T_PCSK9"
+  },
+  {
+    "from": "T_HBA1C",
+    "to": "T_GDMT_INIT"
+  },
+  {
+    "from": "T_LFT",
+    "to": "T_AMIODARONE_LVL"
+  },
+  {
+    "from": "T_CULTURE",
+    "to": "T_ABXIV"
+  },
+  {
+    "from": "T_URINE_CX",
+    "to": "T_ABXIV"
+  },
+  {
+    "from": "T_CULTURE",
+    "to": "T_PROCAL"
+  },
+  {
+    "from": "T_ABG",
+    "to": "T_NIV"
+  },
+  {
+    "from": "T_ABG",
+    "to": "T_HFNC"
+  },
+  {
+    "from": "T_ABG",
+    "to": "T_INTUBATE"
+  },
+  {
+    "from": "T_LACTATE",
+    "to": "T_VASOPRESSOR"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_STRESS"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_STRESS_NUC"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_ECHO_STRESS"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_ECHO_BUBBLE"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_PREP_CATH"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_MRI_CARD"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_TEE"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_ICE"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_SPECT"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_PET"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_BIOPSY_ENDOMYO"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_SWAN_GANZ"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_RHC"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_LHC"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_PERICARDIO"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_PERICARD_WIN"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_BAV"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_BMV"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_TAVR"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_TEER_MITRAL"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_TEER_TRIC"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_PFO_CLOSURE"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_ASD_CLOSURE"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_LAAC"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_AVR_SURG"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_MVR_SURG"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_HEART_TRANSPLANT"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_LVAD"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_IABP"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_IMPELLA"
+  },
+  {
+    "from": "T_ECHO",
+    "to": "T_ECMO_VA"
+  },
+  {
+    "from": "T_ECHO_BUBBLE",
+    "to": "T_PFO_CLOSURE"
+  },
+  {
+    "from": "T_ECHO_BUBBLE",
+    "to": "T_ASD_CLOSURE"
+  },
+  {
+    "from": "T_CT_CALCIUM",
+    "to": "T_CTA"
+  },
+  {
+    "from": "T_CT_TAVR",
+    "to": "T_TAVR"
+  },
+  {
+    "from": "T_CT_LAA",
+    "to": "T_LAAC"
+  },
+  {
+    "from": "T_MRI_CARD",
+    "to": "T_MRI_T1T2"
+  },
+  {
+    "from": "T_MRI_CARD",
+    "to": "T_MRI_STRESS"
+  },
+  {
+    "from": "T_STRESS",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_STRESS_NUC",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_ECHO_STRESS",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_CPET",
+    "to": "T_HEART_TRANSPLANT"
+  },
+  {
+    "from": "T_CPET",
+    "to": "T_LVAD"
+  },
+  {
+    "from": "T_6MWT",
+    "to": "T_CPET"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_CONSENT"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_TTM"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_MDT"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_CT_SURG_REVIEW"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_PALLIATIVE"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_GENETIC_COUNSEL"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_GDMT_INIT"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_PCSK9"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_TAFAMIDIS"
+  },
+  {
+    "from": "T_ATTEND",
+    "to": "T_MAVACAMTEN"
+  },
+  {
+    "from": "T_GENETIC_COUNSEL",
+    "to": "T_GENETIC"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_CABG"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_AVR_SURG"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_MVR_SURG"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_AORTIC_ROOT"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_TAVR"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_TEER_MITRAL"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_TEER_TRIC"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_TEVAR"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_EVAR"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_HEART_TRANSPLANT"
+  },
+  {
+    "from": "T_MDT",
+    "to": "T_LVAD"
+  },
+  {
+    "from": "T_CT_SURG_REVIEW",
+    "to": "T_PREP_SURGERY"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_CATH"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_ANGIO"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_EP"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_CARDIO"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_TEE"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_SURGERY"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_DEVICE"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PREP_TRANSPLANT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_TEE"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ICE"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_SWAN_GANZ"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_RHC"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_LHC"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_BIOPSY_ENDOMYO"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_THROMBO"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_TILT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_EP"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_CABG"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PPM"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_LEADLESS_PPM"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ICD"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_SICD"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_CRT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_LEAD_EXTRACT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_CARDIOVERT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PERICARDIO"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PERICARD_WIN"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_BAV"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_BMV"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_TAVR"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_TEER_MITRAL"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_TEER_TRIC"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PFO_CLOSURE"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ASD_CLOSURE"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_LAAC"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_TEVAR"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_EVAR"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_EMBOLECTOMY"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_AVR_SURG"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_MVR_SURG"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_AORTIC_ROOT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_HEART_TRANSPLANT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_LVAD"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_IABP"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_IMPELLA"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ECMO_VA"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ECMO_VV"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ABLATION_AF"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ABLATION_VT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_ABLATION_SVT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PCI_PRIMARY"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_PCI_RESCUE"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_FFR"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_IVUS"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_OCT"
+  },
+  {
+    "from": "T_CONSENT",
+    "to": "T_AJMALINE"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_CATH"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_ANGIO"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_EP"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_CARDIO"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_TEE"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_SURGERY"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_DEVICE"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_PREP_TRANSPLANT"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_BIOPSY_ENDOMYO"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_TEE"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_ICE"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_TAVR"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_TEER_MITRAL"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_TEER_TRIC"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_LAAC"
+  },
+  {
+    "from": "T_NPO",
+    "to": "T_AJMALINE"
+  },
+  {
+    "from": "T_ANTICOAG",
+    "to": "T_PREP_TEE"
+  },
+  {
+    "from": "T_ANTICOAG",
+    "to": "T_LAAC"
+  },
+  {
+    "from": "T_ANTICOAG",
+    "to": "T_PREP_CARDIO"
+  },
+  {
+    "from": "T_PREP_TEE",
+    "to": "T_TEE"
+  },
+  {
+    "from": "T_PREP_TEE",
+    "to": "T_PREP_CARDIO"
+  },
+  {
+    "from": "T_TEE",
+    "to": "T_CARDIOVERT"
+  },
+  {
+    "from": "T_TEE",
+    "to": "T_LAAC"
+  },
+  {
+    "from": "T_TEE",
+    "to": "T_TEER_MITRAL"
+  },
+  {
+    "from": "T_PREP_CARDIO",
+    "to": "T_CARDIOVERT"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_FFR"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_IVUS"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_OCT"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_PCI_PRIMARY"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_PCI_RESCUE"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_BAV"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_BMV"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_TAVR"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_PFO_CLOSURE"
+  },
+  {
+    "from": "T_PREP_CATH",
+    "to": "T_ASD_CLOSURE"
+  },
+  {
+    "from": "T_PREP_EP",
+    "to": "T_EP"
+  },
+  {
+    "from": "T_PREP_EP",
+    "to": "T_ABLATION_AF"
+  },
+  {
+    "from": "T_PREP_EP",
+    "to": "T_ABLATION_VT"
+  },
+  {
+    "from": "T_PREP_EP",
+    "to": "T_ABLATION_SVT"
+  },
+  {
+    "from": "T_PREP_DEVICE",
+    "to": "T_PPM"
+  },
+  {
+    "from": "T_PREP_DEVICE",
+    "to": "T_LEADLESS_PPM"
+  },
+  {
+    "from": "T_PREP_DEVICE",
+    "to": "T_ICD"
+  },
+  {
+    "from": "T_PREP_DEVICE",
+    "to": "T_SICD"
+  },
+  {
+    "from": "T_PREP_DEVICE",
+    "to": "T_CRT"
+  },
+  {
+    "from": "T_PREP_DEVICE",
+    "to": "T_LEAD_EXTRACT"
+  },
+  {
+    "from": "T_PPM",
+    "to": "T_DEVICE_INTERROG"
+  },
+  {
+    "from": "T_ICD",
+    "to": "T_DEVICE_INTERROG"
+  },
+  {
+    "from": "T_CRT",
+    "to": "T_DEVICE_INTERROG"
+  },
+  {
+    "from": "T_LEADLESS_PPM",
+    "to": "T_DEVICE_INTERROG"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_CABG"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_AVR_SURG"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_MVR_SURG"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_AORTIC_ROOT"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_TEVAR"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_EVAR"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_EMBOLECTOMY"
+  },
+  {
+    "from": "T_PREP_SURGERY",
+    "to": "T_PERICARD_WIN"
+  },
+  {
+    "from": "T_PREP_TRANSPLANT",
+    "to": "T_HEART_TRANSPLANT"
+  },
+  {
+    "from": "T_PREP_TRANSPLANT",
+    "to": "T_LVAD"
+  },
+  {
+    "from": "T_TYPE_SCREEN",
+    "to": "T_PREP_SURGERY"
+  },
+  {
+    "from": "T_TYPE_SCREEN",
+    "to": "T_PREP_TRANSPLANT"
+  },
+  {
+    "from": "T_TYPE_SCREEN",
+    "to": "T_PREP_CATH"
+  },
+  {
+    "from": "T_DOPPLER_VEN",
+    "to": "T_CTPA"
+  },
+  {
+    "from": "T_DOPPLER_ART",
+    "to": "T_CATH"
+  },
+  {
+    "from": "T_ABI",
+    "to": "T_DOPPLER_ART"
+  },
+  {
+    "from": "T_DDIMER",
+    "to": "T_CTPA"
+  },
+  {
+    "from": "T_DDIMER",
+    "to": "T_DOPPLER_VEN"
+  },
+  {
+    "from": "T_FREE_LC",
+    "to": "T_PYP_SCAN"
+  },
+  {
+    "from": "T_SPEP_UPEP",
+    "to": "T_PYP_SCAN"
+  },
+  {
+    "from": "T_PYP_SCAN",
+    "to": "T_TAFAMIDIS"
+  },
+  {
+    "from": "T_GDMT_INIT",
+    "to": "T_DISCHARGE_ED"
+  },
+  {
+    "from": "T_GDMT_INIT",
+    "to": "T_CARDIAC_REHAB"
+  },
+  {
+    "from": "T_DISCHARGE_ED",
+    "to": "T_CARDIAC_REHAB"
+  },
+  {
+    "from": "T_FERRITIN",
+    "to": "T_IRON_IV"
+  },
+  {
+    "from": "T_GLUCOSE",
+    "to": "T_GDMT_INIT"
+  },
+  {
+    "from": "T_AJMALINE",
+    "to": "T_GENETIC"
+  },
+  {
+    "from": "T_TILT",
+    "to": "T_PPM"
+  }
+]

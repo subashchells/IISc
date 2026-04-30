@@ -1,0 +1,61 @@
+=== CardioScheduler V2 ===
+Loading data from: data/
+Overtime threshold: 0 min
+  Diseases: 418   Tests: 183   Patients: 100   Workers: 10
+
+╔══════════════════════════════════════════════════════════════╗
+║              2×2 Strategy Matrix Benchmark                   ║
+╚══════════════════════════════════════════════════════════════╝
+  Same input across all four cells. Ordering decides the BATCH;
+  Matching decides WHO does each task in the batch.
+
+                       Greedy match           Hungarian match
+  ─────────────────────────────────────────────────────────────
+  FCFS  ordering     ms=9260  ot=20210         ms=9350  ot=20210
+  Priority order     ms=9260  ot=20210         ms=9470  ot=20210
+
+  A — FCFS × Greedy        (current FCFS baseline)
+      ordering         : FCFS
+      matching         : Greedy
+      makespan         : 9260 min
+      total overtime   : 20210 min   (max worker: 8780, stdev: 3400.1)
+      capacity breach  : 1827 task(s)
+      runtime          : 11956.000 µs   (202 ticks)
+      coverage         : 2017 / 2017 tasks (0 unscheduled)
+
+  B — FCFS × Hungarian     (matching effect alone)
+      ordering         : FCFS
+      matching         : Hungarian
+      makespan         : 9350 min
+      total overtime   : 20210 min   (max worker: 8870, stdev: 3400.3)
+      capacity breach  : 1830 task(s)
+      runtime          : 65462.500 µs   (928 ticks, 7243 re-queues)
+      coverage         : 2017 / 2017 tasks (0 unscheduled)
+
+  C — Priority × Greedy    (current main scheduler)
+      ordering         : Priority
+      matching         : Greedy
+      makespan         : 9260 min
+      total overtime   : 20210 min   (max worker: 8780, stdev: 3400.0)
+      capacity breach  : 1820 task(s)
+      runtime          : 15934.084 µs   (205 ticks)
+      coverage         : 2017 / 2017 tasks (0 unscheduled)
+
+  D — Priority × Hungarian (best of both)
+      ordering         : Priority
+      matching         : Hungarian
+      makespan         : 9470 min
+      total overtime   : 20210 min   (max worker: 8990, stdev: 3401.4)
+      capacity breach  : 1819 task(s)
+      runtime          : 84195.500 µs   (905 ticks, 6939 re-queues)
+      coverage         : 2017 / 2017 tasks (0 unscheduled)
+
+  ── Pairwise comparisons (Δ = right − left) ─────────────────
+  A→D  (worst → best)              Δ makespan = 210 min,  Δ overtime = 0 min,  Δ breaches = -8
+  A→B  (ordering held FCFS)        Δ makespan = 90 min,  Δ overtime = 0 min     ← matching effect alone
+  A→C  (matching held Greedy)      Δ makespan = 0 min,  Δ overtime = 0 min     ← ordering effect alone
+  B→D  (ordering effect under H.)  Δ makespan = 120 min,  Δ overtime = 0 min     ← does priority still help?
+  C→D  (Hungarian over Priority)   Δ makespan = 210 min,  Δ overtime = 0 min     ← worth the complexity?
+
+  ── Scheduler wall-clock (lower = cheaper) ──────────────────
+  A 11956.000 µs    B 65462.500 µs    C 15934.084 µs    D 84195.500 µs

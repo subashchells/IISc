@@ -1,0 +1,71 @@
+
+╔══════════════════════════════════════════════════════════════╗
+║  Adversarial Bench — synthetic wards designed to break algos ║
+╚══════════════════════════════════════════════════════════════╝
+  Each scenario is built from scratch in-memory (no JSON).
+  Five strategies run on identical input; per-axis winners are
+  tagged so the surviving strategy per attack is visible at a glance.
+
+  ── all-critical --------------------------------------------
+     Every patient CRITICAL — legacy_priority collapses to a single value (11)
+     patients=20  workers=5  tasks=100  total_work=1500 min
+
+     strategy                 ms    OT  max-OT  brch    cov     runtime   ticks
+     ─────────────────────────────────────────────────────────────────────────────
+     FCFS × Greedy           300      0      0     0  100/100   451.5 µs    20  ← best ms / lowest OT / fastest
+     FCFS × Hungarian        300      0      0     0  100/100  1273.0 µs    51 (+145d)  ← best ms / lowest OT
+     Priority × Greedy       300      0      0     0  100/100   534.2 µs    20  ← best ms / lowest OT
+     Priority × Hungarian    300      0      0     0  100/100  1610.8 µs    53 (+155d)  ← best ms / lowest OT
+     Priority × Fair(α=0)   300      0      0     0  100/100   520.2 µs    20  ← best ms / lowest OT
+
+     Priority ordering degenerates to deterministic tie-hash; ordering becomes effectively FIFO-ish.
+
+  ── long-chain ----------------------------------------------
+     25 serially-dependent tasks — parallelism = 1
+     patients=1  workers=5  tasks=25  total_work=375 min
+
+     strategy                 ms    OT  max-OT  brch    cov     runtime   ticks
+     ─────────────────────────────────────────────────────────────────────────────
+     FCFS × Greedy            75      0      0     0    25/25   131.3 µs    25  ← best ms / lowest OT
+     FCFS × Hungarian         75      0      0     0    25/25   269.2 µs    25  ← best ms / lowest OT
+     Priority × Greedy        75      0      0     0    25/25   125.6 µs    25  ← best ms / lowest OT / fastest
+     Priority × Hungarian     75      0      0     0    25/25   267.5 µs    25  ← best ms / lowest OT
+     Priority × Fair(α=0)    75      0      0     0    25/25   131.1 µs    25  ← best ms / lowest OT
+
+     Every tick has batch=1; matchers can't differentiate. Runtime gap is pure per-decision overhead.
+
+  ── single-role-bottleneck ----------------------------------
+     15 patients all need PGY1, only 1 PGY1 on roster (4 idle peers)
+     patients=15  workers=5  tasks=45  total_work=1350 min
+
+     strategy                 ms    OT  max-OT  brch    cov     runtime   ticks
+     ─────────────────────────────────────────────────────────────────────────────
+     FCFS × Greedy          1350    870    870    29    45/45   198.4 µs     9  ← best ms / lowest OT / fastest
+     FCFS × Hungarian       1350    870    870    29    45/45   844.7 µs    45 (+170d)  ← best ms / lowest OT
+     Priority × Greedy      1350    870    870    29    45/45   232.4 µs     9  ← best ms / lowest OT
+     Priority × Hungarian   1350    870    870    29    45/45  1172.9 µs    45 (+170d)  ← best ms / lowest OT
+     Priority × Fair(α=0)  1350    870    870    29    45/45   234.0 µs     9  ← best ms / lowest OT
+
+     All work funnels onto one worker; matcher choice is moot. Hungarian wastes ticks deferring tasks it can't place.
+
+  ── tight-shift ---------------------------------------------
+     Per-worker shift = perfect-split share, 0 min slack
+     patients=12  workers=4  tasks=48  total_work=960 min
+
+     strategy                 ms    OT  max-OT  brch    cov     runtime   ticks
+     ─────────────────────────────────────────────────────────────────────────────
+     FCFS × Greedy           240      0      0     0    48/48   199.4 µs    12  ← best ms / lowest OT / fastest
+     FCFS × Hungarian        240      0      0     0    48/48   419.2 µs    22 (+40d)  ← best ms / lowest OT
+     Priority × Greedy       240      0      0     0    48/48   238.0 µs    12  ← best ms / lowest OT
+     Priority × Hungarian    240      0      0     0    48/48   445.8 µs    18 (+20d)  ← best ms / lowest OT
+     Priority × Fair(α=0)   240      0      0     0    48/48   241.2 µs    12  ← best ms / lowest OT
+
+     Perfect balance → 0 OT. Any imbalance → immediate OT. Exposes which matchers actually balance vs just ride slack.
+
+  Reading the table:
+    ms      = makespan, minutes
+    OT      = total overtime across all workers, minutes
+    max-OT  = worst single-worker overtime, minutes
+    brch    = number of commits that pushed a worker past their shift
+    cov     = scheduled / total tasks (incomplete = INCOMPLETE tag)
+    ticks   = match() invocations; (+Nd) = Hungarian re-queue events

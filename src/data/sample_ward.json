@@ -1,0 +1,866 @@
+{
+  "patients": [
+    {
+      "id": "P001",
+      "name": "Arun Mehta",
+      "age": 55,
+      "complaint": "crushing chest pain, diaphoresis, ST elevation V1-V4",
+      "acuity": "CRITICAL",
+      "disease_id": "D001"
+    },
+    {
+      "id": "P002",
+      "name": "Lakshmi Iyer",
+      "age": 68,
+      "complaint": "witnessed cardiac arrest, VF on monitor",
+      "acuity": "CRITICAL",
+      "disease_id": "D002"
+    },
+    {
+      "id": "P003",
+      "name": "James O'Brien",
+      "age": 72,
+      "complaint": "tearing chest pain radiating to back, BP differential",
+      "acuity": "CRITICAL",
+      "disease_id": "D006"
+    },
+    {
+      "id": "P004",
+      "name": "Fatima Al-Rashid",
+      "age": 45,
+      "complaint": "fever, new murmur, splinter haemorrhages",
+      "acuity": "CRITICAL",
+      "disease_id": "D071"
+    },
+    {
+      "id": "P005",
+      "name": "Chen Wei",
+      "age": 60,
+      "complaint": "acute dyspnoea, hypoxia, pleuritic pain, hypotension",
+      "acuity": "CRITICAL",
+      "disease_id": "D009"
+    },
+    {
+      "id": "P006",
+      "name": "Priya Sharma",
+      "age": 38,
+      "complaint": "post-MI day 3, sudden hypotension, new systolic murmur",
+      "acuity": "CRITICAL",
+      "disease_id": "D083"
+    },
+    {
+      "id": "P007",
+      "name": "David Kim",
+      "age": 64,
+      "complaint": "complete heart block, HR 32, pre-syncope",
+      "acuity": "CRITICAL",
+      "disease_id": "D097"
+    },
+    {
+      "id": "P008",
+      "name": "Maria Santos",
+      "age": 51,
+      "complaint": "polymorphic VT on monitor, QTc 620ms",
+      "acuity": "CRITICAL",
+      "disease_id": "D099"
+    },
+    {
+      "id": "P009",
+      "name": "Ravi Kumar",
+      "age": 70,
+      "complaint": "breathlessness, bilateral leg oedema, orthopnoea",
+      "acuity": "HIGH",
+      "disease_id": "D012"
+    },
+    {
+      "id": "P010",
+      "name": "Sophie Laurent",
+      "age": 58,
+      "complaint": "troponin-positive chest pain, dynamic ST depression",
+      "acuity": "HIGH",
+      "disease_id": "D010"
+    },
+    {
+      "id": "P011",
+      "name": "Hassan Youssef",
+      "age": 42,
+      "complaint": "palpitations, irregular pulse 160 bpm, new onset",
+      "acuity": "HIGH",
+      "disease_id": "D017"
+    },
+    {
+      "id": "P012",
+      "name": "Elena Petrov",
+      "age": 29,
+      "complaint": "chest pain, diffuse ST elevation, recent viral illness",
+      "acuity": "HIGH",
+      "disease_id": "D013"
+    },
+    {
+      "id": "P013",
+      "name": "Tomoko Hayashi",
+      "age": 34,
+      "complaint": "6 weeks postpartum, acute dyspnoea, EF 20%",
+      "acuity": "HIGH",
+      "disease_id": "D074"
+    },
+    {
+      "id": "P014",
+      "name": "Kwame Asante",
+      "age": 56,
+      "complaint": "prosthetic click absent, elevated gradient, INR sub-therapeutic",
+      "acuity": "HIGH",
+      "disease_id": "D076"
+    },
+    {
+      "id": "P015",
+      "name": "Angela Rossi",
+      "age": 48,
+      "complaint": "acute cold painful left leg, absent pedal pulses, AFib",
+      "acuity": "HIGH",
+      "disease_id": "D077"
+    },
+    {
+      "id": "P016",
+      "name": "Raj Patel",
+      "age": 67,
+      "complaint": "BP 240/130, troponin rise, pulmonary oedema",
+      "acuity": "HIGH",
+      "disease_id": "D033"
+    },
+    {
+      "id": "P017",
+      "name": "Ingrid Svensson",
+      "age": 52,
+      "complaint": "sub-massive PE, RV strain on echo, stable BP",
+      "acuity": "HIGH",
+      "disease_id": "D035"
+    },
+    {
+      "id": "P018",
+      "name": "Carlos Vega",
+      "age": 44,
+      "complaint": "emotional stress, apical ballooning, mild troponin rise",
+      "acuity": "HIGH",
+      "disease_id": "D021"
+    },
+    {
+      "id": "P019",
+      "name": "Nina Okonkwo",
+      "age": 31,
+      "complaint": "post-MI day 5, pleuritic chest pain, pericardial rub",
+      "acuity": "HIGH",
+      "disease_id": "D085"
+    },
+    {
+      "id": "P020",
+      "name": "Viktor Novak",
+      "age": 73,
+      "complaint": "alcoholic cardiomyopathy, EF 15%, volume overloaded",
+      "acuity": "HIGH",
+      "disease_id": "D107"
+    },
+    {
+      "id": "P021",
+      "name": "Meera Nair",
+      "age": 62,
+      "complaint": "mild chest tightness on exertion, normal ECG",
+      "acuity": "MEDIUM",
+      "disease_id": "D037"
+    },
+    {
+      "id": "P022",
+      "name": "Thomas Walsh",
+      "age": 78,
+      "complaint": "syncope while standing, no prodrome",
+      "acuity": "MEDIUM",
+      "disease_id": "D038"
+    },
+    {
+      "id": "P023",
+      "name": "Ayesha Khan",
+      "age": 65,
+      "complaint": "severe aortic stenosis, stable, pre-TAVR workup",
+      "acuity": "MEDIUM",
+      "disease_id": "D044"
+    },
+    {
+      "id": "P024",
+      "name": "Robert Chen",
+      "age": 50,
+      "complaint": "stable AFib, rate controlled, elective cardioversion",
+      "acuity": "MEDIUM",
+      "disease_id": "D041"
+    },
+    {
+      "id": "P025",
+      "name": "Yuki Tanaka",
+      "age": 28,
+      "complaint": "HCM on family screening, asymptomatic",
+      "acuity": "MEDIUM",
+      "disease_id": "D061"
+    },
+    {
+      "id": "P026",
+      "name": "Grace Adeyemi",
+      "age": 40,
+      "complaint": "recurrent vasovagal syncope, tilt table scheduled",
+      "acuity": "MEDIUM",
+      "disease_id": "D039"
+    },
+    {
+      "id": "P027",
+      "name": "Pierre Dubois",
+      "age": 55,
+      "complaint": "stable CAD, positive stress test, pre-angiography",
+      "acuity": "MEDIUM",
+      "disease_id": "D064"
+    },
+    {
+      "id": "P028",
+      "name": "Sita Devi",
+      "age": 46,
+      "complaint": "Marfan syndrome, annual aortic root surveillance",
+      "acuity": "MEDIUM",
+      "disease_id": "D069"
+    },
+    {
+      "id": "P029",
+      "name": "Michael Byrne",
+      "age": 71,
+      "complaint": "cardiac amyloidosis workup, stable BNP",
+      "acuity": "MEDIUM",
+      "disease_id": "D049"
+    },
+    {
+      "id": "P030",
+      "name": "Li Jing",
+      "age": 59,
+      "complaint": "CTO of LAD, exertional angina, for PCI attempt",
+      "acuity": "MEDIUM",
+      "disease_id": "D165"
+    },
+    {
+      "id": "P031",
+      "name": "Kavitha Reddy",
+      "age": 45,
+      "complaint": "isolated right heart failure, peripheral edema",
+      "acuity": "HIGH",
+      "disease_id": "D171"
+    },
+    {
+      "id": "P032",
+      "name": "John Smith",
+      "age": 61,
+      "complaint": "hypertensive crisis, pulmonary edema, severe dyspnea",
+      "acuity": "CRITICAL",
+      "disease_id": "D172"
+    },
+    {
+      "id": "P033",
+      "name": "Sanjay Gupta",
+      "age": 55,
+      "complaint": "fever, new prosthetic valve murmur, embolic signs",
+      "acuity": "CRITICAL",
+      "disease_id": "D173"
+    },
+    {
+      "id": "P034",
+      "name": "Emily Davis",
+      "age": 72,
+      "complaint": "visual disturbances, nausea, bradycardia on digoxin",
+      "acuity": "HIGH",
+      "disease_id": "D174"
+    },
+    {
+      "id": "P035",
+      "name": "Vikram Singh",
+      "age": 50,
+      "complaint": "positional syncope, atrial mass seen on prior echo",
+      "acuity": "MEDIUM",
+      "disease_id": "D175"
+    },
+    {
+      "id": "P036",
+      "name": "Sarah Johnson",
+      "age": 68,
+      "complaint": "amiodarone use, progressive hypoxic respiratory failure",
+      "acuity": "CRITICAL",
+      "disease_id": "D176"
+    },
+    {
+      "id": "P037",
+      "name": "Rohit Desai",
+      "age": 59,
+      "complaint": "LVAD low flow alarms, dark urine, suspected thrombosis",
+      "acuity": "CRITICAL",
+      "disease_id": "D177"
+    },
+    {
+      "id": "P038",
+      "name": "Michael Brown",
+      "age": 42,
+      "complaint": "post heart transplant, acute drop in EF, fatigue",
+      "acuity": "CRITICAL",
+      "disease_id": "D178"
+    },
+    {
+      "id": "P039",
+      "name": "Deepa Menon",
+      "age": 70,
+      "complaint": "severe emotional distress followed by shock, apical ballooning",
+      "acuity": "CRITICAL",
+      "disease_id": "D179"
+    },
+    {
+      "id": "P040",
+      "name": "William Taylor",
+      "age": 65,
+      "complaint": "post-CABG day 10, sternal wound purulence, instability",
+      "acuity": "CRITICAL",
+      "disease_id": "D180"
+    },
+    {
+      "id": "P041",
+      "name": "Ananya Patel",
+      "age": 63,
+      "complaint": "acute cold leg, absent popliteal pulse, history of afib",
+      "acuity": "HIGH",
+      "disease_id": "D181"
+    },
+    {
+      "id": "P042",
+      "name": "Jessica Williams",
+      "age": 31,
+      "complaint": "severe dyspnea 2 weeks postpartum, EF 15%",
+      "acuity": "HIGH",
+      "disease_id": "D182"
+    },
+    {
+      "id": "P043",
+      "name": "Rahul Verma",
+      "age": 58,
+      "complaint": "recurrent VF requiring multiple shocks",
+      "acuity": "CRITICAL",
+      "disease_id": "D183"
+    },
+    {
+      "id": "P044",
+      "name": "Amanda Moore",
+      "age": 49,
+      "complaint": "doxorubicin chemotherapy, new onset orthopnea",
+      "acuity": "MEDIUM",
+      "disease_id": "D184"
+    },
+    {
+      "id": "P045",
+      "name": "Amit Chatterjee",
+      "age": 71,
+      "complaint": "endocarditis with new complete heart block",
+      "acuity": "CRITICAL",
+      "disease_id": "D185"
+    },
+    {
+      "id": "P046",
+      "name": "James Wilson",
+      "age": 82,
+      "complaint": "critical AS, exertional syncope, weak pulses",
+      "acuity": "HIGH",
+      "disease_id": "D186"
+    },
+    {
+      "id": "P047",
+      "name": "Sneha Joshi",
+      "age": 66,
+      "complaint": "acute HF exacerbation with anuric renal failure",
+      "acuity": "HIGH",
+      "disease_id": "D187"
+    },
+    {
+      "id": "P048",
+      "name": "David Anderson",
+      "age": 54,
+      "complaint": "massive DVT, hypoxia, suspected paradoxical embolus",
+      "acuity": "CRITICAL",
+      "disease_id": "D188"
+    },
+    {
+      "id": "P049",
+      "name": "Gaurav Ahuja",
+      "age": 77,
+      "complaint": "HR 30 bpm, hypotension, altered mentation",
+      "acuity": "CRITICAL",
+      "disease_id": "D189"
+    },
+    {
+      "id": "P050",
+      "name": "Laura Martinez",
+      "age": 35,
+      "complaint": "Brugada pattern on ECG, frequent syncope",
+      "acuity": "MEDIUM",
+      "disease_id": "D190"
+    },
+    {
+      "id": "P051",
+      "name": "Priya Raghavan",
+      "age": 80,
+      "complaint": "orthopnoea, ankle oedema, raised BNP",
+      "acuity": "MEDIUM",
+      "disease_id": "D378"
+    },
+    {
+      "id": "P052",
+      "name": "Marcus Chen",
+      "age": 63,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D082"
+    },
+    {
+      "id": "P053",
+      "name": "Aisha Khan",
+      "age": 85,
+      "complaint": "progressive dyspnoea, blowing systolic murmur",
+      "acuity": "HIGH",
+      "disease_id": "D022"
+    },
+    {
+      "id": "P054",
+      "name": "Rohan Desai",
+      "age": 84,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D191"
+    },
+    {
+      "id": "P055",
+      "name": "Elena Volkova",
+      "age": 53,
+      "complaint": "exertional dyspnoea and syncope, ejection murmur",
+      "acuity": "HIGH",
+      "disease_id": "D155"
+    },
+    {
+      "id": "P056",
+      "name": "Mohammed Hassan",
+      "age": 68,
+      "complaint": "incidental finding on imaging, asymptomatic",
+      "acuity": "MEDIUM",
+      "disease_id": "D144"
+    },
+    {
+      "id": "P057",
+      "name": "Sofia Costa",
+      "age": 81,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D100"
+    },
+    {
+      "id": "P058",
+      "name": "Hiroshi Tanaka",
+      "age": 57,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "HIGH",
+      "disease_id": "D075"
+    },
+    {
+      "id": "P059",
+      "name": "Olufemi Adeyemi",
+      "age": 49,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D397"
+    },
+    {
+      "id": "P060",
+      "name": "Anjali Bhatt",
+      "age": 47,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D330"
+    },
+    {
+      "id": "P061",
+      "name": "Daniel M\u00fcller",
+      "age": 59,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D063"
+    },
+    {
+      "id": "P062",
+      "name": "Yuki Nakamura",
+      "age": 42,
+      "complaint": "fixed split S2, mild exertional dyspnoea",
+      "acuity": "MEDIUM",
+      "disease_id": "D353"
+    },
+    {
+      "id": "P063",
+      "name": "Sneha Kapoor",
+      "age": 63,
+      "complaint": "progressive dyspnoea, S3 gallop, reduced LVEF",
+      "acuity": "MEDIUM",
+      "disease_id": "D267"
+    },
+    {
+      "id": "P064",
+      "name": "Rajesh Pillai",
+      "age": 22,
+      "complaint": "aborted SCD, type 1 ECG pattern",
+      "acuity": "MEDIUM",
+      "disease_id": "D026"
+    },
+    {
+      "id": "P065",
+      "name": "Carmen Ruiz",
+      "age": 27,
+      "complaint": "syncope on exertion, prolonged QTc",
+      "acuity": "MEDIUM",
+      "disease_id": "D025"
+    },
+    {
+      "id": "P066",
+      "name": "Wei-Ming Lim",
+      "age": 51,
+      "complaint": "orthopnoea, ankle oedema, raised BNP",
+      "acuity": "MEDIUM",
+      "disease_id": "D067"
+    },
+    {
+      "id": "P067",
+      "name": "Fatima Al-Sayed",
+      "age": 69,
+      "complaint": "palpitations, irregularly irregular pulse",
+      "acuity": "MEDIUM",
+      "disease_id": "D141"
+    },
+    {
+      "id": "P068",
+      "name": "Kavya Reddy",
+      "age": 62,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D149"
+    },
+    {
+      "id": "P069",
+      "name": "Tom\u00e1\u0161 Nov\u00e1k",
+      "age": 74,
+      "complaint": "tearing chest pain radiating to back, BP differential",
+      "acuity": "CRITICAL",
+      "disease_id": "D309"
+    },
+    {
+      "id": "P070",
+      "name": "Ngozi Okafor",
+      "age": 38,
+      "complaint": "cyanosis, post-arterial-switch follow-up",
+      "acuity": "MEDIUM",
+      "disease_id": "D359"
+    },
+    {
+      "id": "P071",
+      "name": "Aditya Joshi",
+      "age": 68,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "HIGH",
+      "disease_id": "D023"
+    },
+    {
+      "id": "P072",
+      "name": "Liam O'Sullivan",
+      "age": 40,
+      "complaint": "exertional dyspnoea, fatigue, syncope",
+      "acuity": "CRITICAL",
+      "disease_id": "D338"
+    },
+    {
+      "id": "P073",
+      "name": "Vikram Sharma",
+      "age": 68,
+      "complaint": "incidental finding on imaging, asymptomatic",
+      "acuity": "CRITICAL",
+      "disease_id": "D131"
+    },
+    {
+      "id": "P074",
+      "name": "Saanvi Gupta",
+      "age": 29,
+      "complaint": "syncope on exertion, prolonged QTc",
+      "acuity": "MEDIUM",
+      "disease_id": "D417"
+    },
+    {
+      "id": "P075",
+      "name": "Marco Rossi",
+      "age": 58,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D383"
+    },
+    {
+      "id": "P076",
+      "name": "Jin-Soo Park",
+      "age": 62,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D410"
+    },
+    {
+      "id": "P077",
+      "name": "Aria Patel",
+      "age": 49,
+      "complaint": "progressive dyspnoea, S3 gallop, reduced LVEF",
+      "acuity": "MEDIUM",
+      "disease_id": "D265"
+    },
+    {
+      "id": "P078",
+      "name": "Niamh Walsh",
+      "age": 83,
+      "complaint": "palpitations, irregularly irregular pulse",
+      "acuity": "MEDIUM",
+      "disease_id": "D142"
+    },
+    {
+      "id": "P079",
+      "name": "Karthik Iyer",
+      "age": 85,
+      "complaint": "progressive dyspnoea, S3 gallop, reduced LVEF",
+      "acuity": "MEDIUM",
+      "disease_id": "D280"
+    },
+    {
+      "id": "P080",
+      "name": "Beatrice Lefevre",
+      "age": 55,
+      "complaint": "peripheral oedema, raised JVP, pulsatile liver",
+      "acuity": "MEDIUM",
+      "disease_id": "D352"
+    },
+    {
+      "id": "P081",
+      "name": "Aarav Singh",
+      "age": 79,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D193"
+    },
+    {
+      "id": "P082",
+      "name": "Elif Y\u0131lmaz",
+      "age": 60,
+      "complaint": "muffled heart sounds, raised JVP, pulsus paradoxus",
+      "acuity": "CRITICAL",
+      "disease_id": "D007"
+    },
+    {
+      "id": "P083",
+      "name": "Sam Goldberg",
+      "age": 55,
+      "complaint": "progressive dyspnoea, S3 gallop, reduced LVEF",
+      "acuity": "MEDIUM",
+      "disease_id": "D111"
+    },
+    {
+      "id": "P084",
+      "name": "Ravi Subramanian",
+      "age": 74,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "HIGH",
+      "disease_id": "D408"
+    },
+    {
+      "id": "P085",
+      "name": "Mei-Ling Wong",
+      "age": 69,
+      "complaint": "recent viral illness, chest pain, troponin rise",
+      "acuity": "HIGH",
+      "disease_id": "D225"
+    },
+    {
+      "id": "P086",
+      "name": "Tariq Mahmoud",
+      "age": 62,
+      "complaint": "progressive dyspnoea, S3 gallop, reduced LVEF",
+      "acuity": "MEDIUM",
+      "disease_id": "D109"
+    },
+    {
+      "id": "P087",
+      "name": "Isla MacDonald",
+      "age": 85,
+      "complaint": "recent viral illness, chest pain, troponin rise",
+      "acuity": "HIGH",
+      "disease_id": "D140"
+    },
+    {
+      "id": "P088",
+      "name": "Devika Nair",
+      "age": 80,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D223"
+    },
+    {
+      "id": "P089",
+      "name": "Esteban Garc\u00eda",
+      "age": 59,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D245"
+    },
+    {
+      "id": "P090",
+      "name": "Yusuf Demir",
+      "age": 65,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D070"
+    },
+    {
+      "id": "P091",
+      "name": "Ananya Krishnan",
+      "age": 48,
+      "complaint": "fatigue, presyncope, bradycardia on ECG",
+      "acuity": "MEDIUM",
+      "disease_id": "D234"
+    },
+    {
+      "id": "P092",
+      "name": "Henrik Andersen",
+      "age": 59,
+      "complaint": "fatigue, presyncope, bradycardia on ECG",
+      "acuity": "MEDIUM",
+      "disease_id": "D227"
+    },
+    {
+      "id": "P093",
+      "name": "Pooja Verma",
+      "age": 47,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D360"
+    },
+    {
+      "id": "P094",
+      "name": "Caleb Owusu",
+      "age": 65,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D166"
+    },
+    {
+      "id": "P095",
+      "name": "Ines Carvalho",
+      "age": 70,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "HIGH",
+      "disease_id": "D032"
+    },
+    {
+      "id": "P096",
+      "name": "Manish Chaudhary",
+      "age": 62,
+      "complaint": "progressive dyspnoea, blowing systolic murmur",
+      "acuity": "HIGH",
+      "disease_id": "D286"
+    },
+    {
+      "id": "P097",
+      "name": "Amelia Brennan",
+      "age": 49,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "HIGH",
+      "disease_id": "D325"
+    },
+    {
+      "id": "P098",
+      "name": "Krishna Rao",
+      "age": 58,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D090"
+    },
+    {
+      "id": "P099",
+      "name": "Zara Ahmed",
+      "age": 81,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D244"
+    },
+    {
+      "id": "P100",
+      "name": "Tarek Bouchard",
+      "age": 65,
+      "complaint": "cardiology referral, symptom workup pending",
+      "acuity": "MEDIUM",
+      "disease_id": "D058"
+    }
+  ],
+  "workers": [
+    {
+      "id": "W001",
+      "name": "Nurse Ravi",
+      "role": "NURSE",
+      "shift_minutes_left": 480
+    },
+    {
+      "id": "W002",
+      "name": "Nurse Meera",
+      "role": "NURSE",
+      "shift_minutes_left": 480
+    },
+    {
+      "id": "W003",
+      "name": "Dr. Priya (Intern)",
+      "role": "INTERN",
+      "shift_minutes_left": 600
+    },
+    {
+      "id": "W004",
+      "name": "Dr. Kenji (Intern)",
+      "role": "INTERN",
+      "shift_minutes_left": 600
+    },
+    {
+      "id": "W005",
+      "name": "Dr. Praveen (PGY1)",
+      "role": "PGY1",
+      "shift_minutes_left": 600
+    },
+    {
+      "id": "W006",
+      "name": "Dr. Pavithra (PGY1)",
+      "role": "PGY1",
+      "shift_minutes_left": 480
+    },
+    {
+      "id": "W007",
+      "name": "Dr. Khush (PGY1)",
+      "role": "PGY1",
+      "shift_minutes_left": 480
+    },
+    {
+      "id": "W008",
+      "name": "Dr. Khush (Intern)",
+      "role": "INTERN",
+      "shift_minutes_left": 480
+    },
+    {
+      "id": "W009",
+      "name": "Dr. Gnaani (Intern)",
+      "role": "INTERN",
+      "shift_minutes_left": 480
+    },
+    {
+      "id": "W010",
+      "name": "Dr. Jeril(Intern)",
+      "role": "INTERN",
+      "shift_minutes_left": 480
+    }
+  ]
+}

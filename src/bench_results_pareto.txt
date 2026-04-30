@@ -1,0 +1,30 @@
+=== CardioScheduler V2 ===
+Loading data from: data/
+Overtime threshold: 0 min
+  Diseases: 418   Tests: 183   Patients: 100   Workers: 10
+
+╔══════════════════════════════════════════════════════════════╗
+║   Pareto Frontier — multi-objective schedule selection       ║
+╚══════════════════════════════════════════════════════════════╝
+  Candidates : 35   Frontier : 2   Surfaced : 2
+
+  Acuity   = mean last-finish (min) for CRITICAL+HIGH patients
+  Makespan = max finish_time (min) across the schedule
+  Max-OT   = worst single-worker overtime (min)
+  All three: smaller is better.
+
+  ── Per-policy roll-up (best/median/worst across seeds) ────────────────
+    policy                  acuity (best/med/worst)    ms       max-OT
+    acuity_first            3103.9 /  3346.4 /  3374.3   9260/9265   8780/8785
+    priority_first          3395.0 /  3628.2 /  3661.4   9260/9265   8780/8785
+    acuity_short_first      3562.0 /  3568.1 /  3579.5   9260/9265   8780/8785
+    acuity_long_first       3604.4 /  3615.9 /  3630.7   9260/9260   8780/8780
+    acuity_old_first        2714.4 /  2722.5 /  2723.3   9260/9260   8780/8780
+    acuity_young_first      2695.9 /  2702.5 /  2711.3   9260/9265   8780/8785
+    duration_first          7910.3 /  7911.3 /  7927.0   9260/9275   8780/8795
+
+  ── Pareto frontier (Top-2 by NSGA-II crowding distance) ──────────
+   #   policy (seed)              acuity   makespan   max-OT   notes
+   ──────────────────────────────────────────────────────────────────────
+  [1]  acuity_young_first (s1)     2695.9      9265      8785   ← best acuity
+  [2]  acuity_young_first (s3)     2701.1      9260      8780   ← best makespan / lowest max-OT
