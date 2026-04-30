@@ -1,16 +1,12 @@
  # binaries
  cardio_scheduler
  acuity_sweep
- build/
  
  # bench artefacts
  out.txt
  bench_out.txt
  bench_results_*.txt
  
- # graphify cache (the .json/.html/.md outputs are useful to commit;
- # only the cache should be ignored)
- graphify-out/cache/
- 
+
  # OS junk
  .DS_Store
