@@ -1,0 +1,74 @@
+% ----------------------------------------------------------------------------
+%  11. Evaluation Metrics
+% ----------------------------------------------------------------------------
+\section{Evaluation Metrics}
+\label{sec:metrics}
+
+\subsection{What each stakeholder cares about}
+
+\begin{itemize}
+  \item \textbf{Clinician.}\;
+        How long until each acuity tier finishes care.
+  \item \textbf{Administrator.}\;
+        Total schedule length and total overtime.
+  \item \textbf{Workers.}\;
+        Whether the load is shared evenly within a role.
+  \item \textbf{Engineer.}\;
+        Wall-clock and how often Hungarian had to defer a task.
+\end{itemize}
+
+\subsection{All metrics in one table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Stakeholder} & \textbf{Metric} & \textbf{Where reported} \\
+\midrule
+Clinician
+  & First-task-start, last-task-finish per acuity tier
+    (mean, median, 90\textsuperscript{th}\,pct, max)
+  & legacy, urgency \\
+Clinician
+  & Mean last-finish across CRIT+HIGH (the urgent-care metric)
+  & Pareto sweep \\
+Clinician
+  & Worst-served CRIT patient by name
+  & urgency \\
+Administrator
+  & Makespan (longest finish across the schedule)
+  & all benches \\
+Administrator
+  & Total overtime; feasibility verdict at a chosen budget
+  & all benches \\
+Workers
+  & Per-worker minutes worked
+  & legacy, fair \\
+Workers
+  & Within-role spread (the variance fairness can move)
+  & fairness \\
+Engineer
+  & Wall-clock, tick count, deferred re-queues
+  & 2$\times$2, fair, adversarial \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Why these specific definitions}
+
+\begin{itemize}
+  \item Patients with no scheduled tasks are excluded from
+        per-acuity averages --- counting them as zero would falsely
+        improve the mean.
+  \item ``Within-role'' spread, not overall spread:
+        a nurse and a resident don't do the same work, so their
+        load difference is structural and unmovable. Within-role
+        spread is what a matcher can actually rebalance.
+  \item All Pareto axes are framed as ``smaller is better'' so the
+        dominance check is one rule (componentwise $\leq$).
+  \item 90\textsuperscript{th}\,percentile and worst-case are
+        reported alongside the mean --- a single bad-luck patient
+        gets lost in averages.
+\end{itemize}

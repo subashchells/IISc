@@ -1,0 +1,42 @@
+% ----------------------------------------------------------------------------
+%  19. Conclusion
+% ----------------------------------------------------------------------------
+\section{Conclusion}
+\label{sec:conclusion}
+
+\subsection{What was implemented}
+
+\begin{itemize}
+  \item A scheduler with two pluggable axes: ordering and
+        matching.
+  \item Three matchers (Greedy, FairGreedy, Hungarian).
+  \item Seven priority policies subsuming the legacy formula.
+  \item A multi-objective scoring step.
+  \item A six-mode benchmark suite over a 100-patient,
+        10-worker ward.
+\end{itemize}
+
+\subsection{What the experiments showed}
+
+\begin{itemize}
+  \item Ordering moves more than matching.
+  \item ``Optimal per tick'' (Hungarian) is the wrong invariant
+        when many critical tasks share the same priority --- it
+        regresses worst-case CRIT timing by $4\times$ vs.\ Greedy.
+  \item No algorithm change creates capacity. The ward is
+        $\sim 5\times$ over-loaded, so 20{,}210 minutes of overtime
+        appear under every strategy.
+\end{itemize}
+
+\subsection{Closing note}
+
+\begin{itemize}
+  \item The contribution is not a new algorithm; it is the
+        disciplined separation of ``what task next?'' from
+        ``who does it?'', and a benchmark surface that lets a
+        single observed difference be attributed to a single
+        choice.
+  \item The headline finding is humbling --- the simplest matcher
+        won --- but that's exactly the kind of finding the suite
+        was built to surface.
+\end{itemize}

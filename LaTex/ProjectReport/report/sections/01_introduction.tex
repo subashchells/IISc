@@ -1,0 +1,59 @@
+% ----------------------------------------------------------------------------
+%  1. Introduction
+% ----------------------------------------------------------------------------
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{Why this problem}
+
+\begin{itemize}
+  \item A cardiac ward is a queue where the tasks are not
+        interchangeable. Each diagnosis maps to a different list
+        of tests, and many tests have hard ordering constraints.
+  \item Staff are role-typed and shift-bounded.
+  \item Most Indian hospitals still use pen-and-paper:
+        ``first on the page, first served.'' That gives no
+        priority, no feasibility check, and no record of
+        \emph{why} a schedule was chosen.
+\end{itemize}
+
+\subsection{What we built}
+
+\begin{itemize}
+  \item A C++ task-allocation engine driven by four custom-made
+        JSON files.
+  \item Two policy decisions are pluggable:
+        \emph{which task next?} and \emph{which worker takes it?}
+  \item A six-mode benchmark suite that varies one axis at a time
+        on the same fixed ward.
+\end{itemize}
+
+\subsection{Why six benchmarks instead of one ``best'' algorithm}
+
+\begin{itemize}
+  \item Stakeholders want different things: clinicians want
+        urgent patients seen first, administrators want low
+        overtime, workers want fair load.
+  \item No single number can rank schedules across all three.
+  \item So we run the same engine six different ways and let the
+        data speak. The headline finding (\S\ref{sec:results}) is
+        that the simplest matcher beats the sophisticated one on
+        the production ward.
+\end{itemize}
+
+\subsection{Where to find what in this report}
+
+\begin{itemize}
+  \item Background and problem statement:
+        \S\ref{sec:background}--\S\ref{sec:problem}.
+  \item Architecture and methodology:
+        \S\ref{sec:architecture}--\S\ref{sec:methodology}.
+  \item Pipeline and data flow:
+        \S\ref{sec:pipeline}--\S\ref{sec:dataflow}.
+  \item Setup, results, comparisons, ablations, error analysis,
+        scaling:
+        \S\ref{sec:setup}--\S\ref{sec:perf}.
+  \item Limits, future work, conclusion:
+        \S\ref{sec:limitations}--\S\ref{sec:conclusion}.
+  \item Appendices: CLI surface, supplementary numbers.
+\end{itemize}

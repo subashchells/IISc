@@ -1,0 +1,734 @@
+\documentclass[aspectratio=169, 11pt]{beamer}
+\input{beamer-config}
+\title{CardioScheduler}
+\subtitle{Multi-Strategy Scheduling and Benchmarking System\\
+          for Cardiac-Ward Clinical Workflows}
+\author{Subash C}
+\institute{Indian Institute of Science, Bangalore\\
+           \small SL\,203 --- Introduction to Algorithms and Software Programming}
+\date{April 2026}
+\begin{document}
+
+
+\begin{frame}[plain]
+  \vspace*{-0.15cm}
+  \begin{center}
+    \includegraphics[height=1.65cm]{figures/iisc_logo}\\[0.30em]
+    {\sffamily\footnotesize\color{slate} Indian Institute of Science, Bangalore}\\[0.05em]
+    {\sffamily\scriptsize\color{mutedgray}
+     SL\,203 - Introduction to Algorithms and Software Programming}
+  \end{center}
+
+  \vspace{0.30cm}
+  \begin{center}
+    \textcolor{ruleblue}{\rule{0.55\paperwidth}{0.6pt}}\\[0.45em]
+    {\sffamily\huge\bfseries\color{ruleblue} CardioScheduler}\\[0.30em]
+    {\sffamily\normalsize\color{slate}
+     Multi-Strategy Scheduling and Benchmarking System}\\[0.05em]
+    {\sffamily\normalsize\color{slate}
+     for Cardiac-Ward Clinical Workflows}\\[0.45em]
+    \textcolor{ruleblue}{\rule{0.55\paperwidth}{0.6pt}}
+  \end{center}
+
+  \vfill
+  \begin{center}
+    {\sffamily\normalsize\bfseries By: Subash C,M.Tech(Research) Student}\\[0.20em]
+    {\sffamily\scriptsize\color{mutedgray}
+     Course Instructors:\quad
+     Nagarajan Natarajan, PhD \;|\;
+     Tarun Rambha, PhD}\\[0.30em]
+    {\sffamily\scriptsize\color{mutedgray} April 2026}
+  \end{center}
+  \vspace{0.10cm}
+\end{frame}
+
+% =============================================================================
+%  Slide 2 --- Problem Motivation
+% =============================================================================
+\begin{frame}[fragile]{Problem Motivation}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+      \head{Today, in most Indian wards.}
+      \begin{itemize}
+        \item Pen-and-paper task lists.
+        \item ``First on the page gets done first.''
+        \item No escalation when a CRIT patient's followup.
+        \item No record of \emph{why} a schedule was chosen.
+      \end{itemize}
+      \vspace{0.6em}
+      \head{The cost.}
+      \begin{itemize}
+        \item Healthcare-worker burnout.
+        \item Delayed urgent care.
+        \item No feasibility verdict before the shift starts.
+      \end{itemize}
+    \column{0.42\textwidth}
+      \begin{lstlisting}[language={},basicstyle=\ttfamily\scriptsize,
+                         numbers=none,frame=single,
+                         backgroundcolor=\color{boxbg},
+                         framerule=0.4pt,breaklines=false,
+                         rulecolor=\color{ruleblue}]
+   --- Ward Roster (paper) ---
+
+   [ ] T_ECG    P004   Nurse R.
+   [ ] T_TROP   P017   Intern S.
+   [ ] T_ECHO   P001   Nurse R.
+   [ ] T_CXR    P012   Intern T.
+   [ ] T_STRESS P007   PGY1 K.
+   [ ] T_BMP    P022   Nurse R.
+        ...     ...      ...
+
+   - first row gets done first
+   - no priority field
+   - no shift / capacity check
+   - re-triage = scratch & rewrite
+      \end{lstlisting}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+%  Slide 3 --- Real-World Need
+% =============================================================================
+\begin{frame}{Real-World Need}
+  \head{The hospital floor is a queueing system whose tasks aren't interchangeable.}
+  \begin{itemize}
+    \item Patients differ in \emph{acuity} (CRIT/HIGH/MED/LOW) and
+          \emph{disease}; both shape the workup.
+    \item Tests have hard \emph{precedence} (Troponin $\to$ ECHO $\to$ Stress).
+    \item Workers are \emph{role-typed} (PGY1, INTERN, NURSE) and
+          shift-bounded.
+    \item Shift exceeded $\Rightarrow$ overtime; overtime exceeded
+          $\Rightarrow$ burnout.
+  \end{itemize}
+  \vspace{0.6em}
+  \begin{insight}
+    \head{What an algorithm-driven scheduler must do.}\;
+    Respect roles \;|\; respect precedence \;|\; minimise urgent-patient
+    wait \;|\; honour finite shifts \;|\; report feasibility loudly.
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 4 --- Existing Gaps
+% =============================================================================
+\begin{frame}{Existing Gaps in Current Practice}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+      \head{Static heuristics.}
+      \begin{itemize}
+        \item One scalar priority $\Rightarrow$ entire Pareto regions
+              unreachable.
+        \item No notion of role-aware matching.
+        \item No way to compare two algorithm variants on the
+              same input.
+      \end{itemize}
+    \column{0.5\textwidth}
+      \head{No defensible accountability.}
+      \begin{itemize}
+        \item No feasibility verdict --- shifts silently overrun.
+        \item No per-acuity timing report.
+        \item No record of \emph{which trade-offs} were chosen and
+              \emph{why}.
+      \end{itemize}
+  \end{columns}
+  \vspace{0.4em}
+  \begin{insight}
+    \head{claim:}
+    a scheduling engine that can be \emph{benchmarked} on multiple
+    axes is more valuable than one that ships ``the optimal algorithm''.
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 5 --- Project Goals
+% =============================================================================
+\begin{frame}{Project Goals}
+  \begin{enumerate}
+    \item \head{Correct, deterministic discrete-event scheduler}
+          with two pluggable policy axes (ordering, matching).
+    \item \head{Lexicographic priority abstraction} (\code{LexKey})
+          --- a hand-curated 7-policy catalogue subsuming the
+          legacy scalar ordering.
+    \item \head{Multi-objective evaluation}: Pareto frontier on
+          (urgent-care, makespan, max-OT) + NSGA-II crowding.
+    \item \head{Six-mode benchmark suite} that isolates one
+          algorithmic axis at a time.
+  \end{enumerate}
+\end{frame}
+
+% =============================================================================
+%  Slide 6 --- System Overview (PROJECT_GUIDE.md "big picture" diagram)
+% =============================================================================
+\begin{frame}[fragile]{System Overview --- Input \(\to\) Engine \(\to\) Output}
+  \begin{center}
+    \begin{tcolorbox}[enhanced, breakable=false,
+                      colback=boxbg, colframe=ruleblue,
+                      boxrule=0.4pt, arc=2pt,
+                      left=4pt, right=4pt, top=2pt, bottom=2pt,
+                      width=\dimexpr\textwidth+0.6cm\relax,
+                      enlarge left by=-0.3cm]
+\begin{Verbatim}[fontsize=\scriptsize]
+                       ┌────────────────────────────────────────────┐
+                       │                THE PROJECT                 │
+                       └────────────────────────────────────────────┘
+                                            │
+                ┌───────────────────────────┼───────────────────────────┐
+                │                           │                           │
+                ▼                           ▼                           ▼
+           INPUT DATA                  CORE ENGINE                   OUTPUT
+          (4 JSON files)                 (C++17)                   (terminal)
+                │                           │                           │
+       ┌────────┴─────────┐      ┌──────────┴──────────┐    ┌───────────┴────────┐
+       │ diseases.json    │      │ Ordering Strategy   │    │ Schedule entries   │
+       │ tests.json       │─────▶│  (FCFS / Priority)  │───▶│ (who, what, when)  │
+       │ test_deps.json   │      │ Matching Strategy   │    │ Capacity report    │
+       │ sample_ward.json │      │ (Greedy / Fair / JV)│    │ (overtime info)    │
+       └──────────────────┘      │ Policy + DepGraph   │    │ Benchmark tables   │
+                                 │  (LexKey + Kahn)    │    │ (comparisons)      │
+                                 └─────────────────────┘    └────────────────────┘
+\end{Verbatim}
+    \end{tcolorbox}
+  \end{center}
+  \begin{center}\footnotesize\color{slate}
+    100 patients $\times$ $\sim$20 tests/disease $=$ 2{,}017 task instances at runtime.
+  \end{center}
+\end{frame}
+
+% =============================================================================
+%  Slide 7 --- Architecture (engine core --- the six step inner loop, sourced
+%              from PROJECT_GUIDE.md \S 11)
+% =============================================================================
+\begin{frame}[fragile]{Architecture --- The Engine, One Tick at a Time}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.42\textwidth}
+      \head{Six things every tick.}
+      \begin{enumerate}\small
+        \item Look at unfinished tasks.
+        \item Check rules: which are ready?
+        \item Sort the ready set (ordering).
+        \item Find a free, role-matched worker.
+        \item Assign; move time forward.
+        \item Unblock dependents; loop.
+      \end{enumerate}
+      \vspace{0.4em}
+      \begin{center}\footnotesize\color{slate}
+        Two pluggable axes:\\
+        \head{ordering} (what next) \;|\;
+        \head{matching} (who does it).
+      \end{center}
+    \column{0.55\textwidth}
+      \begin{tcolorbox}[enhanced, breakable=false,
+                        colback=boxbg, colframe=ruleblue,
+                        boxrule=0.4pt, arc=2pt,
+                        left=4pt, right=4pt, top=0pt, bottom=0pt]
+\begin{Verbatim}[fontsize=\tiny]
+   ready tasks (LexKey)
+            ▼
+   ┌────────────────────┐
+   │ OrderingStrategy   │  ◀── what next?
+   │  FCFS / Priority   │
+   └─────────┬──────────┘
+             ▼ drain_up_to(|W|)
+        ╔════════════╗
+        ║ run_engine ║
+        ╚══════╤═════╝
+               ▼ batch
+   ┌────────────────────┐
+   │ MatchingStrategy   │  ◀── who does it?
+   │ Greedy / Fair / JV │
+   └─────────┬──────────┘
+             ▼
+   Schedule · Capacity · Metrics
+\end{Verbatim}
+      \end{tcolorbox}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+%  Slide 8 --- Pipeline Walkthrough (PROJECT_GUIDE.md \S 17 simple data flow)
+% =============================================================================
+\begin{frame}[fragile]{Pipeline Walkthrough --- Data Flow}
+  \begin{center}
+    \begin{tcolorbox}[enhanced, breakable=false,
+                      colback=boxbg, colframe=ruleblue,
+                      boxrule=0.4pt, arc=2pt,
+                      left=4pt, right=4pt, top=2pt, bottom=2pt,
+                      width=\dimexpr\textwidth+0.6cm\relax,
+                      enlarge left by=-0.3cm]
+\begin{Verbatim}[fontsize=\scriptsize]
+   ┌───────────────────┐    ┌──────────────────┐    ╔═════════════════╗    ┌──────────────────┐
+   │   4 JSON catalogs │    │   load_ward()    │    ║                 ║    │                  │
+   │                   │ ──▶│        +         │ ──▶║   run_engine    ║ ──▶│   Output         │
+   │  parsed by loader │    │   build_ward()   │    ║                 ║    │   (terminal)     │
+   └───────────────────┘    └──────────────────┘    ╚═════════════════╝    └──────────────────┘
+   diseases    (418)        tasks      (2017)       ordering  FCFS|Pri     ScheduleEntries
+   tests       (183)        dep_graph  (~3000 e)    matching  G | F | JV   CapacityReport
+   test_deps   (325)        patients   (100)        policy    LexKey       EngineMetrics
+   ward        (100p, 10w)  workers    (10)         seed      uint32_t     bench compare
+\end{Verbatim}
+    \end{tcolorbox}
+  \end{center}
+\end{frame}
+
+% =============================================================================
+%  Slide 9 --- Key Modules
+% =============================================================================
+\begin{frame}{Key Modules}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l}
+      \toprule
+      \head{Module} & \head{Responsibility} \\
+      \midrule
+      \code{data/loader.cpp}        & JSON parsing, ward assembly         \\
+      \code{data\_structures/graph} & Append-only \code{DirectedGraph}    \\
+      \code{scheduler/topological}  & Kahn's cycle check                  \\
+      \code{scheduler/allocator}    & \code{run\_engine}, capacity report \\
+      \code{scheduler/strategies}   & Ordering + matching strategies      \\
+      \code{scheduler/hungarian}    & JV min-cost assignment              \\
+      \code{scheduler/policies}     & LexKey catalogue + Pareto tools     \\
+      \code{bench.cpp}              & Legacy / 2$\times$2 / Pareto / Fair benches \\
+      \code{bench\_adversarial.cpp} & Synthetic pathological scenarios     \\
+      \code{bench\_urgency.cpp}     & Per-acuity-tier timing across 5 matchers \\
+      \code{main.cpp}               & CLI \& dispatch                      \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+\end{frame}
+
+% =============================================================================
+%  Slide 10 --- Data Processing
+% =============================================================================
+\begin{frame}{Data Processing}
+  \head{Inputs.}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l r}
+      \toprule
+      \head{File} & \head{Shape} & \head{Count} \\
+      \midrule
+      \code{diseases.json}          & disease $\to$ test list, base-priority    & 418 \\
+      \code{tests.json}             & test template (role, duration, priority)  & 183 \\
+      \code{test\_dependencies.json} & global must-precede edges                & 325 \\
+      \code{sample\_ward.json}      & 100 patients + 10 workers                 & 100/10 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.6em}
+  \head{Build-time denormalisation.}
+  \begin{itemize}\small
+    \item Each patient gets their own copy of every test in their
+          disease's protocol.
+    \item Task IDs are suffixed by patient (e.g.\ \code{T\_ECG\_P001}
+          $=$ ``ECG for P001'').
+    \item Precedence edges are duplicated inside each patient's
+          sub-graph; \emph{patients never block each other}.
+  \end{itemize}
+\end{frame}
+
+% =============================================================================
+%  Slide 11 --- Algorithms / Models  (1 of 2)
+% =============================================================================
+\begin{frame}{Algorithms (1/2) --- Ordering and Lex Policy}
+  \head{Ordering: \code{FCFS} vs.\ \code{Priority}.}
+  \begin{itemize}
+    \item FCFS = sorted-by-id deque (deterministic FIFO).
+    \item Priority = min-heap on \code{LexKey}.
+  \end{itemize}
+  \vspace{0.3em}
+  \head{LexKey = lexicographic priority key (smaller = more urgent).}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l}
+      \toprule
+      \head{Policy} & \head{Key shape} \\
+      \midrule
+      \code{acuity\_first}        & \code{(acuity, task.priority, hash)} \\
+      \code{priority\_first}      & \code{(task.priority, acuity, hash)} \\
+      \code{acuity\_short\_first} & \code{(acuity, +duration, ..., hash)} \\
+      \code{acuity\_long\_first}  & \code{(acuity, $-$duration, ..., hash)} \\
+      \code{acuity\_old\_first}   & \code{(acuity, $-$age, ..., hash)} \\
+      \code{acuity\_young\_first} & \code{(acuity, $+$age, ..., hash)} \\
+      \code{duration\_first}      & \code{(+duration, ..., hash)} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}\par
+  \begin{center}\footnotesize\color{slate}
+    Why lex over scalar: a scalar weighted-sum cannot pick between two
+    schedules that agree on the dominant axis. Lex keys can.
+  \end{center}
+\end{frame}
+
+% =============================================================================
+%  Slide 12 --- Algorithms / Models (2 of 2)
+% =============================================================================
+\begin{frame}{Algorithms (2/2) --- Matching}
+  \head{Three matchers, one interface.}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l}
+      \toprule
+      \head{Matcher} & \head{Rule (in plain English)} \\
+      \midrule
+      \code{Greedy}                  & Pick the role-matched worker who's free earliest. \\
+      \code{FairGreedy(\(\alpha\))}  & Blend ``earliest free'' with ``most shift left''
+                                       (pure water-fill). \\
+      \code{Hungarian}               & Globally optimal 1-to-1 pairing per tick. \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \begin{insight}
+    \head{Per-tick behaviour matters.}\;
+    Greedy can stack many tasks on one worker in a single tick;
+    Hungarian commits at most one task per worker per tick, so
+    overflow tasks defer to the next tick. This single difference
+    drives the empirical results we'll see next.
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 13 --- Infrastructure / Stack
+% =============================================================================
+\begin{frame}{Infrastructure \& Stack}
+  \head{Build.}
+  Using CMake.
+  \vspace{0.6em}
+  \head{CLI --- one binary, six bench modes.}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l}
+      \toprule
+      \head{Flag} & \head{Bench mode} \\
+      \midrule
+      (none)                    & Legacy: FCFS vs.\ Priority \\
+      \code{--bench-2x2}        & ordering $\times$ matching matrix \\
+      \code{--bench-pareto}     & 7 lex policies $\times$ 5 seeds \\
+      \code{--bench-fair}       & throughput vs.\ intra-role stdev \\
+      \code{--bench-adversarial} & 4 hand-built pathological scenarios \\
+      \code{--bench-urgency}    & per-acuity timing, 5 matchers \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}\par
+\end{frame}
+
+% =============================================================================
+%  Slide 14 --- Experimental Setup
+% =============================================================================
+\begin{frame}{Experimental Setup --- Production Ward}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l}
+      \toprule
+      \head{Parameter} & \head{Value} \\
+      \midrule
+      Patients               & 100 (\code{P001--P100}) \\
+      Acuity mix             & CRIT 23 \;|\; HIGH 28 \;|\; MED 49 \;|\; LOW 0 \\
+      Workers                & 10 (2 NURSE \;|\; 5 INTERN \;|\; 3 PGY1) \\
+      Worker shifts          & 8 $\times$ 480 min, 2 $\times$ 600 min \\
+      Catalogues             & 418 diseases / 183 tests / 325 dep edges \\
+      Per-patient task instances & 2{,}017 \\
+      Total roster capacity  & 5{,}040 min \\
+      Implied workload       & $\sim$25{,}000+ min ($\approx$\,5$\times$ over) \\
+      Total OT (every strat) & 20{,}210 min \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.5em}\par
+  \head{Run discipline.}
+  Every cell deep-copies \code{tasks/workers/patients}; constructs
+  fresh strategy instances; measures wall-clock with
+  \code{steady\_clock}.
+\end{frame}
+
+% =============================================================================
+%  Slide 15 --- Results --- Legacy bench
+% =============================================================================
+\begin{frame}{Results 1 --- Legacy Bench (FCFS vs.\ Priority)}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l r r r}
+      \toprule
+      \head{CRIT+HIGH metric (min)} & \head{FCFS} & \head{Priority} & \head{$\Delta$} \\
+      \midrule
+      First task start              &   134.0   &   155.1   & $+21$ \\
+      Last task finish              & 8{,}481.4 & 3{,}103.9 & $\bm{-5{,}377}$ \\
+      Total overtime                & 20{,}210  & 20{,}210  & 0 \\
+      Capacity breaches             & 1{,}827   & 1{,}820   & $-7$ \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.6em}
+  \begin{insight}
+    \head{Read.}\;
+    Priority delays the \emph{first} urgent task by $\sim$21 min but
+    finishes urgent patients $\sim 5{,}378$~min sooner on average.\\
+    \head{Caveat.}\;
+    Same total work; same total OT --- ordering redistributes who waits.
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 16 --- Comparative Benchmarks --- 2x2 matrix
+% =============================================================================
+\begin{frame}{Results 2 --- 2$\times$2 Ordering $\times$ Matching}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l r r r r r}
+      \toprule
+      \head{Cell} & \head{Combination} & \head{Makespan} & \head{OT}
+                  & \head{Breaches} & \head{Runtime}
+                  & \head{Re-q.} \\
+      \midrule
+      A & FCFS $\times$ Greedy        & 9{,}260 & 20{,}210 & 1{,}827 & 12.0~ms & --- \\
+      B & FCFS $\times$ Hungarian     & 9{,}350 & 20{,}210 & 1{,}830 & 65.5~ms & 7{,}243 \\
+      C & Priority $\times$ Greedy    & \textbf{9{,}260} & 20{,}210 & \textbf{1{,}820} & 15.9~ms & --- \\
+      D & Priority $\times$ Hungarian & 9{,}470 & 20{,}210 & 1{,}819 & 84.2~ms & 6{,}939 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}\par
+  \head{Pairwise deltas.}
+  \begin{itemize}\footnotesize
+    \item A$\to$C (matching held Greedy): $\Delta\text{ms}=0$
+          $\Rightarrow$ ordering-only win is 0~min on makespan.
+    \item A$\to$B (ordering held FCFS): $\Delta\text{ms}=+90$
+          $\Rightarrow$ Hungarian \emph{costs} makespan.
+    \item C$\to$D (Hungarian over Priority): $\Delta\text{ms}=+210$
+          and $\sim$3.6$\times$ wall-clock --- not worth the
+          complexity here.
+  \end{itemize}
+\end{frame}
+
+% =============================================================================
+%  Slide 17 --- Pareto sweep
+% =============================================================================
+\begin{frame}{Results 3 --- Pareto Sweep over Lex Policies}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l r l}
+      \toprule
+      \head{Policy} & \head{Best CRIT+HIGH last (min)} & \head{$\Delta$ vs.\ default} \\
+      \midrule
+      \code{acuity\_young\_first}    & \textbf{2{,}695.9} & $\bm{-408}$ ($-13\%$) \\
+      \code{acuity\_old\_first}      & 2{,}714.4 & $-390$ \\
+      \code{acuity\_first} (default) & 3{,}103.9 & baseline \\
+      \code{priority\_first}         & 3{,}395.0 & $+291$ \\
+      \code{acuity\_short\_first}    & 3{,}562.0 & $+458$ \\
+      \code{acuity\_long\_first}     & 3{,}604.4 & $+500$ \\
+      \code{duration\_first}         & 7{,}910.3 & $+4{,}806$ (worst) \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \begin{insight}
+    \head{Headline.}\;
+    A 2.9$\times$ spread on the urgent-care metric for the
+    \emph{same input}. \code{acuity\_first} and
+    \code{acuity\_young\_first} agree on dim-1 --- only the
+    age tie-break in dim-2 separates them. \emph{No scalar
+    weighted-sum could pick between the two.}
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 18 --- Fairness sweep (bench_results_fair.txt)
+% =============================================================================
+\begin{frame}{Results 4 --- Fairness Sweep (Throughput vs.\ Intra-role Load)}
+  \head{Priority ordering held; matcher varies.}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l r r r r r}
+      \toprule
+      \head{Matcher} & \head{Throughput} & \head{Load stdev}
+                     & \head{Intra-role} & \head{Max-OT} & \head{Runtime} \\
+      \midrule
+      Greedy             & \textbf{0.2178} & 3{,}467.9 & \textbf{7.1}  & 8{,}780 & ~15.9~ms \\
+      Hungarian          & 0.2130          & 3{,}469.2 & 73.5 & 8{,}990 & 84.5~ms \\
+      Fair($\alpha$=0.75) & 0.2178         & 3{,}467.9 & 12.6 & 8{,}780 & 15.7~ms \\
+      Fair($\alpha$=0.50) & 0.2178         & 3{,}468.0 & 21.8 & 8{,}780 & 15.7~ms \\
+      Fair($\alpha$=0.25) & 0.2178         & 3{,}468.1 & 32.0 & 8{,}780 & 15.7~ms \\
+      Fair($\alpha$=0.00) & 0.2178         & 3{,}468.3 & 42.0 & 8{,}780 & 15.7~ms \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \begin{insight}
+    \head{Read.}\;
+    Greedy is the sole strict-Pareto winner on (throughput\,$\uparrow$,
+    intra-role stdev\,$\downarrow$). Every worker starts fresh at $T\!=\!0$,
+    so there is nothing for water-filling to redistribute.
+    The mechanism is correctly wired but inert on this dataset.
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 19 --- Urgency bench --- the strongest signal
+% =============================================================================
+\begin{frame}{Results 5 --- Urgency Bench (per-Acuity Timing)}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l r r r l}
+      \toprule
+      \head{Matcher} & \head{CRIT mean} & \head{$p_{90}$} & \head{Worst CRIT}
+                    \\
+      \midrule
+      Greedy           & 1{,}795 & 2{,}260 & 2{,}415  \\
+      Hungarian        & \textbf{3{,}318} (+85\%) & \textbf{9{,}280} (+311\%)
+                       & \textbf{9{,}470} (4$\times$)  \\
+      Fair($\alpha$=0.75) & 1{,}795 & 2{,}260 & 2{,}415  \\
+      Fair($\alpha$=0.50) & 1{,}795 & 2{,}260 & 2{,}415  \\
+      Fair($\alpha$=0.25) & 1{,}795 & 2{,}260 & 2{,}415  \\
+      Fair($\alpha$=0.00) & 1{,}795 & 2{,}260 & 2{,}415  \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \begin{insight}
+    \head{Hungarian is \emph{actively bad} for critical patients here.}\;
+    1-to-1-per-tick deferral on identical-key CRIT bursts. Greedy
+    stacks them in one tick. Clinical correctness, not just runtime.
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 19 --- Key Insights
+% =============================================================================
+\begin{frame}{Key Insights}
+  \begin{enumerate}
+    \item \head{Ordering moves more than matching} on a roster
+          past capacity. Tie-breaks dominate.
+    \item \head{Globally-optimal-per-tick is the wrong invariant}
+          when priority keys collide. Greedy stacks; Hungarian defers.
+    \item \head{Fair-mode water-filling needs heterogeneous initial
+          load to engage.} Mechanism correct; dataset doesn't exercise it.
+    \item \head{No scheduling change creates capacity.} 20{,}210~min
+          of overtime are invariant.
+  \end{enumerate}
+  \vspace{0.6em}
+  \begin{insight}
+    \head{Recommended production config.}\;
+    \code{Priority} $+$ \code{Greedy} $+$ \code{acuity\_young\_first} LexPolicy.\\
+    \head{Recommended staffing change.}\;
+    Add nurses. The roster is at $\sim$5$\times$ overload.
+  \end{insight}
+\end{frame}
+
+% =============================================================================
+%  Slide 20 --- Failure Cases
+% =============================================================================
+\begin{frame}{Failure Cases \& Adversarial Behaviour}
+  \head{Four hand-built pathological wards.}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{l l}
+      \toprule
+      \head{Scenario} & \head{Breaks} \\
+      \midrule
+      \code{all-critical}            & Priority degenerates to tie-hash (every key=11) \\
+      \code{long-chain}              & Parallelism = 1; matchers can't differentiate \\
+      \code{single-role-bottleneck}  & All work on one worker; Hungarian wastes ticks \\
+      \code{tight-shift}             & Zero slack; perfect-split with no margin \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}\par
+  \head{Schedule quality is identical across all five strategies on every scenario.}
+  \head{Only runtime differs.}\;
+  Hungarian costs 2--4$\times$ Greedy with no schedule improvement.
+\end{frame}
+
+% =============================================================================
+%  Slide 21 --- Limitations
+% =============================================================================
+\begin{frame}{Limitations}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+      \head{Scope cuts (intentional).}
+      \begin{itemize}
+        \item Static acuity (no re-triage).
+        \item Deterministic durations.
+        \item Single-snapshot model.
+        \item Per-disease (not per-task) priority.
+        \item Hardcoded role / acuity enums.
+      \end{itemize}
+    \column{0.5\textwidth}
+      \head{Engineering / empirical.}
+      \begin{itemize}
+        \item No automated test suite (CTest).
+        \item No reusable library target.
+        \item Findings conditional on one production ward.
+        \item Acuity mix is critical-skewed (no LOW patients).
+        \item Adversarial bench bypasses
+              \code{--overtime-threshold}.
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+%  Slide 22 --- Future Improvements
+% =============================================================================
+\begin{frame}{Future Improvements}
+  \begin{enumerate}
+    \item \head{Stack-aware Hungarian.} Restore the optimality
+          guarantee while eliminating CRIT deferrals.
+    \item \head{Acuity escalation path.} Re-triage event handler;
+          re-key the priority heap mid-run.
+    \item \head{Probabilistic durations.} Monte-Carlo schedules;
+          report mean / $p_{95}$ rather than a single deterministic
+          schedule.
+    \item \head{Reusable library + CTest} for the JV solver,
+          topological sort, \code{compute\_objectives}.
+    \item \head{Multi-instance benchmarking.} 5--10 ward snapshots
+          spanning roster mixes.
+    \item \head{Clinical validation} with a practising cardiologist.
+  \end{enumerate}
+\end{frame}
+
+% =============================================================================
+%  Slide 23 --- Conclusion
+% =============================================================================
+\begin{frame}{Conclusion}
+  \head{What I implemented.}
+  \begin{itemize}\small
+    \item A discrete-event scheduler with two pluggable policy axes
+          (ordering, matching).
+    \item Three matchers (Greedy, FairGreedy, Hungarian-JV) and a
+          seven-policy lexicographic priority catalogue.
+    \item A multi-objective Pareto frontier with NSGA-II crowding
+          selection.
+    \item A six-mode benchmark suite over a 100-patient, 10-worker ward.
+  \end{itemize}
+  \vspace{0.3em}
+  \head{What the experiments showed.}
+  \begin{itemize}\small
+    \item On this dataset, the ordering axis moves the urgent-care
+          metric more than the matching axis does.
+    \item Lex tie-breaks reach Pareto points that a scalar
+          weighted-sum priority cannot.
+    \item Hungarian's per-tick optimality regressed CRIT timing on
+          this dataset --- a 1-to-1-per-tick contract issue, not a
+          solver bug.
+    \item Total overtime is invariant across every strategy --- a
+          workforce question, not an algorithm question.
+  \end{itemize}
+\end{frame}
+
+% =============================================================================
+%  Slide 24 --- Discussion (clean, name/institute already on title slide)
+% =============================================================================
+\begin{frame}[plain]
+  \vfill
+  \begin{center}
+    \textcolor{ruleblue}{\rule{0.42\paperwidth}{0.6pt}}\\[1.0em]
+    {\sffamily\Huge\bfseries\color{ruleblue} Thank you.}\\[0.8em]
+    {\sffamily\LARGE\color{slate} Open for discussion.}\\[1.0em]
+    \textcolor{ruleblue}{\rule{0.42\paperwidth}{0.6pt}}
+  \end{center}
+  \vfill
+\end{frame}
+
+\end{document}

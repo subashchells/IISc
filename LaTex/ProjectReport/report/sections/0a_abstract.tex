@@ -1,0 +1,89 @@
+% ----------------------------------------------------------------------------
+%  Abstract
+% ----------------------------------------------------------------------------
+\vspace*{0.5cm}
+\begin{center}
+  {\Large\scshape Abstract}\\[0.3em]
+  \rule{0.25\textwidth}{0.4pt}
+\end{center}
+\vspace{0.8em}
+
+\noindent
+\textbf{CardioScheduler} is a C++ task-allocation engine for
+cardiology hospital wards that decouples \emph{which task to consider next}
+(ordering) from \emph{which worker takes it} (matching) into pluggable
+strategy interfaces.
+
+\vspace{0.9em}
+\noindent\textbf{What was built.}
+\begin{itemize}
+  \item Discrete-event scheduler with two pluggable policy axes
+        (ordering, matching).
+  \item Three matchers: \code{Greedy}, \code{FairGreedy($\alpha$)},
+        \code{Hungarian}.
+  \item Seven-policy lexicographic priority catalogue subsuming the
+        legacy scalar ordering.
+  \item Multi-objective Pareto frontier with NSGA-II crowding
+        selection on (urgent-care, makespan, max overtime).
+  \item Six-mode bench suite (legacy, 2$\times$2, Pareto, fairness,
+        adversarial, urgency), self-contained ward-editor web UI.
+\end{itemize}
+
+\vspace{0.9em}
+\noindent\textbf{Production-ward sample dataset.}
+\begin{itemize}
+  \item 100 patients and 10 staff members on the sample ward.
+  \item Drawn from a catalogue of 418 diseases, 183 tests, and 325
+        inter-test dependency edges.
+  \item Produces 2{,}017 per-patient task instances at runtime.
+\end{itemize}
+
+\vspace{0.9em}
+\noindent\textbf{Three headline findings.}
+\begin{itemize}
+  \item \textbf{Ordering moves more than matching.}
+        Switching the lex-policy tie-break from \code{acuity\_first}
+        to \code{acuity\_young\_first} cuts the mean last-finish of
+        urgent (CRITICAL+HIGH) patients from 3{,}104 to 2{,}696
+        minutes ($-13\%$). No scalar weighted-sum priority can
+        recover this.
+  \item \textbf{Hungarian regresses CRIT timing.}
+        Although globally optimal per tick, Hungarian increases
+        mean CRITICAL last-finish by $+85\%$ and $p_{90}$ by
+        $+311\%$ vs.\ Greedy, at $\sim\!3.6\times$ wall-clock.
+        Mechanism: one-task-per-worker-per-tick deferrals on
+        identical priority keys.
+  \item \textbf{No scheduling change creates capacity.}
+        20{,}210~min of overtime are invariant across every
+        strategy --- the ward's tasks are assigned by guideline
+        rather than by real-world work allocation.
+\end{itemize}
+
+\vfill
+
+\noindent\rule{\textwidth}{0.4pt}
+\vspace{0.5em}
+
+\noindent
+\textsc{Keywords.}\;
+Discrete-event scheduling
+\textbullet{}\,
+cardiac-ward task allocation
+\textbullet{}\,
+lexicographic priority
+\textbullet{}\,
+Hungarian assignment
+\textbullet{}\,
+multi-objective Pareto frontier
+\textbullet{}\,
+NSGA-II crowding
+\textbullet{}\,
+Kahn topological sort
+\textbullet{}\,
+fairness--throughput trade-off
+\textbullet{}\,
+capacity feasibility
+\textbullet{}\,
+C++.
+
+\clearpage

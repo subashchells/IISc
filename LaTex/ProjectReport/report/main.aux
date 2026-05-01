@@ -1,0 +1,166 @@
+\relax 
+\providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
+\@nameuse{bbl@beforestart}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\bibstyle{ieeetr}
+\babel@aux{english}{}
+\citation{graham1969bounds,clrs}
+\citation{jonker1987shortest}
+\citation{deb2002nsga,ehrgott2005multicriteria}
+\citation{esi2005}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{5}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{5}{Introduction}{section.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Why this problem}{5}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}What we built}{5}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Why six benchmarks instead of one ``best'' algorithm}{5}{subsection.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Where to find what in this report}{5}{subsection.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Background}{5}{section.2}\protected@file@percent }
+\newlabel{sec:background}{{2}{5}{Background}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Constrained job scheduling}{5}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Optimal one-to-one matching (Hungarian)}{5}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Picking from many candidates (multi-objective)}{5}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Why a list of integers, not a single number}{5}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Statement}{6}{section.3}\protected@file@percent }
+\newlabel{sec:problem}{{3}{6}{Problem Statement}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}What we have}{6}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}What ``a schedule'' means}{6}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}What ``a good schedule'' means}{6}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}What we don't try to handle}{6}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Objectives and Contributions}{6}{section.4}\protected@file@percent }
+\newlabel{sec:objectives}{{4}{6}{Objectives and Contributions}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}What the project set out to do}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}What this report adds}{6}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Out of scope}{7}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}System Architecture}{7}{section.5}\protected@file@percent }
+\newlabel{sec:architecture}{{5}{7}{System Architecture}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Big-picture data flow}{7}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Five-layer stack}{7}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Module dependency}{7}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Type-level summary}{8}{subsection.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Core types travelling through the engine.}}{8}{table.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:core_types}{{1}{8}{Core types travelling through the engine}{table.caption.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Methodology}{8}{section.6}\protected@file@percent }
+\newlabel{sec:methodology}{{6}{8}{Methodology}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Ordering --- ``what task next?''}{8}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Matching --- ``who does the task?''}{8}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Priority key --- the tie-breaker family}{8}{subsection.6.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The seven priority policies the system ships with.}}{9}{table.caption.2}\protected@file@percent }
+\newlabel{tab:lex_policies}{{2}{9}{The seven priority policies the system ships with}{table.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Picking the best schedule from many}{9}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Capacity feasibility}{9}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Pipeline Design}{9}{section.7}\protected@file@percent }
+\newlabel{sec:pipeline}{{7}{9}{Pipeline Design}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Stage map}{9}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Stage 1 --- Load}{9}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Stage 2 --- Assemble}{9}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Stage 3 --- Schedule}{10}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Stage 4 --- Evaluate}{10}{subsection.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}Discrete-event commit semantics}{10}{subsection.7.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Data Flow}{10}{section.8}\protected@file@percent }
+\newlabel{sec:dataflow}{{8}{10}{Data Flow}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}What goes in (abbreviated)}{10}{subsection.8.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}{\ignorespaces JSON shape excerpts.}}{10}{lstlisting.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Sizes after each pipeline stage}{11}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}What changes during scheduling}{11}{subsection.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}How runs stay deterministic}{11}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Experimental Setup}{11}{section.9}\protected@file@percent }
+\newlabel{sec:setup}{{9}{11}{Experimental Setup}{section.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Production ward}{11}{subsection.9.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Production-ward parameters (deliberate stress configuration; see \S  \ref {sec:results}).}}{11}{table.caption.4}\protected@file@percent }
+\newlabel{tab:project_snapshot}{{3}{11}{Production-ward parameters (deliberate stress configuration; see \S \ref {sec:results})}{table.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Build line used for benchmarks}{11}{subsection.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Six bench modes}{12}{subsection.9.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Bench modes, the question each isolates, typical wall-clock.}}{12}{table.caption.5}\protected@file@percent }
+\newlabel{tab:bench_modes}{{4}{12}{Bench modes, the question each isolates, typical wall-clock}{table.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.4}Ablation matrix}{12}{subsection.9.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Per-bench ablation matrix --- the one varying axis is \textbf  {bold}.}}{12}{table.caption.6}\protected@file@percent }
+\newlabel{tab:ablation_matrix}{{5}{12}{Per-bench ablation matrix --- the one varying axis is \textbf {bold}}{table.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.5}Reproducibility}{12}{subsection.9.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Results}{12}{section.10}\protected@file@percent }
+\newlabel{sec:results}{{10}{12}{Results}{section.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1}Result 1 --- FCFS vs.\ Priority (legacy bench)}{13}{subsection.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2}Result 2 --- Ordering vs.\ matching (2$\times $2 bench)}{13}{subsection.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.3}Result 3 --- Best lexicographic priority policy}{13}{subsection.10.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.4}Result 4 --- Fairness sweep}{14}{subsection.10.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.5}Result 5 --- Per-acuity timing (urgency bench)}{14}{subsection.10.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.6}Result 6 --- Adversarial wards}{14}{subsection.10.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.7}Recommended configuration}{14}{subsection.10.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}Evaluation Metrics}{14}{section.11}\protected@file@percent }
+\newlabel{sec:metrics}{{11}{14}{Evaluation Metrics}{section.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}What each stakeholder cares about}{14}{subsection.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2}All metrics in one table}{15}{subsection.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.3}Why these specific definitions}{15}{subsection.11.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}Comparative Analysis}{15}{section.12}\protected@file@percent }
+\newlabel{sec:comparative}{{12}{15}{Comparative Analysis}{section.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.1}Greedy vs.\ Hungarian, head-to-head}{15}{subsection.12.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.2}Why the textbook is wrong here}{15}{subsection.12.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.3}Fairness: who carries the load?}{15}{subsection.12.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.4}Why no algorithm can fix this}{16}{subsection.12.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {13}Ablation Studies and Observations}{16}{section.13}\protected@file@percent }
+\newlabel{sec:ablation}{{13}{16}{Ablation Studies and Observations}{section.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1}Vary ordering only}{16}{subsection.13.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.2}Vary matcher only}{16}{subsection.13.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.3}Vary priority policy only}{16}{subsection.13.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.4}Vary fairness knob ($\alpha $) only}{16}{subsection.13.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.5}Adversarial scenarios}{17}{subsection.13.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Four hand-built wards. Per-row fastest \textbf  {bold}. Schedule quality identical across all five strategies on every row.}}{17}{table.caption.14}\protected@file@percent }
+\newlabel{tab:adversarial_summary}{{6}{17}{Four hand-built wards. Per-row fastest \textbf {bold}. Schedule quality identical across all five strategies on every row}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.6}Four take-aways}{17}{subsection.13.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {14}Error Analysis}{17}{section.14}\protected@file@percent }
+\newlabel{sec:error}{{14}{17}{Error Analysis}{section.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.1}The big regression: Hungarian on critical patients}{17}{subsection.14.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.2}Silent task drop}{17}{subsection.14.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.3}Easy mistakes when reading benches}{17}{subsection.14.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.4}Configuration drifts caught by the bench layer}{17}{subsection.14.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.5}Failure-mode summary}{18}{subsection.14.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Failure modes and their clinical impact.}}{18}{table.caption.15}\protected@file@percent }
+\newlabel{tab:failure_catalogue}{{7}{18}{Failure modes and their clinical impact}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {15}Engineering Decisions}{18}{section.15}\protected@file@percent }
+\newlabel{sec:engineering}{{15}{18}{Engineering Decisions}{section.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {16}Scalability and Performance}{18}{section.16}\protected@file@percent }
+\newlabel{sec:perf}{{16}{18}{Scalability and Performance}{section.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {16.1}How long each piece takes}{18}{subsection.16.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {16.2}Wall-clock per bench mode}{19}{subsection.16.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {16.3}Memory}{19}{subsection.16.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {16.4}What scaling looks like}{19}{subsection.16.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {17}Limitations}{19}{section.17}\protected@file@percent }
+\newlabel{sec:limitations}{{17}{19}{Limitations}{section.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.1}What we deliberately did not model}{19}{subsection.17.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.2}Engineering gaps}{19}{subsection.17.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {17.3}What the data can and can't tell us}{19}{subsection.17.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {18}Future Work}{19}{section.18}\protected@file@percent }
+\newlabel{sec:future}{{18}{19}{Future Work}{section.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.1}Algorithm}{19}{subsection.18.1}\protected@file@percent }
+\bibdata{references}
+\bibcite{graham1969bounds}{{1}{}{{}}{{}}}
+\bibcite{clrs}{{2}{}{{}}{{}}}
+\bibcite{jonker1987shortest}{{3}{}{{}}{{}}}
+\bibcite{deb2002nsga}{{4}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.2}Engineering}{20}{subsection.18.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {18.3}Empirical}{20}{subsection.18.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {19}Conclusion}{20}{section.19}\protected@file@percent }
+\newlabel{sec:conclusion}{{19}{20}{Conclusion}{section.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {19.1}What was implemented}{20}{subsection.19.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {19.2}What the experiments showed}{20}{subsection.19.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {19.3}Closing note}{20}{subsection.19.3}\protected@file@percent }
+\bibcite{ehrgott2005multicriteria}{{5}{}{{}}{{}}}
+\bibcite{esi2005}{{6}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Command-line reference}{21}{appendix.A}\protected@file@percent }
+\newlabel{app:cli}{{A}{21}{Command-line reference}{appendix.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}\texttt  {\small  cardio\_scheduler --help}}{21}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Mode dispatch}{21}{subsection.A.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Flag $\to $ mode $\to $ bench function dispatch.}}{21}{table.caption.17}\protected@file@percent }
+\newlabel{tab:cli_dispatch}{{8}{21}{Flag $\to $ mode $\to $ bench function dispatch}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Data-directory resolution}{21}{subsection.A.3}\protected@file@percent }
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\@writefile{toc}{\contentsline {section}{\numberline {B}Supplementary Notes}{22}{appendix.B}\protected@file@percent }
+\newlabel{app:supplementary}{{B}{22}{Supplementary Notes}{appendix.B}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}The four adversarial scenarios}{22}{subsection.B.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Fair-mode does work --- here's a synthetic check}{22}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Per-worker minutes on the production ward}{22}{subsection.B.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Reproducing the captured numbers}{22}{subsection.B.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Mini-glossary}{22}{subsection.B.5}\protected@file@percent }
+\gdef \@abspage@last{23}

@@ -1,0 +1,59 @@
+% ----------------------------------------------------------------------------
+%  16. Scalability and Performance
+% ----------------------------------------------------------------------------
+\section{Scalability and Performance}
+\label{sec:perf}
+
+\subsection{How long each piece takes}
+
+\begin{itemize}
+  \item Loading the four JSON files: linear in file size.
+  \item Building per-patient tasks: linear in (patients $\times$
+        tests-per-disease).
+  \item Cycle check: linear in (nodes + edges).
+  \item Scheduling loop:
+        \begin{itemize}
+          \item Greedy: linear in workers per tick.
+          \item Hungarian: cubic in workers per tick.
+        \end{itemize}
+  \item Pareto filter: $O(K^2)$ for $K$ candidates ($K\!=\!35$ in
+        the policy sweep).
+\end{itemize}
+
+\subsection{Wall-clock per bench mode}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{l r}
+\toprule
+\textbf{Bench} & \textbf{Wall-clock} \\
+\midrule
+Legacy             & $\sim$2.5 min (printing the full schedule) \\
+2$\times$2 matrix  & $\sim$30~ms \\
+Pareto sweep       & $\sim$80~ms \\
+Fairness sweep     & $\sim$25~ms \\
+Adversarial        & $\sim$3~ms \\
+Urgency            & $\sim$25~ms \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Memory}
+
+\begin{itemize}
+  \item Per-task record $\sim$120~bytes; the 2{,}017-task map is
+        $\sim$240~KB.
+  \item Bench layer makes 4--6 deep copies of ward state; resident
+        set never exceeds a few MB.
+\end{itemize}
+
+\subsection{What scaling looks like}
+
+\begin{itemize}
+  \item Greedy stays linear in patients --- a 1{,}000-patient ward
+        would take 15--25 minutes wall-clock.
+  \item Hungarian's cubic-in-workers cost makes it less attractive
+        as the roster grows; on a 50-worker roster the bench would
+        push past half an hour.
+\end{itemize}

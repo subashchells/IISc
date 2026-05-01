@@ -1,0 +1,40 @@
+% ----------------------------------------------------------------------------
+%  18. Future Work
+% ----------------------------------------------------------------------------
+\section{Future Work}
+\label{sec:future}
+
+\subsection{Algorithm}
+
+\begin{itemize}
+  \item Let Hungarian stack tasks on the same worker per tick.
+        Removes the critical-patient regression.
+  \item Allow a patient's acuity to change mid-shift, with a
+        re-key of the priority heap.
+  \item Make test durations a distribution rather than a fixed
+        number; report mean and 95\textsuperscript{th} percentile
+        schedule outputs.
+\end{itemize}
+
+\subsection{Engineering}
+
+\begin{itemize}
+  \item Split the engine into a library, then add unit tests over
+        the matchers, the cycle-check, and the scoring functions.
+  \item Validate \code{sample\_ward.json} against a JSON schema.
+  \item Run the six benches in parallel.
+  \item Stamp the binary with the git commit hash.
+\end{itemize}
+
+\subsection{Empirical}
+
+\begin{itemize}
+  \item Test on more wards: nurse-heavy, intern-heavy, weekend,
+        mid-shift restart.
+  \item Have a practising cardiologist review the urgency bench's
+        worst-case patient ranking.
+  \item Compare against a small-instance MILP solver to bound how
+        much our heuristics leave on the table.
+  \item Add a snapshot with LOW-acuity patients (the current
+        sample has zero).
+\end{itemize}

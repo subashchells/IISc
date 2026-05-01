@@ -1,0 +1,86 @@
+% ----------------------------------------------------------------------------
+%  Appendix B: Supplementary notes
+% ----------------------------------------------------------------------------
+\section{Supplementary Notes}
+\label{app:supplementary}
+
+\subsection{The four adversarial scenarios}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Scenario} & \textbf{What it breaks} \\
+\midrule
+\code{all-critical} (20p, 5w)  &
+  Every priority key is identical $\Rightarrow$ Priority degenerates
+  to the tie-hash. \\
+\code{long-chain} (1p, 5w)     &
+  25 strictly serial tasks $\Rightarrow$ no parallelism; matcher
+  choice can't help. \\
+\code{single-role-bottleneck} (15p, 5w) &
+  Only one PGY1 on the roster, all work needs PGY1. \\
+\code{tight-shift} (12p, 4w)   &
+  Shifts sized to the perfect-split share; zero slack. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Fair-mode does work --- here's a synthetic check}
+
+A 3-nurse synthetic test where workers start at unequal load:
+$W_1=200$~min, $W_2=100$~min, $W_3=0$~min already worked.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{l r r r r}
+\toprule
+\textbf{Strategy} & \textbf{$W_1$} & \textbf{$W_2$} & \textbf{$W_3$}
+                  & \textbf{Makespan} \\
+\midrule
+Greedy            & 320 & 220 & 120 & baseline \\
+Fair($\alpha=0$)  & 200 & 220 & 240 & baseline + 120~min \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Fair($\alpha\!=\!0$) actively pushes new work toward the under-loaded
+$W_3$, at a 120-min makespan cost. The production ward just doesn't
+exercise this case.
+
+\subsection{Per-worker minutes on the production ward}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize,numbers=none,frame=single,
+                   backgroundcolor=\color{boxbg}]
+Greedy:        W001(Nurse)=9260  W002(Nurse)=9255  W003(Intern)=260
+               W004(Intern)=240  W005(PGY1)=1410   W006(PGY1)=1390
+               W007(PGY1)=1415   W008(Intern)=240  W009(Intern)=240
+               W010(Intern)=240
+\end{lstlisting}
+
+\noindent
+Two nurses do 9{,}260 / 9{,}255 min; three interns sit at 240~min ---
+a 39$\times$ across-role ratio. Structural; no matcher can move it.
+
+\subsection{Reproducing the captured numbers}
+
+\begin{itemize}
+  \item Compile with the build line in \S\ref{sec:setup}.
+  \item Run from \code{src/} or repo root.
+  \item Pin \code{sample\_ward.json} to the 2026-04-29 snapshot.
+\end{itemize}
+
+\subsection{Mini-glossary}
+
+\begin{itemize}
+  \item \textbf{Acuity:} per-patient urgency tier (CRIT, HIGH,
+        MED, LOW); smaller is more urgent.
+  \item \textbf{Priority list:} list of ints compared left-to-right;
+        smaller is more urgent on every dimension.
+  \item \textbf{Makespan:} total schedule length.
+  \item \textbf{Spread selection:} pick frontier points that span
+        all three score axes, not just one corner.
+\end{itemize}

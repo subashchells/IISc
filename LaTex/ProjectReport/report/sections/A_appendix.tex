@@ -1,0 +1,54 @@
+% ----------------------------------------------------------------------------
+%  Appendix A: Command-line reference
+% ----------------------------------------------------------------------------
+\section{Command-line reference}
+\label{app:cli}
+
+\subsection{\code{cardio\_scheduler --help}}
+
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small,
+                   numbers=none,frame=single,backgroundcolor=\color{boxbg}]
+Usage: cardio_scheduler [options] [data_dir]
+
+  data_dir                 directory of the four JSON files
+                           (default: ./data, falls back to ./src/data)
+
+  --bench-2x2              FCFS/Priority * Greedy/Hungarian matrix
+  --bench-pareto           Pareto sweep over lex policies x seeds
+  --bench-fair             throughput vs worker-load stdev
+  --bench-adversarial      synthetic wards built to break each algo
+  --bench-urgency          per-acuity timing across 5 matchers
+
+  --overtime-threshold N   OT budget (min) before INFEASIBLE
+  -h, --help               print this message
+\end{lstlisting}
+
+\subsection{Mode dispatch}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Flag $\to$ mode $\to$ bench function dispatch.}
+\label{tab:cli_dispatch}
+\begin{tabular}{l l l}
+\toprule
+\textbf{Flag} & \textbf{Mode} & \textbf{Function} \\
+\midrule
+(none)                    & \code{LEGACY}             & \code{run\_legacy\_bench} \\
+\code{--bench-2x2}        & \code{BENCH\_2X2}         & \code{run\_2x2\_bench} \\
+\code{--bench-pareto}     & \code{BENCH\_PARETO}      & \code{run\_pareto\_sweep} \\
+\code{--bench-fair}       & \code{BENCH\_FAIR}        & \code{run\_fairness\_bench} \\
+\code{--bench-adversarial} & \code{BENCH\_ADVERSARIAL} & \code{run\_adversarial\_bench} \\
+\code{--bench-urgency}    & \code{BENCH\_URGENCY}     & \code{run\_urgency\_bench} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Data-directory resolution}
+
+\begin{itemize}
+  \item Probes \code{./data} first; falls back to
+        \code{./src/data}.
+  \item Picks the first that contains \code{diseases.json}.
+  \item On failure: exits with code 2 and an informative error.
+\end{itemize}

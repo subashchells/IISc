@@ -1,0 +1,63 @@
+
+\documentclass[11pt,a4paper]{article}
+
+\input{preamble}
+
+\begin{document}
+
+% ----------------------------------------------------------------------------
+%  Title page
+% ----------------------------------------------------------------------------
+\input{sections/00_titlepage}
+
+% ----------------------------------------------------------------------------
+%  Abstract (keywords folded into the abstract footer)
+% ----------------------------------------------------------------------------
+\input{sections/0a_abstract}
+
+% ----------------------------------------------------------------------------
+%  Table of contents (compact two-column variant on a single page)
+% ----------------------------------------------------------------------------
+{\hypersetup{linkcolor=slate}%
+ \begingroup
+   \renewcommand{\baselinestretch}{0.95}\selectfont
+   \tableofcontents
+ \endgroup}
+\clearpage
+
+% ----------------------------------------------------------------------------
+%  Body sections
+% ----------------------------------------------------------------------------
+\input{sections/01_introduction}
+\input{sections/02_background}
+\input{sections/03_problem_statement}
+\input{sections/04_objectives_contributions}
+\input{sections/05_system_architecture}
+\input{sections/06_methodology}
+\input{sections/07_pipeline_design}
+\input{sections/08_data_flow}
+\input{sections/09_experimental_setup}
+\input{sections/10_results}
+\input{sections/11_evaluation_metrics}
+\input{sections/12_comparative_analysis}
+\input{sections/13_ablation_observations}
+\input{sections/14_error_analysis}
+\input{sections/15_engineering_decisions}
+\input{sections/16_scalability_performance}
+\input{sections/17_limitations}
+\input{sections/18_future_work}
+\input{sections/19_conclusion}
+
+% ----------------------------------------------------------------------------
+%  References
+% ----------------------------------------------------------------------------
+\bibliography{references}
+
+% ----------------------------------------------------------------------------
+%  Appendix
+% ----------------------------------------------------------------------------
+\appendix
+\input{sections/A_appendix}
+\input{sections/B_supplementary}
+
+\end{document}

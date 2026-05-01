@@ -1,0 +1,69 @@
+% ----------------------------------------------------------------------------
+%  8. Data Flow
+% ----------------------------------------------------------------------------
+\section{Data Flow}
+\label{sec:dataflow}
+
+\subsection{What goes in (abbreviated)}
+
+\begin{lstlisting}[language=Java,basicstyle=\ttfamily\small,
+                   numbers=none,frame=single,backgroundcolor=\color{boxbg},
+                   caption={JSON shape excerpts.},captionpos=b]
+// diseases.json
+{ "id":"D001", "name":"STEMI", "base_priority":1,
+  "test_ids":["T_ECG","T_TROP","T_ECHO", ...] }
+
+// tests.json
+{ "id":"T_ECG", "required_role":"NURSE",
+  "duration_minutes":10, "priority":1 }
+
+// test_dependencies.json
+{ "from":"T_TROP", "to":"T_ECHO" }
+
+// sample_ward.json
+{ "id":"P001", "age":55, "acuity":"CRITICAL",
+  "disease_id":"D001", ... }
+\end{lstlisting}
+
+\subsection{Sizes after each pipeline stage}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{l r}
+\toprule
+\textbf{Stage} & \textbf{Count} \\
+\midrule
+Diseases loaded                 & 418 \\
+Tests loaded                    & 183 \\
+Dependency edges (global)       & 325 \\
+Patients on the ward            & 100 \\
+Workers on the roster           & 10 \\
+Per-patient task instances      & 2{,}017 \\
+Per-patient dependency edges    & $\sim$3{,}000 \\
+Schedule entries (per run)      & 2{,}017 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{What changes during scheduling}
+
+\begin{itemize}
+  \item Each worker's ``next free at'' time is advanced.
+  \item Each worker's shift remaining decreases (can go negative
+        $\Rightarrow$ overtime).
+  \item Each task is marked DONE and stamped with its assigned
+        worker.
+\end{itemize}
+
+\noindent
+The bench layer makes a deep copy of all this state before every
+cell, since the engine mutates it in place.
+
+\subsection{How runs stay deterministic}
+
+\begin{itemize}
+  \item Hash-map iteration is reproducible (we sort).
+  \item Tied priorities resolve via a seeded hash of the task ID.
+  \item The matcher's tie-break (smaller column wins) is stable.
+\end{itemize}

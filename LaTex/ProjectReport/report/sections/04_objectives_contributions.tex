@@ -1,0 +1,40 @@
+% ----------------------------------------------------------------------------
+%  4. Objectives and Contributions
+% ----------------------------------------------------------------------------
+\section{Objectives and Contributions}
+\label{sec:objectives}
+
+\subsection{What the project set out to do}
+
+\begin{itemize}
+  \item Build a deterministic scheduler with two pluggable axes
+        (ordering, matching) so each can be tested on its own.
+  \item Add a multi-objective scoring step (urgent-care, makespan,
+        worst overtime).
+  \item Wrap everything in a six-mode benchmark suite.
+\end{itemize}
+
+\subsection{What this report adds}
+
+\begin{itemize}
+  \item A list-of-integers priority key that subsumes the legacy
+        scalar formula and exposes seven hand-curated tie-break
+        policies.
+  \item A clean separation between the matcher's cost matrix and
+        the priority policy --- so changing the priority changes
+        queue order but not the matcher.
+  \item Empirical evidence that Hungarian regresses critical-
+        patient timing by $+85\%$ on the production ward (a
+        clinical-correctness finding).
+  \item The structural diagnosis: 20{,}210~min of overtime are
+        invariant across every algorithm. The fix is staffing,
+        not algorithm.
+  \item A reproducibility package: deterministic, with one binary and a benchmarking suite.
+\end{itemize}
+
+\subsection{Out of scope}
+
+\begin{itemize}
+  \item No claim to optimise overtime; it is structurally invariant.
+  \item No automatic re-triage; the system flags trade-offs to a human.
+\end{itemize}

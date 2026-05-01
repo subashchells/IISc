@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{graham1969bounds}
+R.~L. Graham, ``Bounds on multiprocessing timing anomalies,'' {\em SIAM Journal
+  on Applied Mathematics}, vol.~17, no.~2, pp.~416--429, 1969.
+
+\bibitem{clrs}
+T.~H. Cormen, C.~E. Leiserson, R.~L. Rivest, and C.~Stein, {\em Introduction to
+  Algorithms}.
+\newblock MIT Press, 4~ed., 2022.
+
+\bibitem{jonker1987shortest}
+R.~Jonker and A.~Volgenant, ``A shortest augmenting path algorithm for dense
+  and sparse linear assignment problems,'' {\em Computing}, vol.~38, no.~4,
+  pp.~325--340, 1987.
+
+\bibitem{deb2002nsga}
+K.~Deb, A.~Pratap, S.~Agarwal, and T.~Meyarivan, ``A fast and elitist
+  multiobjective genetic algorithm: {NSGA-II},'' {\em IEEE Transactions on
+  Evolutionary Computation}, vol.~6, no.~2, pp.~182--197, 2002.
+
+\bibitem{ehrgott2005multicriteria}
+M.~Ehrgott, {\em Multicriteria Optimization}.
+\newblock Springer, 2~ed., 2005.
+
+\bibitem{esi2005}
+N.~Gilboy, P.~Tanabe, D.~A. Travers, A.~M. Rosenau, and D.~R. Eitel,
+  ``Emergency {Severity} {Index}, version~4: Implementation handbook,'' Tech.
+  Rep. AHRQ Publication No.~05-0046-2, Agency for Healthcare Research and
+  Quality, Rockville, MD, May 2005.
+
+\end{thebibliography}

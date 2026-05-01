@@ -1,0 +1,21 @@
+\frametitle{Pipeline Walkthrough --- Data Flow}
+\begin{center}
+    \begin{tcolorbox}[enhanced, breakable=false,
+                      colback=boxbg, colframe=ruleblue,
+                      boxrule=0.4pt, arc=2pt,
+                      left=4pt, right=4pt, top=2pt, bottom=2pt,
+                      width=\dimexpr\textwidth+0.6cm\relax,
+                      enlarge left by=-0.3cm]
+\begin{Verbatim}[fontsize=\scriptsize]
+   ┌───────────────────┐    ┌──────────────────┐    ╔═════════════════╗    ┌──────────────────┐
+   │   4 JSON catalogs │    │   load_ward()    │    ║                 ║    │                  │
+   │                   │ ──▶│        +         │ ──▶║   run_engine    ║ ──▶│   Output         │
+   │  parsed by loader │    │   build_ward()   │    ║                 ║    │   (terminal)     │
+   └───────────────────┘    └──────────────────┘    ╚═════════════════╝    └──────────────────┘
+   diseases    (418)        tasks      (2017)       ordering  FCFS|Pri     ScheduleEntries
+   tests       (183)        dep_graph  (~3000 e)    matching  G | F | JV   CapacityReport
+   test_deps   (325)        patients   (100)        policy    LexKey       EngineMetrics
+   ward        (100p, 10w)  workers    (10)         seed      uint32_t     bench compare
+\end{Verbatim}
+    \end{tcolorbox}
+  \end{center}

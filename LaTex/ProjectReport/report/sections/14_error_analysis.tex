@@ -1,0 +1,93 @@
+% ----------------------------------------------------------------------------
+%  14. Error Analysis
+% ----------------------------------------------------------------------------
+\section{Error Analysis}
+\label{sec:error}
+
+\subsection{The big regression: Hungarian on critical patients}
+
+\begin{itemize}
+  \item Worst-served critical patient finishes at 9{,}470~min under
+        Hungarian; same patient finishes at 2{,}415~min under
+        Greedy.
+  \item Not a bug --- the matching itself is mathematically optimal
+        for each tick.
+\end{itemize}
+
+\textbf{What goes wrong, step by step:}
+
+\begin{enumerate}
+  \item Several critical tasks become ready in the same tick.
+  \item All of them have the same priority number (acuity = CRITICAL,
+        base = 1, so priority = 11 for every one of them).
+  \item Hungarian places \emph{one} task per worker per tick. The
+        rest are deferred to the next tick.
+  \item Greedy has no such rule --- it stacks all of them on
+        whichever workers are free, in the same tick.
+  \item The deferred tasks get spread out, so one unlucky patient
+        (P006) ends up at the back of the line.
+\end{enumerate}
+
+\subsection{Silent task drop}
+
+\begin{itemize}
+  \item If no worker on the roster has the required role for a
+        task, the engine logs the failure but \emph{forgets} to
+        unblock that task's downstream tasks.
+  \item Those downstream tasks stay blocked forever.
+  \item Doesn't trigger on the production ward (every test has a
+        matching role), but it's a latent bug.
+\end{itemize}
+
+\subsection{Easy mistakes when reading benches}
+
+\begin{itemize}
+  \item Both makespan and the urgent-care number depend on
+        \emph{both} ordering and matching.
+  \item Comparing two configurations that change both axes
+        misattributes the difference.
+  \item The 2$\times$2 bench was built precisely to keep one axis
+        fixed at a time.
+\end{itemize}
+
+\subsection{Configuration drifts caught by the bench layer}
+
+\begin{itemize}
+  \item The adversarial bench ignores the
+        \code{--overtime-threshold} flag (hardcoded $0$).
+  \item A code comment in \code{strategies.cpp} says priority
+        ranges $[11, 45]$; the real maximum is $43$.
+  \item Captured benchmark numbers used \code{-O2 -Wpedantic};
+        the CMake build uses default flags.
+\end{itemize}
+
+\subsection{Failure-mode summary}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Failure modes and their clinical impact.}
+\label{tab:failure_catalogue}
+\setlength{\tabcolsep}{6pt}
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Failure mode} & \textbf{Trigger} & \textbf{Severity} \\
+\midrule
+Hungarian critical regression
+  & burst of CRIT tasks with identical priorities
+  & \textbf{High} \\
+Silent downstream-task drop
+  & roster missing a required role for a task
+  & \textbf{High} \\
+Cycle in dependency graph
+  & malformed dependency JSON
+  & Medium \\
+Threshold flag ignored
+  & user expects \code{--overtime-threshold} on adversarial bench
+  & Low \\
+Patient with no diagnosis silently skipped
+  & patient added with no \code{disease\_id}
+  & Low \\
+\bottomrule
+\end{tabularx}
+\end{table}

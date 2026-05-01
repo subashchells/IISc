@@ -1,0 +1,61 @@
+% ----------------------------------------------------------------------------
+%  3. Problem Statement
+% ----------------------------------------------------------------------------
+\section{Problem Statement}
+\label{sec:problem}
+
+\subsection{What we have}
+
+\begin{itemize}
+  \item A list of \textbf{patients}, each with an acuity (CRIT,
+        HIGH, MED, LOW), an age, and a diagnosis.
+  \item A list of \textbf{workers}, each with a role (PGY1, INTERN,
+        NURSE) and a finite shift in minutes.
+  \item Three reference catalogues:
+        \begin{itemize}
+          \item 418 diseases, each mapping to a list of required
+                tests and a base priority.
+          \item 183 tests, each with a required role and a
+                duration in minutes.
+          \item 325 ``A must precede B'' edges across the test
+                catalogue.
+        \end{itemize}
+\end{itemize}
+
+\subsection{What ``a schedule'' means}
+
+A schedule says, for every (patient, test) pair: who does it, when
+they start. To be valid, the schedule must:
+
+\begin{itemize}
+  \item Use a worker whose role matches the test.
+  \item Respect every ``must precede'' edge.
+  \item Never double-book a worker.
+  \item Cover every task whose required role exists on the roster.
+\end{itemize}
+
+\subsection{What ``a good schedule'' means}
+
+Three smaller-is-better scores, all reported separately:
+
+\begin{itemize}
+  \item Average finish time of urgent (CRIT+HIGH) patients.
+  \item Total schedule length.
+  \item Worst single-worker overtime.
+\end{itemize}
+
+\noindent
+A schedule's ``feasibility verdict'' is just: total overtime
+$\leq$ a threshold the operator sets.
+
+\subsection{What we don't try to handle}
+
+\begin{itemize}
+  \item Patient deteriorating mid-shift (acuity is fixed once set).
+  \item Random or unpredictable test durations (for example, if
+        the cardiology ward sends a patient for an Echocardiogram,
+        the wait time depends on the inflow from other wards
+        requesting the same Echocardiogram service).
+  \item Worker breaks or training time.
+  \item Per-(patient, test) priority overrides.
+\end{itemize}

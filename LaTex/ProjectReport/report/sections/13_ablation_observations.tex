@@ -1,0 +1,87 @@
+% ----------------------------------------------------------------------------
+%  13. Ablation Studies and Observations
+% ----------------------------------------------------------------------------
+\section{Ablation Studies and Observations}
+\label{sec:ablation}
+
+Each study holds two of the three policy axes fixed and varies one.
+
+\subsection{Vary ordering only}
+
+\begin{itemize}
+  \item Hold matcher = Greedy. Compare FCFS vs.\ Priority.
+  \item Makespan and total overtime: identical.
+  \item Urgent-care metric: $-5{,}378$~min under Priority.
+  \item Conclusion: priority redistributes who waits; it doesn't
+        save total work.
+\end{itemize}
+
+\subsection{Vary matcher only}
+
+\begin{itemize}
+  \item Hold ordering = FCFS. Compare Greedy vs.\ Hungarian.
+  \item Makespan: $+90$~min under Hungarian; over-capacity tasks
+        $+3$.
+  \item Conclusion: ``optimal per tick'' costs the schedule.
+\end{itemize}
+
+\subsection{Vary priority policy only}
+
+\begin{itemize}
+  \item Hold ordering + matcher fixed (Priority + Greedy).
+  \item 7 named policies $\times$ 5 random seeds = 35 schedules.
+  \item Best vs.\ worst: $2.9\times$ swing on the urgent-care
+        metric for the same input.
+  \item Two policies that agree on the dominant axis (acuity)
+        differ by 408~min on dim-2 (age). A simple weighted-sum
+        priority cannot distinguish them.
+\end{itemize}
+
+\subsection{Vary fairness knob ($\alpha$) only}
+
+\begin{itemize}
+  \item Hold ordering + priority policy fixed.
+  \item Throughput and worst overtime: identical across all $\alpha$.
+  \item Within-role spread: rises monotonically as $\alpha$
+        approaches 0.
+  \item Greedy ($\alpha\!=\!1$) is the fairest configuration on
+        this ward.
+\end{itemize}
+
+\subsection{Adversarial scenarios}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Four hand-built wards. Per-row fastest \textbf{bold}.
+Schedule quality identical across all five strategies on every row.}
+\label{tab:adversarial_summary}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{X r r r r r}
+\toprule
+\textbf{Scenario} & \textbf{G/FCFS} & \textbf{H/FCFS}
+                  & \textbf{G/Pri} & \textbf{H/Pri} & \textbf{Fair($0$)/Pri} \\
+\midrule
+\code{all-critical}            & 65~$\mu$s & 124~$\mu$s &
+                                 \textbf{45~$\mu$s} & 136~$\mu$s & 45~$\mu$s \\
+\code{long-chain}              & 20~$\mu$s & 25~$\mu$s &
+                                 \textbf{11~$\mu$s} & 25~$\mu$s & 11~$\mu$s \\
+\code{single-role-bottleneck}  & 26~$\mu$s & 96~$\mu$s &
+                                 24~$\mu$s & 105~$\mu$s & \textbf{23~$\mu$s} \\
+\code{tight-shift}             & 27~$\mu$s & 51~$\mu$s &
+                                 23~$\mu$s & 48~$\mu$s & \textbf{23~$\mu$s} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Four take-aways}
+
+\begin{enumerate}
+  \item Ordering moves more than matching on a roster past
+        capacity.
+  \item ``Optimal per tick'' is the wrong invariant under burst
+        arrivals with identical priorities.
+  \item Fair-mode helps only when workers start unequal.
+  \item No algorithm choice creates capacity --- 20{,}210~min of
+        overtime is invariant.
+\end{enumerate}

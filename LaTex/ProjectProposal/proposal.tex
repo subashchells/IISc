@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in, top=0.65in, bottom=0.65in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{xcolor}
+
+% ── Hyperlink style ──────────────────────────────────────────────────────────
+\hypersetup{colorlinks=true, urlcolor=blue!60!black, linkcolor=black}
+
+% ── Section heading style ────────────────────────────────────────────────────
+% Left-aligned, small caps, compact vertical spacing. Line rule removed.
+\definecolor{ruleblue}{RGB}{30, 60, 120}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\scshape}  % font
+  {\thesection.}                         % label
+  {0.5em}                                % sep between label and title
+  {}                                     % before-code (Line rule deleted from here)
+
+\titlespacing{\section}
+  {0pt}       % left indent
+  {0.9em}     % before space
+  {0.4em}     % after space
+
+% ── Subsection style ────────────────────────────────────────────────────────
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}
+  {0.5em}{}[]
+
+\titlespacing{\subsection}
+  {0pt}{0.6em}{0.2em}
+
+% ── List tightening ─────────────────────────────────────────────────────────
+\setlist{nosep, leftmargin=1.4em, topsep=2pt, itemsep=1pt}
+
+% ── Paragraph spacing ───────────────────────────────────────────────────────
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% ── Title block ─────────────────────────────────────────────────────────────
+\begin{center}
+  {\LARGE\textbf{Project Proposal}}\\[0.4em]
+  {\normalsize\textit{Introduction to Algorithms and Software Programming (SL\,203)}}\\[0.8em]
+  {\Large\textbf{Optimizing Cardiac Ward Workflows: An Algorithmic Approach\\
+  to Dynamic Task Management and Allocation}}\\[0.8em]
+  {\normalsize\textbf{Subash C}\quad\textbar\quad
+  \href{mailto:subashc@iisc.ac.in}{subashc@iisc.ac.in}}\\[0.3em]
+  {\small Course Instructors: Nagarajan Natarajan, PhD\,(Visiting Professor)
+  \;\(\cdot\)\; Tarun Rambha, PhD\,(Associate Professor)}\\[0.2em]
+  {\small Indian Institute of Science, Bangalore}
+\end{center}
+
+\vspace{0.5em}
+\textcolor{ruleblue}{\rule{\linewidth}{0.8pt}}
+\vspace{0.3em}
+
+% ── Section inputs ───────────────────────────────────────────────────────────
+\input{Objective/objective}
+\input{Rationale/rationale}
+\input{Approach/approach}
+\input{Timeline/timeline}
+\input{PossibleIssues/possible_issues}
+% \bibliography{references}
+
+\end{document}

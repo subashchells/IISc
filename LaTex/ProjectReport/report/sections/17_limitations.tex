@@ -1,0 +1,39 @@
+% ----------------------------------------------------------------------------
+%  17. Limitations
+% ----------------------------------------------------------------------------
+\section{Limitations}
+\label{sec:limitations}
+
+\subsection{What we deliberately did not model}
+
+\begin{itemize}
+  \item Patient acuity changing mid-shift.
+  \item Probabilistic or random test durations.
+  \item Worker breaks, training, or non-shift time.
+  \item Multi-day rosters or shift handovers.
+  \item Per-(patient, test) priority overrides.
+  \item Adding a new role / acuity tier without a code change.
+\end{itemize}
+
+\subsection{Engineering gaps}
+
+\begin{itemize}
+  \item No automated test suite; the bench output is the only
+        correctness signal.
+  \item No reusable library target; only one executable.
+  \item No version stamping in the binary.
+  \item Help text refers to a path that doesn't match the
+        repo layout.
+  \item Adversarial bench ignores the
+        \code{--overtime-threshold} flag.
+\end{itemize}
+
+\subsection{What the data can and can't tell us}
+
+\begin{itemize}
+  \item All numbers come from one fixed ward snapshot --- findings
+        are conditional on that ward.
+  \item Acuity mix is critical-skewed (no LOW patients on this
+        snapshot).
+  \item No clinician has reviewed the resulting schedules.
+\end{itemize}

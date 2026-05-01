@@ -1,0 +1,96 @@
+% ----------------------------------------------------------------------------
+%  6. Methodology
+% ----------------------------------------------------------------------------
+\section{Methodology}
+\label{sec:methodology}
+
+\noindent
+The engine has four pluggable pieces. Each can be swapped without
+touching the others.
+
+\subsection{Ordering --- ``what task next?''}
+
+\begin{itemize}
+  \item \textbf{FCFS.}\; First-come-first-served queue;
+        ties broken by task ID.
+  \item \textbf{Priority.}\; Min-heap on a priority key;
+        smaller key = more urgent.
+\end{itemize}
+
+\subsection{Matching --- ``who does the task?''}
+
+\begin{itemize}
+  \item \textbf{Greedy.}\; Pick the role-matched worker who is
+        free earliest. Can stack many tasks on one worker per
+        tick.
+  \item \textbf{FairGreedy($\alpha$).}\;
+        Trade off ``free earliest'' vs.\ ``most shift remaining.''
+        $\alpha\!=\!1$ is plain Greedy; $\alpha\!=\!0$ is pure
+        load-balancing.
+  \item \textbf{Hungarian.}\; Solve the optimal one-to-one match
+        between this tick's ready tasks and free workers.
+        Overflow tasks are deferred to the next tick.
+\end{itemize}
+
+\subsection{Priority key --- the tie-breaker family}
+
+\begin{itemize}
+  \item Each policy expresses urgency as a list of integers
+        compared left-to-right.
+  \item Smaller is more urgent; negation flips a single dimension.
+  \item Default reproduces the legacy
+        $\text{acuity}\!\times\!10 + \text{priority}$ formula.
+  \item Last dimension is a seeded hash so equal-key ties resolve
+        deterministically.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\small
+\caption{The seven priority policies the system ships with.}
+\label{tab:lex_policies}
+\setlength{\tabcolsep}{6pt}
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Policy} & \textbf{Key shape (smaller better on every dim)} \\
+\midrule
+\code{acuity\_first}        & (acuity, base-priority, hash) \\
+\code{priority\_first}      & (base-priority, acuity, hash) \\
+\code{acuity\_short\_first} & (acuity, $+$duration, base-priority, hash) \\
+\code{acuity\_long\_first}  & (acuity, $-$duration, base-priority, hash) \\
+\code{acuity\_old\_first}   & (acuity, $-$age, base-priority, hash) \\
+\code{acuity\_young\_first} & (acuity, $+$age, base-priority, hash) \\
+\code{duration\_first}      & ($+$duration, acuity, base-priority, hash) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Picking the best schedule from many}
+
+\begin{itemize}
+  \item Each candidate schedule has three ``smaller is better''
+        scores:
+        \begin{itemize}
+          \item Urgent-care: average finish time of CRIT+HIGH
+                patients.
+          \item Makespan: when the schedule ends overall.
+          \item Worst overtime: most overtime any single worker
+                takes.
+        \end{itemize}
+  \item Drop dominated candidates (some other candidate is
+        $\leq$ on every score and $<$ on at least one).
+  \item Among the survivors, pick six spread out across the
+        three axes so the human sees the trade-offs, not just one
+        corner.
+\end{itemize}
+
+\subsection{Capacity feasibility}
+
+\begin{itemize}
+  \item If a task pushes a worker past their shift, the engine
+        records the overtime but still schedules the task.
+  \item Post-run: total overtime, per-worker overtime, and a
+        boolean ``feasible at threshold $\theta$.''
+  \item The engine never refuses to schedule on overtime grounds
+        --- the human is the final judge.
+\end{itemize}

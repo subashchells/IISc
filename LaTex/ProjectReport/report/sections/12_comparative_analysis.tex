@@ -1,0 +1,66 @@
+% ----------------------------------------------------------------------------
+%  12. Comparative Analysis
+% ----------------------------------------------------------------------------
+\section{Comparative Analysis}
+\label{sec:comparative}
+
+\subsection{Greedy vs.\ Hungarian, head-to-head}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{l r r r}
+\toprule
+\textbf{Axis} & \textbf{Greedy} & \textbf{Hungarian} & \textbf{Difference} \\
+\midrule
+Makespan (min)             & 9{,}260 & 9{,}470 & $+210$ \\
+Total overtime (min)       & 20{,}210 & 20{,}210 & 0 \\
+Mean critical finish (min) & 1{,}795 & 3{,}318 & $\bm{+85\%}$ \\
+Worst critical finish (min)& 2{,}415 & 9{,}470 & $\bm{4\times}$ \\
+Wall-clock                 & 16~ms   & 84~ms   & $+428\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Why the textbook is wrong here}
+
+\begin{itemize}
+  \item Hungarian solves the ``best one-to-one match for this
+        single tick'' problem perfectly.
+  \item But many critical tasks arrive together with the same
+        priority. Hungarian places one per worker per tick;
+        the rest are pushed to the next tick.
+  \item Greedy stacks all of them on free workers in the same
+        tick. The deferral never happens.
+  \item The textbook claim --- ``Hungarian is optimal'' --- is true
+        only at the single-tick level. Across many ticks, Greedy's
+        stacking is what the patients actually experience.
+\end{itemize}
+
+\subsection{Fairness: who carries the load?}
+
+\begin{itemize}
+  \item Within each role, Greedy already balances the work
+        (within-role spread $\approx 7$~min).
+  \item ``Fair-mode'' rebalancing only helps when workers
+        \emph{start} unequal. They don't on this ward.
+  \item The big imbalance is \emph{across} roles, not within them
+        --- and that's a staffing problem, not a matching problem.
+\end{itemize}
+
+\subsection{Why no algorithm can fix this}
+
+\begin{itemize}
+  \item Total work needed: $\sim$25{,}000~min.
+  \item Total available shift time: 5{,}040~min.
+  \item Workload is $\sim$5$\times$ over capacity.
+  \item Two nurses end the day at 9{,}260 / 9{,}255 min worked.
+        Three interns end at 240~min each. A 39$\times$ ratio.
+  \item No ordering or matching change can move that.
+\end{itemize}
+
+\begin{insightbox}
+\textbf{The one number that matters.}\;
+20{,}210~minutes of overtime show up under \emph{every} strategy.
+The fix is more nurses, not a smarter scheduler.
+\end{insightbox}

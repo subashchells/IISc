@@ -1,0 +1,111 @@
+% ----------------------------------------------------------------------------
+%  9. Experimental Setup
+% ----------------------------------------------------------------------------
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Production ward}
+
+All numbers in this report come from one fixed instance:
+\code{data/sample\_ward.json} dated 2026-04-29.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Production-ward parameters (deliberate stress configuration;
+see \S\ref{sec:results}).}
+\label{tab:project_snapshot}
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Patients                 & 100 (IDs \code{P001--P100}) \\
+Acuity mix               & CRITICAL = 23\;|\;HIGH = 28\;|\;MEDIUM = 49\;|\;LOW = 0 \\
+Workers                  & 10 (\,2 NURSE \;|\; 5 INTERN \;|\; 3 PGY1\,) \\
+Worker shifts            & 8 $\times$ 480~min, 2 $\times$ 600~min;
+                           total roster capacity 5{,}040~min \\
+Diseases catalogued      & 418 \\
+Tests catalogued         & 183 \\
+Dependency edges (global) & 325 \\
+Per-patient task instances at runtime & 2{,}017 \\
+Implied total work       & $\sim$25{,}000+~min ($\approx 5\times$ over) \\
+Total overtime per strategy & 20{,}210~min (invariant) \\
+Source size              & 3{,}024 lines across 17 files \\
+Web UI                   & \code{index.html}, $\sim$800 lines, single-page \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Build line used for benchmarks}
+
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small,
+                   numbers=none,frame=single,backgroundcolor=\color{boxbg}]
+g++ -std=c++17 -Wall -Wextra -Wpedantic -O2 -I. -Ithird_party \
+    main.cpp bench.cpp bench_adversarial.cpp bench_urgency.cpp \
+    data_structures/graph.cpp data/loader.cpp \
+    scheduler/topological.cpp scheduler/allocator.cpp \
+    scheduler/strategies.cpp scheduler/hungarian.cpp \
+    scheduler/policies.cpp \
+    -o cardio_scheduler
+\end{lstlisting}
+
+\noindent
+The CMake target compiles the same set with default flags
+(\code{-Wall -Wextra}); reproducing the captured runtimes via CMake
+requires \code{-DCMAKE\_CXX\_FLAGS="-O2"}.
+
+\subsection{Six bench modes}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Bench modes, the question each isolates, typical wall-clock.}
+\label{tab:bench_modes}
+\begin{tabularx}{\textwidth}{l l X r}
+\toprule
+\textbf{Flag} & \textbf{Mode} & \textbf{Question isolated} & \textbf{Wall-clock} \\
+\midrule
+(none)                  & Legacy           & FCFS vs.\ Priority (Greedy held)              & $\sim$2.5~min \\
+\code{--bench-2x2}      & 2$\times$2 matrix & ordering $\times$ matching, all four cells     & $\sim$30~ms \\
+\code{--bench-pareto}   & Pareto sweep      & 7 lex policies $\times$ 5 seeds, NSGA-II top-6 & $\sim$80~ms \\
+\code{--bench-fair}     & Fairness sweep    & throughput vs.\ intra-role load stdev         & $\sim$25~ms \\
+\code{--bench-adversarial} & Adversarial    & 4 hand-built pathological scenarios            & $\sim$3~ms \\
+\code{--bench-urgency}  & Urgency           & per-acuity-tier timing across 5 matchers      & $\sim$25~ms \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Ablation matrix}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Per-bench ablation matrix --- the one varying axis is \textbf{bold}.}
+\label{tab:ablation_matrix}
+\begin{tabular}{l c c c c}
+\toprule
+& \textbf{Ordering} & \textbf{Matcher} & \textbf{LexPolicy} & \textbf{Fair $\alpha$} \\
+\midrule
+Legacy            & \textbf{$\{$FCFS, Priority$\}$} & Greedy   & default  & --- \\
+2$\times$2        & \textbf{$\{$FCFS, Priority$\}$} & \textbf{$\{$Greedy, Hungarian$\}$} & default  & --- \\
+Pareto sweep      & Priority & Greedy   & \textbf{7-policy catalogue} & --- \\
+Fairness sweep    & Priority & \textbf{$\{$Greedy, Hungarian, Fair($\alpha$)$\}$} & default  & \textbf{$\{$0.00, 0.25, 0.50, 0.75$\}$} \\
+Adversarial       & Both     & All five  & default  & 0.00 \\
+Urgency           & Priority & \textbf{$\{$Greedy, Hungarian, Fair($\alpha$)$\}$} & default  & \textbf{$\{$0.00, 0.25, 0.50, 0.75$\}$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reproducibility}
+
+\begin{itemize}
+  \item Greedy and Hungarian are inherently deterministic (tie-break
+        rules are stable).
+  \item Pareto sweep deterministically varies the FNV-1a tie hash
+        by integer seed (\code{kPolicySeedCount = 5}).
+  \item Adversarial bench builds scenarios in C++ memory; no JSON;
+        byte-exact across hosts.
+  \item \code{Results.md} + six \code{bench\_results\_*.txt} files
+        pin the captured numbers to the 2026-04-29 run.
+\end{itemize}

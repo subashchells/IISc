@@ -1,0 +1,46 @@
+% ----------------------------------------------------------------------------
+%  2. Background
+% ----------------------------------------------------------------------------
+\section{Background}
+\label{sec:background}
+
+The system sits at the intersection of three classical sub-problems.
+
+\subsection{Constrained job scheduling}
+
+\begin{itemize}
+  \item Schedule jobs on parallel machines, respecting a graph of
+        ``A must finish before B'' rules.
+  \item NP-hard in general; cheap list-scheduling heuristics get
+        close to optimal in practice \citep{graham1969bounds, clrs}.
+\end{itemize}
+
+\subsection{Optimal one-to-one matching (Hungarian)}
+
+\begin{itemize}
+  \item Hungarian finds the cheapest
+        one-to-one pairing in $O(n^3)$
+        \citep{jonker1987shortest}.
+  \item At our roster size ($\leq 10$) the cubic cost is
+        negligible, so we use it as a ``per-tick optimum'' to
+        compare against Greedy.
+\end{itemize}
+
+\subsection{Picking from many candidates (multi-objective)}
+
+\begin{itemize}
+  \item Three smaller-is-better scores:
+        urgent-care, makespan, worst overtime.
+  \item Drop ``dominated'' candidates; from the rest, surface a
+        spread of six picks for human review
+        \citep{deb2002nsga, ehrgott2005multicriteria}.
+\end{itemize}
+
+\subsection{Why a list of integers, not a single number}
+
+\begin{itemize}
+  \item A weighted-sum priority cannot pick between two schedules
+        that agree on the dominant axis but differ on a tie-break
+        \citep{esi2005}.
+  \item A list of integers, compared left-to-right, can.
+\end{itemize}

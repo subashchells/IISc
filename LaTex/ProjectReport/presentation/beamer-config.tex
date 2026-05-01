@@ -1,0 +1,125 @@
+% =============================================================================
+%  beamer-config.tex --- shared style for the CardioScheduler presentation
+% =============================================================================
+
+% ── Theme & colours
+\usetheme{default}
+\useinnertheme{rectangles}
+\useoutertheme{infolines}
+\setbeamertemplate{navigation symbols}{}      % no nav UI
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{frametitle}{family=\sffamily, series=\bfseries, size=\large}
+\setbeamerfont{title}{family=\sffamily, series=\bfseries, size=\Large}
+\setbeamerfont{subtitle}{family=\sffamily, series=\mdseries, size=\normalsize}
+
+\definecolor{ruleblue}{RGB}{30, 60, 120}
+\definecolor{accent}{RGB}{170, 35, 35}
+\definecolor{slate}{RGB}{60, 70, 90}
+\definecolor{mutedgray}{RGB}{120, 120, 130}
+\definecolor{boxbg}{RGB}{248, 248, 250}
+\definecolor{tablerow}{RGB}{245, 246, 250}
+
+\setbeamercolor{frametitle}{fg=ruleblue}
+\setbeamercolor{title}{fg=ruleblue}
+\setbeamercolor{structure}{fg=ruleblue}
+\setbeamercolor{block title}{fg=white, bg=ruleblue}
+\setbeamercolor{block body}{bg=boxbg, fg=black}
+\setbeamercolor{itemize item}{fg=ruleblue}
+\setbeamercolor{itemize subitem}{fg=accent}
+
+% ── Frame title underline
+\setbeamertemplate{frametitle}{%
+  \vspace*{0.5em}%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.6cm,rightskip=0.6cm]{frametitle}%
+    \insertframetitle\\[-0.55em]%
+    \textcolor{ruleblue}{\rule{0.92\paperwidth}{0.6pt}}%
+  \end{beamercolorbox}%
+}
+
+% ── Body font (Spectral substitute: Palatino)
+\usepackage{mathpazo}
+\usepackage[scaled=0.92]{helvet}
+
+% ── Math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+
+% ── Unicode box-drawing support
+%    pmboxdraw renders U+2500..U+257F box-drawing chars as proper glyphs
+%    so the CLI-style ASCII diagrams in the MD files reproduce
+%    pixel-for-pixel inside lstlisting.
+\usepackage{pmboxdraw}
+% (Arrow declarations moved below into the monospace-aligned block.)
+
+% ── Tables / graphics / utilities
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{microtype}
+
+% ── Code listings (kept light --- slides should rarely host code)
+\usepackage{listings}
+% fancyvrb's Verbatim handles UTF-8 box-drawing characters cleanly when
+% paired with pmboxdraw, where lstlisting's verbatim mode chokes on the
+% multibyte sequences.
+\usepackage{fancyvrb}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+% Triangle-pointer arrows used in the MD-style flow diagrams.
+% Each is wrapped in a 0.5em fixed-width box so it aligns to the
+% monospace grid that pmboxdraw's box-drawing characters use ---
+% otherwise the math triangles disrupt every line they appear on.
+\newcommand{\monosym}[1]{\hbox to 0.5em{\hss\ensuremath{\smash{#1}}\hss}}
+\DeclareUnicodeCharacter{25B6}{\monosym{\blacktriangleright}}
+\DeclareUnicodeCharacter{25BC}{\monosym{\blacktriangledown}}
+\DeclareUnicodeCharacter{25BA}{\monosym{\blacktriangleright}}
+\DeclareUnicodeCharacter{25C0}{\monosym{\blacktriangleleft}}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{ruleblue}\bfseries,
+  commentstyle=\color{mutedgray}\itshape,
+  stringstyle=\color{accent},
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{mutedgray!40},
+  framesep=3pt,
+  backgroundcolor=\color{boxbg},
+  language=C++
+}
+
+% ── Macros
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\head}[1]{\textbf{\sffamily\color{ruleblue}#1}}
+
+% ── A reusable boxed-callout
+\newenvironment{insight}{%
+  \par\medskip\noindent
+  \begin{tikzpicture}
+    \node[draw=ruleblue, line width=0.8pt, fill=boxbg, rounded corners=2pt,
+          inner sep=8pt, text width=0.92\textwidth]\bgroup
+}{%
+    \egroup;
+  \end{tikzpicture}\par\medskip}
+
+% ── Figure placeholder for slides
+% Usage: \slidefig{label}{height-cm}{width-fraction}{description}
+\newcommand{\slidefig}[4]{%
+  \begin{center}
+    \fcolorbox{mutedgray!50}{boxbg}{%
+      \parbox[c][#2cm][c]{#3\textwidth}{%
+        \centering
+        {\sffamily\bfseries\color{slate} Figure placeholder}\par
+        \vspace{0.4em}
+        {\small\sffamily #4\par}
+        \vspace{0.4em}
+        {\scriptsize\sffamily\color{mutedgray}figures/\detokenize{#1}.pdf\par}
+      }%
+    }
+  \end{center}}

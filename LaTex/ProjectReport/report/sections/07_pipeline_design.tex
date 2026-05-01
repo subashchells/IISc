@@ -1,0 +1,106 @@
+% ----------------------------------------------------------------------------
+%  7. Pipeline Design
+% ----------------------------------------------------------------------------
+\section{Pipeline Design}
+\label{sec:pipeline}
+
+\noindent
+End-to-end: \emph{Load $\to$ Assemble $\to$ Schedule $\to$ Evaluate}.
+
+\subsection{Stage map}
+
+\begin{center}
+  \begin{tcolorbox}[enhanced, breakable=false,
+                    colback=boxbg, colframe=ruleblue,
+                    boxrule=0.4pt, arc=2pt,
+                    left=4pt, right=4pt, top=2pt, bottom=2pt]
+\centering
+\begin{BVerbatim}[fontsize=\scriptsize]
+┌─────────────────┐    ┌──────────────────┐    ╔═════════════════╗    ┌─────────────────┐
+│  4 JSON catalogs│    │   load_ward()    │    ║                 ║    │                 │
+│                 │ ──▶│        +         │ ──▶║   run_engine    ║ ──▶│   Output        │
+│ parsed by loader│    │   build_ward()   │    ║                 ║    │  (terminal)     │
+└─────────────────┘    └──────────────────┘    ╚═════════════════╝    └─────────────────┘
+diseases    (418)      tasks      (2017)       ordering FCFS|Pri      ScheduleEntries
+tests       (183)      dep_graph  (~3000 e)    matching G | F | JV    CapacityReport
+test_deps   (325)      patients   (100)        policy   LexKey        EngineMetrics
+ward      (100p, 10w)  workers    (10)         seed     uint32_t      bench compare
+\end{BVerbatim}
+  \end{tcolorbox}
+\end{center}
+
+\subsection{Stage 1 --- Load}
+
+\begin{itemize}
+  \item Each loader: \code{read\_file} $\to$
+        \code{nlohmann::json::parse} $\to$ iterate root array
+        $\to$ field-by-field extraction.
+  \item Required fields use \code{at()} (throws on missing).
+        Optional fields use \code{contains()} first.
+  \item Enum parsers (\code{parse\_role}, \code{parse\_acuity})
+        are exact-string matchers; throw with helpful labels on
+        unknown values.
+\end{itemize}
+
+\subsection{Stage 2 --- Assemble}
+
+\begin{itemize}
+  \item \code{build\_ward} loops patients, delegates to
+        \code{build\_patient\_tasks}.
+  \item Per patient: suffix every task id by
+        \code{\_<patient\_id>}, add as graph node, duplicate global
+        edges into the patient's sub-graph (both endpoints in the
+        chosen test set).
+  \item Empty \code{disease\_id} silently skipped; unknown disease
+        id yields a stderr warning.
+  \item Reverse map \code{task\_to\_patient} populated.
+\end{itemize}
+
+\subsection{Stage 3 --- Schedule}
+
+The engine's main loop (\code{allocator.cpp:79}):
+
+\begin{itemize}
+  \item \code{matching.prepare(workers)}.
+  \item Cycle-check via \code{topological\_sort} (result discarded
+        --- only acyclicity matters here).
+  \item Pre-pass: for every task already \code{DONE}, decrement
+        in-degree of its neighbours.
+  \item Seed the ordering with all \code{PENDING} tasks of
+        \code{in\_deg = 0}.
+  \item Loop while ordering non-empty:
+        \begin{itemize}
+          \item \code{batch} $\gets$
+                \code{ordering.drain\_up\_to(|workers|)}.
+          \item \code{results} $\gets$
+                \code{matching.match(batch, workers)}.
+          \item For each result: \code{NO\_ROLE\_MATCH} drops
+                dependents; \code{DEFERRED} re-pushes;
+                \code{ASSIGNED} commits (emit
+                \code{ScheduleEntry}, mark task DONE, advance
+                worker, push newly-unblocked dependents).
+        \end{itemize}
+  \item Finalise capacity report and engine metrics.
+\end{itemize}
+
+\subsection{Stage 4 --- Evaluate}
+
+\begin{itemize}
+  \item \code{compute\_objectives} $\to$ acuity, makespan, max-OT.
+  \item \code{pareto\_frontier} $\to$ non-dominated indices.
+  \item \code{top\_k\_by\_crowding} $\to$ NSGA-II spread.
+  \item Legacy bench bypasses the Pareto stage and prints
+        per-acuity summaries directly.
+\end{itemize}
+
+\subsection{Discrete-event commit semantics}
+
+\begin{itemize}
+  \item A task is committed the instant it is matched; the
+        worker's \code{available\_at} advances by the task
+        duration.
+  \item No ``time tick'' --- events are sorted by
+        \code{start\_time} only at print time.
+  \item Strictly causal: a later commit cannot modify an earlier
+        \code{ScheduleEntry}.
+\end{itemize}

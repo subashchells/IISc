@@ -1,0 +1,37 @@
+% ----------------------------------------------------------------------------
+%  15. Engineering Decisions
+% ----------------------------------------------------------------------------
+\section{Engineering Decisions}
+\label{sec:engineering}
+
+The choices that turned out to matter.
+
+\begin{itemize}
+  \item \textbf{Two pluggable axes, not one ``scheduler.''}\;
+        Lets each axis be ablated independently. A monolithic class
+        would make attribution impossible.
+  \item \textbf{Hungarian uses the legacy priority, not the
+        priority list.}\;
+        Switching the priority policy reorders the queue but
+        leaves the matcher's cost matrix untouched. Two clean,
+        independent axes.
+  \item \textbf{Engine always commits, then reports overtime.}\;
+        A clinical scheduler that silently refuses is more
+        dangerous than one that loudly flags. The human is the
+        final judge.
+  \item \textbf{Dependency graph is append-only.}\;
+        Built once, read-only thereafter. Removes a class of
+        consistency bugs.
+  \item \textbf{Bench layer deep-copies state per cell.}\;
+        The engine mutates four pieces of state; a shallow copy
+        that misses one silently corrupts the next cell.
+  \item \textbf{Seeded tie-break hash.}\;
+        Five distinct schedules per priority policy at zero
+        correctness cost --- exactly what the policy sweep needs.
+  \item \textbf{One binary, six bench modes.}\;
+        Single CMake target, fast build, identical data path.
+        Adding a strategy means recompiling once.
+  \item \textbf{No JSON-Schema validator.}\;
+        The field-by-field exception path is enough; a real
+        validator would pull a non-trivial dependency.
+\end{itemize}
